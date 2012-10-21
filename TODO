@@ -1,0 +1,46 @@
+
+::::: CURRENT/NEXT ::
+
+- [FEATURE]: Possability to override 'url' with new Redis(url, options)
+
+- [FEATURE]: Implement Storage superclass, so that one can do this kind of jingle: if (object instanceof Storage) { ... }
+
+- [FEATURE]: Implement Storage.endpoint = <URI>, so that this makes sense: Document('Recipe', Redis)
+
+- [FEATURE]: Validation based on schema (Amanda)
+      - https://github.com/Baggz/Amanda
+
+- [FEATURE]: Document.Model.prototype.changes => diff(last_fetched, attributes)
+      - https://github.com/NV/objectDiff.js
+      - https://github.com/mikolalysenko/patcher.js
+
+
+::::: HIGH ::
+
+- [FEATURE:] Get/Set attribute values using JSON-selectors? Example: doc.get('.comments .body')
+
+- [FEATURE]: Allow alternative constructor-DSL: Document({type: 'Recipe', schema: {}, storage: new Redis())
+
+
+::::: MEDIUM ::
+
+- [FEATURE]: FileStorage
+
+- [FEATURE]: MongoDBStorage
+
+- [REFACTOR]: Refactor out all storages excelt "Memory" to own NPM modules, e.g. "node-document-redis", "node-document-file", etc.
+
+- [DOC]: Proper function documentation (jsdoc-style).
+
+
+::::: LOW ::
+
+- [FEATURE]: Schema default values?
+
+- [FEATURE]: Storage.count
+
+- [FEATURE]: Storage.exists
+
+- [FEATURE]: Storage.clear
+
+- [FEATURE]: Support "expires" for documents (Storage).

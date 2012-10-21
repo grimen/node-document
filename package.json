@@ -1,0 +1,57 @@
+{
+  "name": "document",
+  "description": "Many document stores, Y U NO interface?",
+  "version": "0.0.1",
+  "repositories": [
+    {
+     "type": "git",
+     "url": "https://github.com/grimen/node-document.git"
+    }
+  ],
+  "bugs": {
+    "web": "https://github.com/grimen/node-document/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/grimen/node-document/blob/MIT-LICENSE"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Jonas Grimfelt",
+      "email": "grimen@gmail.com",
+      "web": "https://github.com/grimen"
+    }
+  ],
+  "contributors": [],
+  "directories": {
+    "lib": "./lib"
+  },
+  "main": "./index.js",
+  "scripts": {
+    "test": "mocha ./test/**/*_spec.js || true"
+  },
+  "bin": {},
+  "engines": {
+    "node": ">= 0.6.5"
+  },
+  "dependencies": {
+    "sugar": "1.2",
+    "amanda": "0.4",
+    "node-uuid": "latest",
+    "patcher": "latest",
+    "docstore": "latest",
+    "memcached": "latest",
+    "redis": "latest",
+    "hiredis": "latest",
+    "elastical": "latest"
+  },
+  "devDependencies": {
+    "vows": "0.6",
+    "mocha": "latest",
+    "chai": "latest",
+    "cover": "latest",
+    "node-inspector": "latest"
+  }
+}
