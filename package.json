@@ -45,7 +45,8 @@
     "memcached": "latest",
     "redis": "latest",
     "hiredis": "latest",
-    "elastical": "latest"
+    "elastical": "latest",
+    "mongodb": "latest"
   },
   "devDependencies": {
     "vows": "0.6",

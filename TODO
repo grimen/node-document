@@ -26,11 +26,9 @@
 
 - [FEATURE]: FileStorage
 
-- [FEATURE]: MongoDBStorage
-
 - [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks. (Merchii-style)
 
-- [REFACTOR]: Refactor out all storages excelt "Memory" to own NPM modules, e.g. "node-document-redis", "node-document-file", etc.
+- [REFACTOR]: Refactor out all storages except "Memory" to own NPM modules, e.g. "node-document-redis", "node-document-file", etc.
 
 - [DOC]: Proper function documentation (jsdoc-style).
 
