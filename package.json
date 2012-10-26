@@ -49,7 +49,6 @@
     "mongodb": "latest"
   },
   "devDependencies": {
-    "vows": "0.6",
     "mocha": "latest",
     "chai": "latest",
     "cover": "latest",
