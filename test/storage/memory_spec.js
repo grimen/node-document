@@ -9,8 +9,6 @@ var helper = require('../spec_helper'),
     Client = Storage.Client,
     client = new Client();
 
-return;
-
 var Spec = {
 
   '#set': {

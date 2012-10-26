@@ -9,8 +9,6 @@ var helper = require('../spec_helper'),
     Client = require('redis'),
     client = Client.createClient();
 
-return;
-
 var Spec = {
 
   '#set': {
