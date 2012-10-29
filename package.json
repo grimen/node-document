@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "funargs": "latest",
-    "sugar": "latest",
+    "sugar": "1.2",
     "amanda": "latest",
     "node-uuid": "latest",
     "patcher": "latest",
