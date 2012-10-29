@@ -147,23 +147,25 @@ var Spec = {
 
     'Persistance': {
       '.create': {
-        '()': function() {
+        '()': function(done) {
           Post.create(function(err, doc) {
             assert.deepEqual ( doc.attributes, {id: doc.id} );
             assert.deepEqual ( doc.changes, {} );
             assert.deepEqual ( doc.errors, {} );
             assert.equal ( doc.persisted, true );
             assert.equal ( doc.new, false );
+            done();
           });
         },
 
-        '({})': function() {
+        '({})': function(done) {
           Post.create({title: "A title", description: "Lorem ipsum..."}, function(err, doc) {
             assert.deepEqual ( doc.attributes, {id: doc.id, title: "A title", description: "Lorem ipsum..."} );
             assert.deepEqual ( doc.changes, {} );
             assert.deepEqual ( doc.errors, {} );
             assert.equal ( doc.persisted, true );
             assert.equal ( doc.new, false );
+            done();
           });
         }
       },
@@ -183,15 +185,17 @@ var Spec = {
           });
         },
 
-        '(1, {})': function() {
+        '(1, {})': function(done) {
           Post.set(1, {foo: 'bar 1'}, function(err, result) {
             assert.deepEqual ( result, [true] );
+            done();
           });
         },
 
-        '(1, {}, {})': function() {
+        '(1, {}, {})': function(done) {
           Post.set(1, {foo: 'bar 1'}, {}, function(err, result) {
             assert.deepEqual ( result, [true] );
+            done();
           });
         },
 
@@ -215,15 +219,17 @@ var Spec = {
           });
         },
 
-        '([1, 2], [{}, {}])': function() {
+        '([1, 2], [{}, {}])': function(done) {
           Post.set([1, 2], [{foo: 'bar 1'}, {foo: 'bar 2'}], function(err, result) {
             assert.deepEqual ( result, [true, true] );
+            done();
           });
         },
 
-        '([1, 2], [{}, {}], {})': function() {
+        '([1, 2], [{}, {}], {})': function(done) {
           Post.set([1, 2], [{foo: 'bar 1'}, {foo: 'bar 2'}], {}, function(err, result) {
             assert.deepEqual ( result, [true, true] );
+            done();
           });
         }
       }, // .set
@@ -237,29 +243,33 @@ var Spec = {
 
         // .get 1
 
-        '(1)': function() {
+        '(1)': function(done) {
           Post.get(1, function(err, result) {
             assert.deepEqual ( result, [{foo: 'bar 1'}] );
+            done();
           });
         },
 
-        '(1, {})': function() {
+        '(1, {})': function(done) {
           Post.get(1, {}, function(err, result) {
             assert.deepEqual ( result, [{foo: 'bar 1'}] );
+            done();
           });
         },
 
         // .get *
 
-        '([1, 2])': function() {
+        '([1, 2])': function(done) {
           Post.get([1, 2], function(err, result) {
             assert.deepEqual ( result, [{foo: 'bar 1'}, {foo: 'bar 2'}] );
+            done();
           });
         },
 
-        '([1, 2], {})': function() {
+        '([1, 2], {})': function(done) {
           Post.get([1, 2], {}, function(err, result) {
             assert.deepEqual ( result, [{foo: 'bar 1'}, {foo: 'bar 2'}] );
+            done();
           });
         }
       }, // .get
@@ -273,29 +283,33 @@ var Spec = {
 
         // .del 1
 
-        '(1)': function() {
+        '(1)': function(done) {
           Post.del(1, function(err, result) {
             assert.deepEqual ( result, [true] );
+            done();
           });
         },
 
-        '(1, {})': function() {
+        '(1, {})': function(done) {
           Post.del(1, {}, function(err, result) {
             assert.deepEqual ( result, [false] );
+            done();
           });
         },
 
         // .del *
 
-        '([1, 2])': function() {
+        '([1, 2])': function(done) {
           Post.del([1, 2], function(err, result) {
             assert.deepEqual ( result, [false, true] );
+            done();
           });
         },
 
-        '([1, 2], {})': function() {
+        '([1, 2], {})': function(done) {
           Post.del([1, 2], {}, function(err, result) {
             assert.deepEqual ( result, [false, false] );
+            done();
           });
         }
       }, // .del
@@ -336,7 +350,7 @@ var Spec = {
 
       '#type': function() {
         assert.equal ( doc.type, 'Post' );
-      },
+      }
     },
 
     'Attributes': {
@@ -686,7 +700,7 @@ var Spec = {
 
       '#destroy': {
         'new': {
-          '()': function() {
+          '()': function(done) {
             doc = new Post({title: "A title", description: "Lorem ipsum..."});
 
             doc.destroy(function(err, _doc) {
@@ -695,12 +709,13 @@ var Spec = {
               assert.deepEqual ( _doc.errors, {} );
               assert.deepEqual ( _doc.persisted, false );
               assert.deepEqual ( _doc.new, true );
+              done();
             });
           }
         },
 
         'persisted': {
-          '()': function() {
+          '()': function(done) {
             doc = new Post({id: 5, title: "A title", description: "Lorem ipsum..."});
 
             Post.set(5, {title: "A title", description: "Lorem ipsum..."}, function() {
@@ -710,6 +725,7 @@ var Spec = {
                 assert.deepEqual ( _doc.errors, {} );
                 assert.deepEqual ( _doc.persisted, false );
                 assert.deepEqual ( _doc.new, true );
+                done();
               });
             });
           }
@@ -718,7 +734,7 @@ var Spec = {
 
       '#save': {
         'new': {
-          '()': function() {
+          '()': function(done) {
             var doc = new Post({title: "A title", description: "Lorem ipsum..."});
 
             doc.save(function(err, _doc) {
@@ -727,12 +743,13 @@ var Spec = {
               assert.deepEqual ( _doc.errors, {} );
               assert.deepEqual ( _doc.persisted, true );
               assert.deepEqual ( _doc.new, false );
+              done();
             });
           }
         },
 
         'persisted': {
-          '()': function() {
+          '()': function(done) {
             var doc = new Post({id: 5, title: "A title", description: "Lorem ipsum..."});
 
             Post.set(doc.id, {title: "A title", description: "Lorem ipsum..."}, function() {
@@ -742,6 +759,7 @@ var Spec = {
                 assert.deepEqual ( _doc.errors, {} );
                 assert.deepEqual ( _doc.persisted, true );
                 assert.deepEqual ( _doc.new, false );
+                done();
               });
             });
           }
@@ -750,7 +768,7 @@ var Spec = {
 
       '#fetch': {
         'ID specified - new': {
-          '()': function() {
+          '()': function(done) {
             doc = new Post({id: 'fetch-1', title: "A title", description: "Lorem ipsum..."});
 
             Post.del(doc.id, function() {
@@ -759,15 +777,16 @@ var Spec = {
                 assert.deepEqual ( _doc.attributes, {id: 'fetch-1'} );
                 assert.deepEqual ( _doc.changes, {} );
                 assert.deepEqual ( _doc.errors, {} );
-                assert.deepEqual ( _doc.persisted, false )
-                assert.deepEqual ( _doc.new, true )
+                assert.deepEqual ( _doc.persisted, false );
+                assert.deepEqual ( _doc.new, true );
+                done();
               });
             });
           }
         },
 
         'ID specified - existing': {
-          '()': function() {
+          '()': function(done) {
             doc = new Post({id: 2, title: "A title", description: "Lorem ipsum..."});
 
             Post.set(2, {id: 2, title: "A title", description: "Lorem ipsum..."}, function() {
@@ -778,13 +797,14 @@ var Spec = {
                 assert.deepEqual ( _doc.errors, {} );
                 assert.deepEqual ( _doc.persisted, true );
                 assert.deepEqual ( _doc.new, false );
+                done();
               });
             });
           }
         },
 
         'ID not specified': {
-          '()': function() {
+          '()': function(done) {
             doc = new Post({title: "A title", description: "Lorem ipsum..."});
 
             doc.fetch(function(err, _doc) {
@@ -794,6 +814,7 @@ var Spec = {
               assert.deepEqual ( _doc.errors, {} );
               assert.deepEqual ( _doc.persisted, false );
               assert.deepEqual ( _doc.new, true );
+              done();
             });
           }
         }

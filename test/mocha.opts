@@ -1,4 +1,4 @@
 --ui exports
 --globals memory
 --reporter dot
---timeout 300
+--timeout 0
