@@ -16,11 +16,9 @@
 
 - [FEATURE:] Get/Set attribute values using JSON-selectors? Example: doc.get('.comments .body')
 
-- [FEATURE]: Allow alternative constructor-DSL: Document({type: 'Recipe', schema: {}, storage: new Redis())
+- [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks. (Merchii-style)
 
 - [DOC]: README v1
-
-- [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks. (Merchii-style)
 
 
 ::::: MEDIUM ::
@@ -29,6 +27,8 @@
 
 
 ::::: LOW ::
+
+- [FEATURE]: Allow alternative constructor-DSL: Document({type: 'Recipe', schema: {}, storage: new Redis())
 
 - [DOC]: Proper function documentation (jsdoc-style).
 
