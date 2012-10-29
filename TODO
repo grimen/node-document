@@ -3,6 +3,9 @@
 
 - [FEATURE]: Possability to override 'url' with new Redis(url, options)
 
+
+::::: HIGH ::
+
 - [FEATURE]: Validation based on schema (Amanda)
       - https://github.com/Baggz/Amanda
       - https://github.com/0ctave/node-sync (...as Amanda's async validation may feel overkill)
@@ -10,9 +13,6 @@
 - [FEATURE]: Document.Model.prototype.changes => diff(last_fetched, attributes)
       - https://github.com/NV/objectDiff.js
       - https://github.com/mikolalysenko/patcher.js
-
-
-::::: HIGH ::
 
 - [FEATURE:] Get/Set attribute values using JSON-selectors? Example: doc.get('.comments .body')
 
