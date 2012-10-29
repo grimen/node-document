@@ -20,7 +20,13 @@ var Spec = {
     },
 
     '.klass': function() {
-      assert.instanceOf ( storage.klass, require('../../lib/storage/redis') );
+      assert.property ( storage, 'klass' );
+      assert.equal ( storage.klass, require('../../lib/storage/redis') );
+    },
+
+    '.url': function() {
+      assert.property ( Storage, 'url' );
+      assert.typeOf ( Storage.url, 'string' );
     }
   },
 

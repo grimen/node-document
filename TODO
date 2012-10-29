@@ -3,8 +3,6 @@
 
 - [FEATURE]: Possability to override 'url' with new Redis(url, options)
 
-- [FEATURE]: Implement Storage.endpoint = <URI>, so that this makes sense: Document('Recipe', Redis)
-
 - [FEATURE]: Validation based on schema (Amanda)
       - https://github.com/Baggz/Amanda
       - https://github.com/0ctave/node-sync (...as Amanda's async validation may feel overkill)
@@ -22,15 +20,12 @@
 
 - [DOC]: README v1
 
+- [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks. (Merchii-style)
+
 
 ::::: MEDIUM ::
 
-- [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks. (Merchii-style)
-
 - [FEATURE]: FileSystemStorage
-
-- [REFACTOR/ENHANCEMENT]: Use `URI.js` for parsing endpoint URL:s
-      - https://github.com/medialize/URI.js
 
 
 ::::: LOW ::
@@ -48,6 +43,9 @@
 - [FEATURE]: Storage.clear
 
 - [FEATURE]: Support "expires" for documents (Storage).
+
+- [REFACTOR/ENHANCEMENT]: Use `URI.js` for parsing endpoint URL:s (?)
+      - https://github.com/medialize/URI.js
 
 
 ::::: MAYBE/CRAZY ::

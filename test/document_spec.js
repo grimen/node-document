@@ -5,8 +5,7 @@ var helper = require('./spec_helper'),
 
     Document = require('../lib/document'),
 
-    Redis = require('../lib/storage/redis'),
-    redis = new Redis();
+    Redis = require('../lib/storage/redis');
 
 var Post = undefined,
     doc = undefined;
@@ -64,7 +63,29 @@ var Spec = {
 
     '("type", storage)': {
       before: function() {
-        Post = Document('Post', redis);
+        Post = Document('Post', new Redis());
+      },
+
+      'should successfully create a model': function() {
+        assert.typeOf ( Post, 'function' );
+      },
+
+      '.type': function() {
+        assert.deepEqual ( Post.type, 'Post' );
+      },
+
+      '.schema': function() {
+        assert.deepEqual ( Post.schema, {} );
+      },
+
+      '.storage': function() {
+        assert.instanceOf ( Post.storage, Redis );
+      }
+    },
+
+    '("type", Storage)': {
+      before: function() {
+        Post = Document('Post', Redis);
       },
 
       'should successfully create a model': function() {

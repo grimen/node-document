@@ -16,7 +16,12 @@ var Spec = {
     },
 
     '.klass': function() {
-      assert.instanceOf ( storage.klass, require('../lib/storage') );
+      assert.property ( storage, 'klass' );
+      assert.equal ( storage.klass, require('../lib/storage') );
+    },
+
+    '.url': function() {
+      assert.typeOf ( Storage.url, 'undefined' );
     }
   },
 
