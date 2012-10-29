@@ -24,6 +24,7 @@
 ::::: MEDIUM ::
 
 - [FEATURE]: FileSystemStorage
+      - http://nodejs.org/api/fs.html
 
 
 ::::: LOW ::
@@ -51,6 +52,7 @@
 ::::: MAYBE/CRAZY ::
 
 - [FEATURE]: FileStorage (one file)
+      - https://github.com/nearinfinity/node-docstore
 
 - [FEATURE]: PostgreSQLStorage (HStore)
 

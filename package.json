@@ -38,11 +38,10 @@
   },
   "dependencies": {
     "funargs": "latest",
-    "sugar": "1.2",
-    "amanda": "0.4",
+    "sugar": "latest",
+    "amanda": "latest",
     "node-uuid": "latest",
     "patcher": "latest",
-    "docstore": "latest",
     "memcached": "latest",
     "redis": "latest",
     "hiredis": "latest",
