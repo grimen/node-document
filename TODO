@@ -57,3 +57,5 @@
 - [FEATURE]: SQLiteStorage
 
 - [FEATURE]: MySQLStorage
+
+- [FEATURE]: HyperDexStorage
