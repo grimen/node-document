@@ -22,6 +22,10 @@ var Spec = {
 
     '.url': function() {
       assert.typeOf ( Storage.url, 'undefined' );
+    },
+
+    '.options': function() {
+      assert.typeOf ( Storage.options, 'undefined' );
     }
   },
 

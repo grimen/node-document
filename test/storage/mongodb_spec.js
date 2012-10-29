@@ -6,47 +6,7 @@ var helper = require('../spec_helper'),
     Storage = require('../../lib/storage/mongodb'),
     storage = new Storage();
 
-    driver = require('mongodb'),
-    Client = driver.Db,
-    Server = driver.Server,
-    client = new Client('default_test', new Server('localhost', 27017), {safe:false});
-
-var native = {
-  get: function(type, id, callback) {
-    var client = new Client('default_test', new Server('localhost', 27017), {safe:false});
-    client.open(function(err, db) {
-      db.collection(type, function(err, collection) {
-        collection.findOne({_id:id}, function(err, doc) {
-          db.close();
-          callback(err, doc);
-        });
-      });
-    });
-  },
-  set: function(type, id, data, callback) {
-    var client = new Client('default_test', new Server('localhost', 27017), {safe:false});
-    client.open(function(err, db) {
-      db.collection(type, function(err, collection) {
-        data._id = id;
-        collection.update({_id:id}, data, {upsert:true, safe:true}, function(err, count) {
-          db.close();
-          callback(err, count);
-        });
-      });
-    });
-  },
-  del: function(type, id, callback) {
-    var client = new Client('default_test', new Server('localhost', 27017), {safe:false});
-    client.open(function(err, db) {
-      db.collection(type, function(err, collection) {
-        collection.remove({_id:id}, {safe:true}, function(err, doc) {
-          db.close();
-          callback(err, doc);
-        });
-      });
-    });
-  }
-};
+    native = require('./native/mongodb');
 
 var Spec = {
 
@@ -66,6 +26,11 @@ var Spec = {
     '.url': function() {
       assert.property ( Storage, 'url' );
       assert.typeOf ( Storage.url, 'string' );
+    },
+
+    '.options': function() {
+      assert.property ( Storage, 'options' );
+      assert.typeOf ( Storage.options, 'object' );
     }
   },
 

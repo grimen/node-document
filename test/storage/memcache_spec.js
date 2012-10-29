@@ -27,6 +27,11 @@ var Spec = {
     '.url': function() {
       assert.property ( Storage, 'url' );
       assert.typeOf ( Storage.url, 'string' );
+    },
+
+    '.options': function() {
+      assert.property ( Storage, 'options' );
+      assert.typeOf ( Storage.options, 'object' );
     }
   },
 
