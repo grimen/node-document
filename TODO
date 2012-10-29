@@ -8,11 +8,11 @@
 
 ::::: HIGH ::
 
+- [FEATURE:] Get/Set attribute values using JSON-selectors? Example: doc.get('.comments .body')
+
 - [FEATURE]: Document.Model.prototype.changes => diff(last_fetched, attributes)
       - https://github.com/NV/objectDiff.js
       - https://github.com/mikolalysenko/patcher.js
-
-- [FEATURE:] Get/Set attribute values using JSON-selectors? Example: doc.get('.comments .body')
 
 - [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks. (Merchii-style)
 
@@ -24,24 +24,24 @@
 - [FEATURE]: FileSystemStorage
       - http://nodejs.org/api/fs.html
 
-
-::::: LOW ::
-
-- [FEATURE]: Allow alternative constructor-DSL: Document({type: 'Recipe', schema: {}, storage: new Redis())
-
-- [DOC]: Proper function documentation (jsdoc-style).
-
-- [REFACTOR]: Refactor out all storages except "Memory" to own NPM modules, e.g. "node-document-redis", "node-document-file", etc.
-
-- [FEATURE]: Schema default values?
-
 - [FEATURE]: Storage.count
 
 - [FEATURE]: Storage.exists
 
 - [FEATURE]: Storage.clear
 
+- [REFACTOR]: Refactor out all storages except "Memory" to own NPM modules, e.g. "node-document-redis", "node-document-file", etc.
+
+
+::::: LOW ::
+
 - [FEATURE]: Support "expires" for documents (Storage).
+
+- [DOC]: Proper function documentation (jsdoc-style).
+
+- [FEATURE]: Schema default values?
+
+- [FEATURE]: Allow alternative constructor-DSL: Document({type: 'Recipe', schema: {}, storage: new Redis())
 
 - [REFACTOR/ENHANCEMENT]: Use `URI.js` for parsing endpoint URL:s (?)
       - https://github.com/medialize/URI.js
