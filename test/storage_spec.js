@@ -12,6 +12,45 @@ var Spec = {
     'new': {
       '()': function() {
         assert.instanceOf ( storage, require('../lib/storage') );
+
+        Storage.reset();
+
+        var storage2 = new Storage();
+
+        assert.equal ( storage2.url, null );
+        assert.typeOf ( storage2.options, 'object' );
+        assert.deepEqual ( storage2.options.custom, undefined );
+      },
+
+      '("url")': function() {
+        Storage.reset();
+
+        var storage2 = new Storage('bogus://127.0.0.1:1234/custom');
+
+        assert.equal ( storage2.url, 'bogus://127.0.0.1:1234/custom' );
+        assert.typeOf ( storage2.options, 'object' );
+        assert.deepEqual ( storage2.options.custom, undefined );
+      },
+
+      '(options)': function() {
+        Storage.reset();
+
+        var storage2 = new Storage({custom: {foo: 'bar'}});
+
+        assert.equal ( storage2.url, null );
+        assert.typeOf ( storage2.options, 'object' );
+        assert.deepEqual ( storage2.options.custom, {foo: 'bar'} );
+      },
+
+      '("url", options)': function() {
+        Storage.reset();
+
+        var storage2 = new Storage('bogus://127.0.0.1:1234/custom', {custom: {foo: 'bar'}});
+
+        assert.equal ( storage2.url, 'bogus://127.0.0.1:1234/custom' );
+
+        assert.typeOf ( storage2.options, 'object' );
+        assert.deepEqual ( storage2.options.custom, {foo: 'bar'} );
       }
     },
 
@@ -20,16 +59,54 @@ var Spec = {
       assert.equal ( storage.klass, require('../lib/storage') );
     },
 
+    '.defaults': function() {
+      assert.property ( Storage, 'defaults' );
+
+      assert.equal ( Storage.defaults.url, null );
+      assert.typeOf ( Storage.defaults.options, 'object' );
+    },
+
     '.url': function() {
       assert.typeOf ( Storage.url, 'undefined' );
+
+      Storage.reset();
+
+      Storage.url = 'storage://127.0.0.1:1234/store';
+      assert.equal ( (new Storage()).url, 'storage://127.0.0.1:1234/store' );
     },
 
     '.options': function() {
-      assert.typeOf ( Storage.options, 'undefined' );
+      assert.typeOf ( Storage.options, 'object' );
+    },
+
+    '.reset()': function() {
+      assert.typeOf ( Storage.reset, 'function' );
+
+      Storage.url = "bogus://127.0.0.1:1234/custom";
+      assert.equal ( Storage.url, "bogus://127.0.0.1:1234/custom" );
+
+      Storage.reset();
+
+      assert.equal ( Storage.url, null );
     }
   },
 
   'Storage.prototype': {
+    '#url': function() {
+      assert.property ( storage, 'url' );
+      assert.typeOf ( storage.url, 'null' );
+    },
+
+    '#options': function() {
+      assert.property ( storage, 'options' );
+      assert.typeOf ( storage.options, 'object' );
+    },
+
+    '#client': function() {
+      assert.property ( storage, 'client' );
+      assert.typeOf ( storage.client, 'null' );
+    },
+
     '#key': function() {
       assert.isFunction ( storage.key );
       assert.throws ( storage.set, Error );

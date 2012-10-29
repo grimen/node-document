@@ -15,26 +15,97 @@ var Spec = {
       '()': function() {
         assert.instanceOf ( storage, require('../../lib/storage/redis') );
         assert.instanceOf ( storage, require('../../lib/storage') );
+
+        Storage.reset();
+
+        var storage2 = new Storage();
+
+        assert.equal ( storage2.url, 'redis://localhost:6379/default.test' );
+        assert.typeOf ( storage2.options, 'object' );
+        assert.deepEqual ( storage2.options.custom, undefined );
+      },
+
+      '("url")': function() {
+        Storage.reset();
+
+        var storage2 = new Storage('redis://127.0.0.1:6379/custom');
+
+        assert.equal ( storage2.url, 'redis://127.0.0.1:6379/custom' );
+        assert.typeOf ( storage2.options, 'object' );
+        assert.deepEqual ( storage2.options.custom, undefined );
+      },
+
+      '(options)': function() {
+        Storage.reset();
+
+        var storage2 = new Storage({custom: {foo: 'bar'}});
+
+        assert.equal ( storage2.url, 'redis://localhost:6379/default.test' );
+        assert.typeOf ( storage2.options, 'object' );
+        assert.deepEqual ( storage2.options.custom, {foo: 'bar'} );
+      },
+
+      '("url", options)': function() {
+        Storage.reset();
+
+        var storage2 = new Storage('redis://127.0.0.1:6379/custom', {custom: {foo: 'bar'}});
+
+        assert.equal ( storage2.url, 'redis://127.0.0.1:6379/custom' );
+
+        assert.typeOf ( storage2.options, 'object' );
+        assert.deepEqual ( storage2.options.custom, {foo: 'bar'} );
       }
     },
 
     '.klass': function() {
       assert.property ( storage, 'klass' );
-      assert.equal ( storage.klass, require('../../lib/storage/redis') );
+      assert.equal ( storage.klass, Storage );
+    },
+
+    '.defaults': function() {
+      assert.property ( Storage, 'defaults' );
+
+      assert.equal ( Storage.defaults.url, 'redis://localhost:6379/default.test' );
+      assert.typeOf ( Storage.defaults.options, 'object' );
     },
 
     '.url': function() {
-      assert.property ( Storage, 'url' );
       assert.typeOf ( Storage.url, 'string' );
+      assert.equal ( Storage.url, 'redis://localhost:6379/default.test' );
     },
 
     '.options': function() {
-      assert.property ( Storage, 'options' );
       assert.typeOf ( Storage.options, 'object' );
+    },
+
+    '.reset()': function() {
+      assert.typeOf ( Storage.reset, 'function' );
+
+      Storage.url = "redis://127.0.0.1:6379/custom";
+      assert.equal ( Storage.url, "redis://127.0.0.1:6379/custom" );
+
+      Storage.reset();
+
+      assert.equal ( Storage.url, 'redis://localhost:6379/default.test' );
     }
   },
 
   'RedisStorage.prototype': {
+    '#url': function() {
+      assert.property ( storage, 'url' );
+      assert.typeOf ( storage.url, 'string' );
+    },
+
+    '#options': function() {
+      assert.property ( storage, 'options' );
+      assert.typeOf ( storage.options, 'object' );
+    },
+
+    '#client': function() {
+      assert.property ( storage, 'client' );
+      assert.typeOf ( storage.client, 'object' );
+    },
+
     '#set': {
       'one': {
         '<NEW_KEY>': {

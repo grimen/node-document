@@ -9,6 +9,7 @@ test:
 	&& \
 	(echo test/storage/mongodb_spec.js && ./node_modules/.bin/mocha ./test/storage/mongodb_spec.js) \
 	&& \
-	(echo test/storage/elasticsearch_spec.js && ./node_modules/.bin/mocha ./test/storage/elasticsearch_spec.js)
+	(echo test/storage/elasticsearch_spec.js && ./node_modules/.bin/mocha ./test/storage/elasticsearch_spec.js) \
+
 
 .PHONY: test
