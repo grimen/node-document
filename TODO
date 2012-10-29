@@ -27,7 +27,7 @@
 
 - [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks. (Merchii-style)
 
-- [FEATURE]: FileStorage
+- [FEATURE]: FileSystemStorage
 
 - [REFACTOR/ENHANCEMENT]: Use `URI.js` for parsing endpoint URL:s
       - https://github.com/medialize/URI.js
@@ -48,3 +48,14 @@
 - [FEATURE]: Storage.clear
 
 - [FEATURE]: Support "expires" for documents (Storage).
+
+
+::::: MAYBE/CRAZY ::
+
+- [FEATURE]: FileStorage (one file)
+
+- [FEATURE]: PostgreSQLStorage (HStore)
+
+- [FEATURE]: SQLiteStorage
+
+- [FEATURE]: MySQLStorage
