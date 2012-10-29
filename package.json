@@ -30,13 +30,14 @@
   },
   "main": "./index.js",
   "scripts": {
-    "test": "mocha ./test/**/*_spec.js"
+    "test": "(echo test/*_spec.js && ./node_modules/.bin/mocha ./test/*_spec.js) && (echo test/storage/*_spec.js && ./node_modules/.bin/mocha ./test/storage/*_spec.js)"
   },
   "bin": {},
   "engines": {
     "node": ">= 0.6.5"
   },
   "dependencies": {
+    "funargs": "latest",
     "sugar": "1.2",
     "amanda": "0.4",
     "node-uuid": "latest",

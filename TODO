@@ -3,12 +3,11 @@
 
 - [FEATURE]: Possability to override 'url' with new Redis(url, options)
 
-- [FEATURE]: Implement Storage superclass, so that one can do this kind of jingle: if (object instanceof Storage) { ... }
-
 - [FEATURE]: Implement Storage.endpoint = <URI>, so that this makes sense: Document('Recipe', Redis)
 
 - [FEATURE]: Validation based on schema (Amanda)
       - https://github.com/Baggz/Amanda
+      - https://github.com/0ctave/node-sync (...as Amanda's async validation may feel overkill)
 
 - [FEATURE]: Document.Model.prototype.changes => diff(last_fetched, attributes)
       - https://github.com/NV/objectDiff.js
@@ -21,19 +20,24 @@
 
 - [FEATURE]: Allow alternative constructor-DSL: Document({type: 'Recipe', schema: {}, storage: new Redis())
 
+- [DOC]: README v1
+
 
 ::::: MEDIUM ::
 
-- [FEATURE]: FileStorage
-
 - [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks. (Merchii-style)
 
-- [REFACTOR]: Refactor out all storages except "Memory" to own NPM modules, e.g. "node-document-redis", "node-document-file", etc.
+- [FEATURE]: FileStorage
 
-- [DOC]: Proper function documentation (jsdoc-style).
+- [REFACTOR/ENHANCEMENT]: Use `URI.js` for parsing endpoint URL:s
+      - https://github.com/medialize/URI.js
 
 
 ::::: LOW ::
+
+- [DOC]: Proper function documentation (jsdoc-style).
+
+- [REFACTOR]: Refactor out all storages except "Memory" to own NPM modules, e.g. "node-document-redis", "node-document-file", etc.
 
 - [FEATURE]: Schema default values?
 
