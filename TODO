@@ -1,20 +1,21 @@
 
 ::::: CURRENT/NEXT ::
 
-- [FEATURE]: Validation based on schema (Amanda)
-      - https://github.com/Baggz/Amanda
-      - https://github.com/0ctave/node-sync (...as Amanda's async validation may feel overkill)
+- [FEATURE:] Get/Set attribute values using JSON-selectors? Example: doc.get('.comments .body')
 
 
 ::::: HIGH ::
 
-- [FEATURE:] Get/Set attribute values using JSON-selectors? Example: doc.get('.comments .body')
+- [ENHANCEMENT:] Make `validate`/`valid`/`sync` synchronous
+      - https://github.com/0ctave/node-sync (...as Amanda's async validation may feel overkill)
 
 - [FEATURE]: Document.Model.prototype.changes => diff(last_fetched, attributes)
       - https://github.com/NV/objectDiff.js
       - https://github.com/mikolalysenko/patcher.js
 
 - [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks. (Merchii-style)
+
+- [SPEC]: Add test-case for "invalid attributes" (schema validation) on `save()`;
 
 - [DOC]: README v1
 
