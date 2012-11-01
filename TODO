@@ -12,9 +12,6 @@
 
 - [FEATURE:] Get/Set attribute values using JSON-selectors? Example: doc.get('.comments .body')
 
-- [ENHANCEMENT:] Make `validate`/`valid`/`sync` synchronous
-      - https://github.com/0ctave/node-sync (...as Amanda's async validation may feel overkill)
-
 - [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks. (Merchii-style)
 
 - [SPEC]: Add test-case for "invalid attributes" (schema validation) on `save()`;
@@ -48,6 +45,9 @@
 
 - [REFACTOR/ENHANCEMENT]: Use `URI.js` for parsing endpoint URL:s (?)
       - https://github.com/medialize/URI.js
+
+- [ENHANCEMENT:] Make `validate`/`valid`/`sync` optionally synchronous
+      - ./test/experiments/async2sync.js
 
 
 ::::: MAYBE/CRAZY ::
