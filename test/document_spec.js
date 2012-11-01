@@ -690,10 +690,10 @@ var Spec = {
         }
       },
 
-      '#validator': {
+      '.validator': {
         '': function() {
-          assert.property ( doc, 'validator' );
-          assert.instanceOf ( doc.validator, Document.Validator );
+          assert.property ( Post, 'validator' );
+          assert.instanceOf ( Post.validator, Document.Validator );
         }
       },
 
