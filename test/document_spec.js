@@ -683,6 +683,20 @@ var Spec = {
         doc = new Post({title: "A title", description: "Lorem ipsum..."});
       },
 
+      '.Validator': {
+        '': function() {
+          assert.property ( Document, 'Validator' );
+          assert.equal ( Document.Validator, require('../lib/validator/amanda') );
+        }
+      },
+
+      '#validator': {
+        '': function() {
+          assert.property ( doc, 'validator' );
+          assert.instanceOf ( doc.validator, Document.Validator );
+        }
+      },
+
       '#errors': {
         '': function() {
           assert.property ( doc, 'errors' );
