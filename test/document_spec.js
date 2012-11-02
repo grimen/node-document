@@ -111,7 +111,7 @@ var Spec = {
 
         assert.typeOf ( doc, 'object' );
         assert.typeOf ( doc.attributes, 'object' );
-        assert.typeOf ( doc.changes, 'object' );
+        assert.typeOf ( doc.changes, 'null' );
         assert.typeOf ( doc.errors, 'null' );
 
         assert.deepEqual ( doc.attributes, {} );
@@ -123,7 +123,7 @@ var Spec = {
 
         assert.typeOf ( doc, 'object' );
         assert.typeOf ( doc.attributes, 'object' );
-        assert.typeOf ( doc.changes, 'object' );
+        assert.typeOf ( doc.changes, 'null' );
         assert.typeOf ( doc.errors, 'null' );
 
         assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
@@ -145,7 +145,7 @@ var Spec = {
 
           assert.typeOf ( doc, 'object' );
           assert.typeOf ( doc.attributes, 'object' );
-          assert.typeOf ( doc.changes, 'object' );
+          assert.typeOf ( doc.changes, 'null' );
           assert.typeOf ( doc.errors, 'null' );
 
           assert.deepEqual ( doc.attributes, {} );
@@ -157,7 +157,7 @@ var Spec = {
 
           assert.typeOf ( doc, 'object' );
           assert.typeOf ( doc.attributes, 'object' );
-          assert.typeOf ( doc.changes, 'object' );
+          assert.typeOf ( doc.changes, 'null' );
           assert.typeOf ( doc.errors, 'null' );
 
           assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
@@ -171,7 +171,7 @@ var Spec = {
         '()': function(done) {
           Post.create(function(err, doc) {
             assert.deepEqual ( doc.attributes, {id: doc.id} );
-            assert.deepEqual ( doc.changes, {} );
+            assert.deepEqual ( doc.changes, null );
             assert.deepEqual ( doc.errors, null );
             assert.equal ( doc.persisted, true );
             assert.equal ( doc.new, false );
@@ -182,7 +182,7 @@ var Spec = {
         '({})': function(done) {
           Post.create({title: "A title", description: "Lorem ipsum..."}, function(err, doc) {
             assert.deepEqual ( doc.attributes, {id: doc.id, title: "A title", description: "Lorem ipsum..."} );
-            assert.deepEqual ( doc.changes, {} );
+            assert.deepEqual ( doc.changes, null );
             assert.deepEqual ( doc.errors, null );
             assert.equal ( doc.persisted, true );
             assert.equal ( doc.new, false );
@@ -342,7 +342,7 @@ var Spec = {
       } // .end
     },
 
-    'Schema': {
+    'Validation (Schema)': {
       '.validate': {
         before: function() {
           Post = Document('Post', {
@@ -354,14 +354,101 @@ var Spec = {
           });
         },
 
-        '()': undefined,
+        '(attributes) - when valid data': function(done) {
+          var data = {title: "A title"};
 
-        '(attributes)': undefined,
+          Post.validate(data, function(errors, valid) {
+            assert.typeOf ( errors, 'null' );
+            assert.equal ( valid, true );
+            done();
+          });
+        },
 
-        '(attributes, options)': undefined
+        '(attributes) - when invalid data': function(done) {
+          var data = {title: "A"};
+
+          Post.validate(data, function(errors, valid) {
+            assert.typeOf ( errors, 'object' );
+            assert.equal ( errors.length, 1 );
+            assert.equal ( valid, false );
+            done();
+          });
+        },
+
+        '(attributes, options) - when valid data': function(done) {
+          var data = {title: "A title"};
+
+          Post.validate(data, {}, function(errors, valid) {
+            assert.typeOf ( errors, 'null' );
+            assert.equal ( valid, true );
+            done();
+          });
+        },
+
+        '(attributes, options) - when invalid data': function(done) {
+          var data = {title: "A"};
+
+          Post.validate(data, {}, function(errors, valid) {
+            assert.typeOf ( errors, 'object' );
+            assert.equal ( errors.length, 1 );
+            assert.equal ( valid, false );
+            done();
+          });
+        }
       } // .validate
-    }
+    },
 
+    'Diffing': {
+      '.diff': {
+        before: function() {
+          Post = Document('Post');
+        },
+
+        '(attributes) - when identical data': function(done) {
+          var data_a = {title: "A title"},
+              data_b = {title: "A title"};
+
+          Post.diff(data_a, data_b, function(diff, identical) {
+            assert.typeOf ( diff, 'null' );
+            assert.equal ( identical, true );
+            done();
+          });
+        },
+
+        '(attributes) - when different data': function(done) {
+          var data_a = {title: "A title"},
+              data_b = {title: "A title 2"};
+
+          Post.diff(data_a, data_b, function(diff, identical) {
+            assert.typeOf ( diff, 'object' );
+            assert.equal ( identical, false );
+            done();
+          });
+        },
+
+        '(attributes, options) - when identical data': function(done) {
+          var data_a = {title: "A title"},
+              data_b = {title: "A title"};
+
+          Post.diff(data_a, data_b, {}, function(diff, identical) {
+            assert.typeOf ( diff, 'null' );
+            assert.equal ( identical, true );
+            done();
+          });
+        },
+
+        '(attributes, options) - when different data': function(done) {
+          var data_a = {title: "A title"},
+              data_b = {title: "A title 2"};
+
+          Post.diff(data_a, data_b, {}, function(diff, identical) {
+            assert.typeOf ( diff, 'object' );
+            assert.equal ( identical, false );
+            done();
+          });
+        }
+      } // .diff
+    }
   }, // Document.Model
 
 
@@ -575,13 +662,13 @@ var Spec = {
           doc.persisted_attributes = {title: "A title", description: "Lorem ipsum..."};
 
           assert.deepEqual ( doc.attributes, {} );
-          assert.deepEqual ( doc.changes, {} );
+          assert.deepEqual ( doc.changes, null );
           assert.deepEqual ( doc.errors, null );
 
           doc.reset();
 
           assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-          assert.deepEqual ( doc.changes, {} );
+          assert.deepEqual ( doc.changes, null );
           assert.deepEqual ( doc.errors, null );
         }
       },
@@ -595,7 +682,7 @@ var Spec = {
           doc.clear();
 
           assert.deepEqual ( doc.attributes, {} );
-          assert.deepEqual ( doc.changes, {} );
+          assert.deepEqual ( doc.changes, null );
           assert.deepEqual ( doc.errors, null );
         },
 
@@ -607,7 +694,7 @@ var Spec = {
           doc.clear('attributes');
 
           assert.deepEqual ( doc.attributes, {} );
-          assert.deepEqual ( doc.changes, {} );
+          assert.deepEqual ( doc.changes, null );
           assert.deepEqual ( doc.errors, null );
         },
 
@@ -619,7 +706,7 @@ var Spec = {
           doc.clear('changes');
 
           assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-          assert.deepEqual ( doc.changes, {} );
+          assert.deepEqual ( doc.changes, null );
           assert.deepEqual ( doc.errors, null );
         },
 
@@ -631,15 +718,59 @@ var Spec = {
           doc.clear('errors');
 
           assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-          assert.deepEqual ( doc.changes, {} );
+          assert.deepEqual ( doc.changes, null );
           assert.deepEqual ( doc.errors, null );
         }
       }
     }, // Attributes
 
     'Changes': {
-      '#changes': function() {
-        assert.typeOf ( doc.changes, 'object');
+      before: function() {
+        Post = Document('Post');
+        doc = new Post({title: "A title", description: "Lorem ipsum..."});
+      },
+
+      '.Differ': {
+        '': function() {
+          assert.property ( Document, 'Differ' );
+          assert.equal ( Document.Differ, require('../lib/differ/jsondiff') );
+        }
+      },
+
+      '.differ': {
+        '': function() {
+          assert.property ( Post, 'differ' );
+          assert.instanceOf ( Post.differ, Document.Differ );
+        }
+      },
+
+      '#changes': {
+        '': function() {
+          assert.property ( doc, 'changes' );
+          assert.typeOf ( doc.changes, 'null');
+        },
+
+        '() - when original data': function(done) {
+          doc.persisted_attributes = {a: "foo", b: "bar"};
+          doc.attributes = {a: "foo", b: "bar"};
+
+          doc.diff(function(diff, identical) {
+            assert.typeOf ( diff, 'null' );
+            assert.equal ( identical, true );
+            done();
+          });
+        },
+
+        '() - when changed data': function(done) {
+          doc.persisted_attributes = {a: "foo", b: "bar"};
+          doc.attributes = {a: "foo", b: "bar", c: "baz"};
+
+          doc.diff(function(diff, identical) {
+            assert.typeOf ( diff, 'object' );
+            assert.equal ( identical, false );
+            done();
+          });
+        }
       }
     },
 
@@ -819,19 +950,19 @@ var Spec = {
           assert.deepEqual ( doc.errors, null );
 
           assert.deepEqual ( doc.attributes, {id: 1, title: "A title", description: "Lorem ipsum..."} );
-          assert.deepEqual ( doc.changes, {} );
+          assert.deepEqual ( doc.changes, null );
           assert.deepEqual ( doc.errors, null );
 
           var cloned_doc = doc.clone();
 
           assert.deepEqual ( cloned_doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-          assert.deepEqual ( cloned_doc.changes, {} );
+          assert.deepEqual ( cloned_doc.changes, null );
           assert.deepEqual ( cloned_doc.errors, null );
 
           var cloned_doc_2 = cloned_doc.clone();
 
           assert.deepEqual ( cloned_doc_2.attributes, {title: "A title", description: "Lorem ipsum..."} );
-          assert.deepEqual ( cloned_doc_2.changes, {} );
+          assert.deepEqual ( cloned_doc_2.changes, null );
           assert.deepEqual ( cloned_doc_2.errors, null );
         }
       }
@@ -849,7 +980,7 @@ var Spec = {
 
             doc.destroy(function(err, _doc) {
               assert.deepEqual ( _doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-              assert.deepEqual ( _doc.changes, {} );
+              assert.deepEqual ( _doc.changes, null );
               assert.deepEqual ( _doc.errors, null );
               assert.deepEqual ( _doc.persisted, false );
               assert.deepEqual ( _doc.new, true );
@@ -865,7 +996,7 @@ var Spec = {
             Post.set(5, {title: "A title", description: "Lorem ipsum..."}, function() {
               doc.destroy(function(err, _doc) {
                 assert.deepEqual ( _doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-                assert.deepEqual ( _doc.changes, {} );
+                assert.deepEqual ( _doc.changes, null );
                 assert.deepEqual ( _doc.errors, null );
                 assert.deepEqual ( _doc.persisted, false );
                 assert.deepEqual ( _doc.new, true );
@@ -883,7 +1014,7 @@ var Spec = {
 
             doc.save(function(err, _doc) {
               assert.deepEqual ( _doc.attributes, {id: doc.id, title: "A title", description: "Lorem ipsum..."} );
-              assert.deepEqual ( _doc.changes, {} );
+              assert.deepEqual ( _doc.changes, null );
               assert.deepEqual ( _doc.errors, null );
               assert.deepEqual ( _doc.persisted, true );
               assert.deepEqual ( _doc.new, false );
@@ -899,7 +1030,7 @@ var Spec = {
             Post.set(doc.id, {title: "A title", description: "Lorem ipsum..."}, function() {
               doc.save(function(err, _doc) {
                 assert.deepEqual ( _doc.attributes, {id: doc.id, title: "A title", description: "Lorem ipsum..."} );
-                assert.deepEqual ( _doc.changes, {} );
+                assert.deepEqual ( _doc.changes, null );
                 assert.deepEqual ( _doc.errors, null );
                 assert.deepEqual ( _doc.persisted, true );
                 assert.deepEqual ( _doc.new, false );
@@ -919,7 +1050,7 @@ var Spec = {
               doc.fetch(function(err, _doc) {
                 assert.deepEqual ( _doc.id, 'fetch-1' );
                 assert.deepEqual ( _doc.attributes, {id: 'fetch-1'} );
-                assert.deepEqual ( _doc.changes, {} );
+                assert.deepEqual ( _doc.changes, null );
                 assert.deepEqual ( _doc.errors, null );
                 assert.deepEqual ( _doc.persisted, false );
                 assert.deepEqual ( _doc.new, true );
@@ -937,7 +1068,7 @@ var Spec = {
               doc.fetch(function(err, _doc) {
                 assert.deepEqual ( _doc.id, 2 );
                 assert.deepEqual ( _doc.attributes, {id: 2, title: "A title", description: "Lorem ipsum..."} );
-                assert.deepEqual ( _doc.changes, {} );
+                assert.deepEqual ( _doc.changes, null );
                 assert.deepEqual ( _doc.errors, null );
                 assert.deepEqual ( _doc.persisted, true );
                 assert.deepEqual ( _doc.new, false );
@@ -954,7 +1085,7 @@ var Spec = {
             doc.fetch(function(err, _doc) {
               assert.deepEqual ( _doc.id, undefined );
               assert.deepEqual ( _doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-              assert.deepEqual ( _doc.changes, {} );
+              assert.deepEqual ( _doc.changes, null );
               assert.deepEqual ( _doc.errors, null );
               assert.deepEqual ( _doc.persisted, false );
               assert.deepEqual ( _doc.new, true );

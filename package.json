@@ -46,7 +46,8 @@
     "redis": "latest",
     "hiredis": "latest",
     "elastical": "latest",
-    "mongodb": "latest"
+    "mongodb": "latest",
+    "json-diff": "latest"
   },
   "devDependencies": {
     "mocha": "latest",
