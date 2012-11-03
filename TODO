@@ -1,14 +1,16 @@
 
 ::::: CURRENT/NEXT ::
 
-- [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks. (Merchii-style)
+- [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks.
 
 
 ::::: HIGH ::
 
-- [SPEC]: Add tests för default "validator"
+- [SPEC]: Add tests för default "validator".
 
-- [SPEC]: Add tests för default "differ"
+- [SPEC]: Add tests för default "differ".
+
+- [SPEC]: Add tests för storage authentication for the different adapters.
 
 - [DOC]: README v1
 
@@ -38,9 +40,9 @@
 
 ::::: LOW ::
 
-- [SPEC]: Add test-case for "invalid attributes" (schema validation) on `save()`;
+- [SPEC]: Add test-case for "invalid attributes" (schema validation) on `save()`.
 
-- [FEATURE]: Get/Set/Del nested attribute values in some convenient way
+- [FEATURE]: Get/Set/Del nested attribute values in some convenient way.
 
 - [FEATURE]: Support "expires" for documents (Storage).
 
