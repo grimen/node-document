@@ -1,14 +1,14 @@
 
 ::::: CURRENT/NEXT ::
 
-- [FEATURE:] Get/Set attribute values using JSON-selectors? Example: doc.get('.comments .body')
+- [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks. (Merchii-style)
 
 
 ::::: HIGH ::
 
-- [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks. (Merchii-style)
+- [SPEC]: Add tests för default "validator"
 
-- [SPEC]: Add tests för default validator/differ
+- [SPEC]: Add tests för default "differ"
 
 - [DOC]: README v1
 
@@ -33,27 +33,24 @@
 
 - [DOC]: Proper function documentation (jsdoc-style).
 
+- [FEATURE]: Schema default values?
+
 
 ::::: LOW ::
 
 - [SPEC]: Add test-case for "invalid attributes" (schema validation) on `save()`;
 
+- [FEATURE]: Get/Set/Del nested attribute values in some convenient way
+
 - [FEATURE]: Support "expires" for documents (Storage).
-
-- [FEATURE]: Schema default values?
-
-- [FEATURE]: Allow alternative constructor-DSL: Document({type: 'Recipe', schema: {}, storage: new Redis())
-
-- [REFACTOR/ENHANCEMENT]: Use `URI.js` for parsing endpoint URL:s (?)
-      - https://github.com/medialize/URI.js
-
-- [ENHANCEMENT]: Make `validate`/`valid`/`sync` optionally synchronous
-      - ./test/experiments/async2sync.js
 
 - [REFACTOR/DISCUSS]: Move our every `Document` function/property to own module for easier managment?
 
 
 ::::: MAYBE/CRAZY ::
+
+- [ENHANCEMENT]: Make `validate`/`valid`/`sync` optionally synchronous
+      - ./test/experiments/async2sync.js
 
 - [FEATURE]: FileStorage (one file)
       - https://github.com/nearinfinity/node-docstore
