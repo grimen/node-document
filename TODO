@@ -57,10 +57,17 @@
 - [FEATURE]: FileStorage (one file)
       - https://github.com/nearinfinity/node-docstore
 
+- [FEATURE]: HyperDexStorage
+
+- [FEATURE]: RavenDB
+
+- [FEATURE]: CouchDB
+
+- [FEATURE]: Cassandra
+
 - [FEATURE]: PostgreSQLStorage (HStore)
 
 - [FEATURE]: SQLiteStorage
 
 - [FEATURE]: MySQLStorage
 
-- [FEATURE]: HyperDexStorage
