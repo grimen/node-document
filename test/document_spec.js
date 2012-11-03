@@ -493,20 +493,6 @@ var Spec = {
         assert.equal ( doc.id, null );
       },
 
-      '#has': {
-        '(key)': function() {
-          doc = new Post({title: "A title", description: "Lorem ipsum..."});
-
-          assert.typeOf ( doc.has, 'function' );
-
-          assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-
-          assert.deepEqual ( doc.has('title'), true );
-          assert.deepEqual ( doc.has('description'), true );
-          assert.deepEqual ( doc.has('foo'), false );
-        }
-      },
-
       '#get': {
         '()': function() {
           doc = new Post({title: "A title", description: "Lorem ipsum..."});
@@ -516,18 +502,6 @@ var Spec = {
           assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
 
           assert.deepEqual ( doc.get(), {title: "A title", description: "Lorem ipsum..."} );
-        },
-
-        '(key)': function() {
-          doc = new Post({title: "A title", description: "Lorem ipsum..."});
-
-          assert.typeOf ( doc.get, 'function' );
-
-          assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-
-          assert.deepEqual ( doc.get('title'), "A title" );
-          assert.deepEqual ( doc.get('description'), "Lorem ipsum..." );
-          assert.deepEqual ( doc.get('foo'), undefined );
         }
       },
 
@@ -545,36 +519,6 @@ var Spec = {
           // TODO: Merging?
           // assert.deepEqual ( doc.set({title: "A modified title", published: true}), {title: "A modified title", description: "Lorem ipsum...", published: true} );
           // assert.deepEqual ( doc.attributes, {title: "A modified title", description: "Lorem ipsum...", published: true} );
-        },
-
-        '(key, value)': function() {
-          doc = new Post({title: "A title", description: "Lorem ipsum..."});
-
-          assert.typeOf ( doc.set, 'function' );
-
-          assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-
-          assert.deepEqual ( doc.set('title', "A modified title"), {title: "A modified title", description: "Lorem ipsum..."} );
-          assert.deepEqual ( doc.attributes, {title: "A modified title", description: "Lorem ipsum..."} );
-
-          assert.deepEqual ( doc.set('published', true), {title: "A modified title", description: "Lorem ipsum...", published: true} );
-          assert.deepEqual ( doc.attributes, {title: "A modified title", description: "Lorem ipsum...", published: true} );
-        }
-      },
-
-      '#del': {
-        '(key)': function() {
-          doc = new Post({title: "A title", description: "Lorem ipsum..."});
-
-          assert.typeOf ( doc.set, 'function' );
-
-          assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-
-          assert.deepEqual ( doc.del('title'), {description: "Lorem ipsum..."} );
-          assert.deepEqual ( doc.attributes, {description: "Lorem ipsum..."} );
-
-          assert.deepEqual ( doc.del('published'), {description: "Lorem ipsum..."} );
-          assert.deepEqual ( doc.attributes, {description: "Lorem ipsum..."} );
         }
       },
 
@@ -587,18 +531,6 @@ var Spec = {
           assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
 
           assert.deepEqual ( doc.attr(), {title: "A title", description: "Lorem ipsum..."} );
-        },
-
-        '(key)': function() {
-          doc = new Post({title: "A title", description: "Lorem ipsum..."});
-
-          assert.typeOf ( doc.attr, 'function' );
-
-          assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-
-          assert.deepEqual ( doc.attr('title'), "A title" );
-          assert.deepEqual ( doc.attr('description'), "Lorem ipsum..." );
-          assert.deepEqual ( doc.attr('foo'), undefined );
         },
 
         '(object)': function() {
@@ -614,20 +546,6 @@ var Spec = {
           // TODO: Merging?
           // assert.deepEqual ( doc.set({title: "A modified title", published: true}), {title: "A modified title", description: "Lorem ipsum...", published: true} );
           // assert.deepEqual ( doc.attributes, {title: "A modified title", description: "Lorem ipsum...", published: true} );
-        },
-
-        '(key, value)': function() {
-          doc = new Post({title: "A title", description: "Lorem ipsum..."});
-
-          assert.typeOf ( doc.attr, 'function' );
-
-          assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-
-          assert.deepEqual ( doc.attr('title', "A modified title"), {title: "A modified title", description: "Lorem ipsum..."} );
-          assert.deepEqual ( doc.attributes, {title: "A modified title", description: "Lorem ipsum..."} );
-
-          assert.deepEqual ( doc.attr('published', true), {title: "A modified title", description: "Lorem ipsum...", published: true} );
-          assert.deepEqual ( doc.attributes, {title: "A modified title", description: "Lorem ipsum...", published: true} );
         }
       },
 
