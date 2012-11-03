@@ -528,9 +528,7 @@ var Spec = {
           assert.deepEqual ( doc.get('title'), "A title" );
           assert.deepEqual ( doc.get('description'), "Lorem ipsum..." );
           assert.deepEqual ( doc.get('foo'), undefined );
-        },
-
-        '(nested_key)': undefined
+        }
       },
 
       '#set': {
@@ -561,9 +559,7 @@ var Spec = {
 
           assert.deepEqual ( doc.set('published', true), {title: "A modified title", description: "Lorem ipsum...", published: true} );
           assert.deepEqual ( doc.attributes, {title: "A modified title", description: "Lorem ipsum...", published: true} );
-        },
-
-        '(nested_key, value)': undefined
+        }
       },
 
       '#del': {
@@ -579,25 +575,7 @@ var Spec = {
 
           assert.deepEqual ( doc.del('published'), {description: "Lorem ipsum..."} );
           assert.deepEqual ( doc.attributes, {description: "Lorem ipsum..."} );
-        },
-
-        '(keys)': function() {
-          doc = new Post({title: "A title", description: "Lorem ipsum..."});
-
-          assert.typeOf ( doc.set, 'function' );
-
-          assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-
-          assert.deepEqual ( doc.del(['published', 'created_at']), {title: "A title", description: "Lorem ipsum..."} );
-          assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
-
-          assert.deepEqual ( doc.del(['title', 'description']), {} );
-          assert.deepEqual ( doc.attributes, {} );
-        },
-
-        '(nested_key)': undefined,
-
-        '(nested_keys)': undefined
+        }
       },
 
       '#attr': {
