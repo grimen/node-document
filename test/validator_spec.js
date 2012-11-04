@@ -35,13 +35,12 @@ var Spec = {
 
     '.klass': function() {
       assert.property ( validator, 'klass' );
-      assert.equal ( validator.klass, require('../lib/validator') );
+      assert.equal ( validator.klass, Validator );
     },
 
     '.defaults': function() {
       assert.property ( Validator, 'defaults' );
 
-      assert.equal ( Validator.defaults.url, null );
       assert.typeOf ( Validator.defaults.options, 'object' );
     },
 
@@ -56,10 +55,11 @@ var Spec = {
 
       Validator.options = {foo: "bar"};
       assert.deepEqual ( Validator.options, {foo: "bar"} );
+      assert.deepEqual ( Validator.defaults.options, {} );
 
       Validator.reset();
 
-      assert.equal ( Validator.url, null );
+      assert.equal ( Validator.options, Validator.defaults.options );
     }
   },
 

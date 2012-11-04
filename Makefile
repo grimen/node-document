@@ -1,6 +1,10 @@
 test:
 	(echo test/*_spec.js && ./node_modules/.bin/mocha ./test/*_spec.js) \
 	&& \
+	(echo test/validator/*_spec.js && ./node_modules/.bin/mocha ./test/validator/*_spec.js) \
+	&& \
+	(echo test/differ/*_spec.js && ./node_modules/.bin/mocha ./test/differ/*_spec.js) \
+	&& \
 	(echo test/storage/memory_spec.js && ./node_modules/.bin/mocha ./test/storage/memory_spec.js) \
 	&& \
 	(echo test/storage/memcache_spec.js && ./node_modules/.bin/mocha ./test/storage/memcache_spec.js) \

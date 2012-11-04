@@ -6,10 +6,6 @@
 
 ::::: HIGH ::
 
-- [SPEC]: Add tests för default "validator".
-
-- [SPEC]: Add tests för default "differ".
-
 - [SPEC]: Add tests för storage authentication for the different adapters.
 
 - [DOC]: README v1

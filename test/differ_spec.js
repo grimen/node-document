@@ -17,7 +17,6 @@ var Spec = {
 
         var differ2 = new Differ();
 
-        assert.equal ( differ2.url, null );
         assert.typeOf ( differ2.options, 'object' );
         assert.deepEqual ( differ2.options.custom, undefined );
       },
@@ -35,13 +34,12 @@ var Spec = {
 
     '.klass': function() {
       assert.property ( differ, 'klass' );
-      assert.equal ( differ.klass, require('../lib/differ') );
+      assert.equal ( differ.klass, Differ );
     },
 
     '.defaults': function() {
       assert.property ( Differ, 'defaults' );
 
-      assert.equal ( Differ.defaults.url, null );
       assert.typeOf ( Differ.defaults.options, 'object' );
     },
 
@@ -56,10 +54,11 @@ var Spec = {
 
       Differ.options = {foo: "bar"};
       assert.deepEqual ( Differ.options, {foo: "bar"} );
+      assert.deepEqual ( Differ.defaults.options, {} );
 
       Differ.reset();
 
-      assert.equal ( Differ.url, null );
+      assert.equal ( Differ.options, Differ.defaults.options );
     }
   },
 
