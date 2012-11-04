@@ -67,7 +67,8 @@ var Spec = {
     },
 
     '.url': function() {
-      assert.typeOf ( Storage.url, 'undefined' );
+      assert.property ( Storage, 'url' );
+      assert.typeOf ( Storage.url, 'null' );
 
       Storage.reset();
 
@@ -76,10 +77,12 @@ var Spec = {
     },
 
     '.options': function() {
+      assert.property ( Storage, 'options' );
       assert.typeOf ( Storage.options, 'object' );
     },
 
     '.reset()': function() {
+      assert.property ( Storage, 'reset' );
       assert.typeOf ( Storage.reset, 'function' );
 
       Storage.url = "bogus://127.0.0.1:1234/custom";
@@ -108,30 +111,36 @@ var Spec = {
     },
 
     '#key': function() {
-      assert.isFunction ( storage.key );
-      assert.throws ( storage.set, Error );
+      assert.property ( storage, 'key' );
+      assert.typeOf ( storage.key, 'function' );
+      assert.throws ( storage.key, Error );
     },
 
     '#set': function() {
-      assert.isFunction ( storage.set );
+      assert.property ( storage, 'set' );
+      assert.typeOf ( storage.set, 'function' );
       assert.throws ( storage.set, Error );
     },
 
     '#get': function() {
-      assert.isFunction ( storage.get );
-      assert.throws ( storage.set, Error );
+      assert.property ( storage, 'get' );
+      assert.typeOf ( storage.get, 'function' );
+      assert.throws ( storage.get, Error );
     },
 
     '#del | delete': function() {
-      assert.isFunction ( storage.del );
-      assert.throws ( storage.set, Error );
+      assert.property ( storage, 'del' );
+      assert.typeOf ( storage.del, 'function' );
+      assert.throws ( storage.del, Error );
 
-      assert.isFunction ( storage.delete );
+      assert.property ( storage, 'delete' );
+      assert.typeOf ( storage.delete, 'function' );
       assert.throws ( storage.delete, Error );
     },
 
     '#end': function() {
-      assert.isFunction ( storage.end );
+      assert.property ( storage, 'end' );
+      assert.typeOf ( storage.end, 'function' );
       assert.throws ( storage.end, Error );
     }
   }
