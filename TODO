@@ -3,13 +3,23 @@
 
 - [SPEC]: Add tests for storage authentication for the different adapters.
 
-
-::::: HIGH ::
-
 - [DOC]: README v1
 
 
+::::: HIGH ::
+
+
+
 ::::: MEDIUM ::
+
+- [FEATURE]: IDGenerator adapter support.
+
+- [FEATURE]: Implement some more "differs" as seperate packages.
+      - https://github.com/NV/objectDiff.js
+      - https://github.com/mikolalysenko/patcher.js
+      - https://github.com/iriscouch/obj_diff
+
+- [REFACTOR]: Refactor out all adapters except "MemoryStorage" and "FileSystemStorage" to own NPM modules, e.g. "node-document-storage-redis", "node-document-validator-amanda", "node-document-differ-jsondiff", etc.
 
 - [REVIEW]: What API/conventions should be used for triggered document events?
 
@@ -26,21 +36,12 @@
 
 - [FEATURE]: Storage.clear
 
-- [REFACTOR]: Refactor out all storages except "Memory" to own NPM modules, e.g. "node-document-redis", "node-document-file", etc.
-
-- [FEATURE]: Implement some more "differs" as seperate packages.
-      - https://github.com/NV/objectDiff.js
-      - https://github.com/mikolalysenko/patcher.js
-      - https://github.com/iriscouch/obj_diff
-
 - [FEATURE]: Schema default values?
 
 
 ::::: LOW ::
 
 - [SPEC]: Add test-case for "invalid attributes" (schema validation) on `save()`.
-
-- [FEATURE]: IDGenerator adapter support.
 
 - [FEATURE]: Get/Set/Del nested attribute values in some convenient way.
 
@@ -72,4 +73,6 @@
 - [FEATURE]: SQLiteStorage
 
 - [FEATURE]: MySQLStorage
+
+- [FEATURE]: RESTStorage (client/server-side)
 
