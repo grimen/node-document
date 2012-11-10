@@ -86,7 +86,7 @@ var Spec = {
         var a = {a: "foo", b: "bar"};
         var b = {a: "foo", b: "bar"};
 
-        differ.diff(a, b, function(diff, identical) {
+        differ.diff(a, b, function(err, diff, identical) {
           assert.typeOf ( diff, 'null' );
           assert.equal ( identical, true );
           done();
@@ -97,7 +97,7 @@ var Spec = {
         var a = {a: "foo", b: "bar"};
         var b = {a: "foo", b: "bar", c: "baz"};
 
-        differ.diff(a, b, function(diff, identical) {
+        differ.diff(a, b, function(err, diff, identical) {
           assert.typeOf ( diff, 'object' );
           assert.equal ( identical, false );
           done();
@@ -108,7 +108,7 @@ var Spec = {
         var a = {a: "foo", b: "bar"};
         var b = {a: "foo", b: "bar"};
 
-        differ.diff(a, b, {}, function(diff, identical) {
+        differ.diff(a, b, {}, function(err, diff, identical) {
           assert.typeOf ( diff, 'null' );
           assert.equal ( identical, true );
           done();
@@ -119,7 +119,7 @@ var Spec = {
         var a = {a: "foo", b: "bar"};
         var b = {a: "foo", b: "bar", c: "baz"};
 
-        differ.diff(a, b, {}, function(diff, identical) {
+        differ.diff(a, b, {}, function(err, diff, identical) {
           assert.typeOf ( diff, 'object' );
           assert.equal ( identical, false );
           done();

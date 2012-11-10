@@ -97,7 +97,7 @@ var Spec = {
       '(attributes) - when valid data': function(done) {
         var data = {title: "A title"};
 
-        validator.validate(data, schema, function(errors, valid) {
+        validator.validate(data, schema, function(err, errors, valid) {
           assert.typeOf ( errors, 'null' );
           assert.equal ( valid, true );
           done();
@@ -107,7 +107,7 @@ var Spec = {
       '(attributes) - when invalid data': function(done) {
         var data = {title: "A"};
 
-        validator.validate(data, schema, function(errors, valid) {
+        validator.validate(data, schema, function(err, errors, valid) {
           assert.typeOf ( errors, 'object' );
           assert.equal ( errors.length, 1 );
           assert.equal ( valid, false );
@@ -118,7 +118,7 @@ var Spec = {
       '(attributes, options) - when valid data': function(done) {
         var data = {title: "A title"};
 
-        validator.validate(data, schema, {}, function(errors, valid) {
+        validator.validate(data, schema, {}, function(err, errors, valid) {
           assert.typeOf ( errors, 'null' );
           assert.equal ( valid, true );
           done();
@@ -128,7 +128,7 @@ var Spec = {
       '(attributes, options) - when invalid data': function(done) {
         var data = {title: "A"};
 
-        validator.validate(data, schema, {}, function(errors, valid) {
+        validator.validate(data, schema, {}, function(err, errors, valid) {
           assert.typeOf ( errors, 'object' );
           assert.equal ( errors.length, 1 );
           assert.equal ( valid, false );

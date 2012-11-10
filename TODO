@@ -1,17 +1,21 @@
 
 ::::: CURRENT/NEXT ::
 
-- [FEATURE]: EventEmitter for each model instance to be able to listen to events instead of callbacks.
+- [SPEC]: Add tests for storage authentication for the different adapters.
 
 
 ::::: HIGH ::
-
-- [SPEC]: Add tests för storage authentication for the different adapters.
 
 - [DOC]: README v1
 
 
 ::::: MEDIUM ::
+
+- [REVIEW]: What API/conventions should be used for triggered document events?
+
+- [DOC]: Proper function documentation (JSDoc-style).
+      - http://en.wikipedia.org/wiki/JSDoc
+      - https://developers.google.com/closure/compiler/docs/js-for-compiler
 
 - [FEATURE]: FileSystemStorage
       - http://nodejs.org/api/fs.html
@@ -29,8 +33,6 @@
       - https://github.com/mikolalysenko/patcher.js
       - https://github.com/iriscouch/obj_diff
 
-- [DOC]: Proper function documentation (jsdoc-style).
-
 - [FEATURE]: Schema default values?
 
 
@@ -38,11 +40,15 @@
 
 - [SPEC]: Add test-case for "invalid attributes" (schema validation) on `save()`.
 
+- [FEATURE]: IDGenerator adapter support.
+
 - [FEATURE]: Get/Set/Del nested attribute values in some convenient way.
 
 - [FEATURE]: Support "expires" for documents (Storage).
 
 - [REFACTOR/DISCUSS]: Move our every `Document` function/property to own module for easier managment?
+
+- REVIEW: <#DocumentCollection [<#Document>, <#Document>, ...]>
 
 
 ::::: MAYBE/CRAZY ::
