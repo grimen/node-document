@@ -14,10 +14,13 @@
 
 - [FEATURE]: IDGenerator adapter support.
 
-- [FEATURE]: Implement some more "differs" as seperate packages.
+- [FEATURE]: Implement some more "differs" as separate packages.
       - https://github.com/NV/objectDiff.js
       - https://github.com/mikolalysenko/patcher.js
       - https://github.com/iriscouch/obj_diff
+
+- [FEATURE]: Implement some more "schemas" as separate packages.
+      - https://github.com/akidee/schema.js
 
 - [REFACTOR]: Refactor out all adapters except "MemoryStorage" and "FileSystemStorage" to own NPM modules, e.g. "node-document-storage-redis", "node-document-validator-amanda", "node-document-differ-jsondiff", etc.
 
@@ -50,6 +53,9 @@
 - [REFACTOR/DISCUSS]: Move our every `Document` function/property to own module for easier managment?
 
 - REVIEW: <#DocumentCollection [<#Document>, <#Document>, ...]>
+
+- [FEATURE]: AmazonS3Storage
+      - https://github.com/LearnBoost/knox
 
 
 ::::: MAYBE/CRAZY ::
