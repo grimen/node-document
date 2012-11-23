@@ -8,6 +8,9 @@ var helper = require('../spec_helper'),
 
     native = require('./native/redis');
 
+process.env.REDIS_URL_AUTHORIZED = process.env.REDIS_URL_AUTHORIZED || 'redis://redistogo:57c5cf5c220a6b376cf3740297e0f69f@slimehead.redistogo.com:9501/test';
+process.env.REDIS_URL_UNAUTHORIZED = process.env.REDIS_URL_UNAUTHORIZED || 'redis://redistogo:123@slimehead.redistogo.com:9501/test';
+
 var Spec = {
 
   'RedisStorage': {
@@ -104,6 +107,42 @@ var Spec = {
     '#client': function() {
       assert.property ( storage, 'client' );
       assert.typeOf ( storage.client, 'object' );
+    },
+
+    'Connection': {
+      'auth': {
+        'unauthorized': function(done) {
+          if (!/true/i.test('' + process.env.NODE_DOCUMENT_TEST_AUTH)) {
+            done();
+            return;
+          }
+
+          assert.throws(function() {
+            var storage = new Storage(process.env.REDIS_URL_UNAUTHORIZED);
+
+            storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function() {
+              console.log(arguments)
+              done()
+            });
+          });
+        },
+
+        'authorized': function(done) {
+          if (!/true/i.test('' + process.env.NODE_DOCUMENT_TEST_AUTH)) {
+            done();
+            return;
+          }
+
+          assert.doesNotThrow(function() {
+            var storage = new Storage(process.env.REDIS_URL_AUTHORIZED);
+
+            storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
+              assert.typeOf ( err, 'null')
+              done();
+            });
+          });
+        }
+      }
     },
 
     '#set': {

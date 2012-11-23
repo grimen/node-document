@@ -8,6 +8,9 @@ var helper = require('../spec_helper'),
 
     native = require('./native/mongodb');
 
+process.env.MONGODB_URL_AUTHORIZED = process.env.MONGODB_URL_AUTHORIZED || 'mongodb://heroku:f51b96d19b73a934b3d2a0d43e4b7aa7@alex.mongohq.com:10020/app9156953';
+process.env.MONGODB_URL_UNAUTHORIZED = process.env.MONGODB_URL_UNAUTHORIZED || 'mongodb://heroku:123@alex.mongohq.com:10020/app9156953';
+
 var Spec = {
 
   'MongoDBStorage': {
@@ -104,6 +107,38 @@ var Spec = {
     '#client': function() {
       assert.property ( storage, 'client' );
       assert.typeOf ( storage.client, 'object' );
+    },
+
+    'Connection': {
+      'auth': {
+        'unauthorized': function(done) {
+          if (!/true/i.test('' + process.env.NODE_DOCUMENT_TEST_AUTH)) {
+            done();
+            return;
+          }
+
+          var storage = new Storage(process.env.MONGODB_URL_UNAUTHORIZED);
+
+          storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
+            assert.typeOf ( err, 'object')
+            done();
+          });
+        },
+
+        'authorized': function(done) {
+          if (!/true/i.test('' + process.env.NODE_DOCUMENT_TEST_AUTH)) {
+            done();
+            return;
+          }
+
+          var storage = new Storage(process.env.MONGODB_URL_AUTHORIZED);
+
+          storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
+            assert.typeOf ( err, 'null')
+            done();
+          });
+        }
+      }
     },
 
     '#set': {

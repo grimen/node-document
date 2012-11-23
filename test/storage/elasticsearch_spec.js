@@ -8,6 +8,9 @@ var helper = require('../spec_helper'),
 
     native = require('./native/elasticsearch');
 
+process.env.ELASTICSEARCH_URL_AUTHORIZED = process.env.ELASTICSEARCH_URL_AUTHORIZED || 'http://vt4t5uu0:pk9q6whooingl4uo@jasmine-4473159.us-east-1.bonsai.io/test';
+process.env.ELASTICSEARCH_URL_UNAUTHORIZED = process.env.ELASTICSEARCH_URL_UNAUTHORIZED || 'http://vt4t5uu0:123@jasmine-4473159.us-east-1.bonsai.io/test';
+
 var Spec = {
 
   'ElasticSearchStorage': {
@@ -104,6 +107,38 @@ var Spec = {
     '#client': function() {
       assert.property ( storage, 'client' );
       assert.typeOf ( storage.client, 'object' );
+    },
+
+    'Connection': {
+      'auth': {
+        'unauthorized': function(done) {
+          if (!/true/i.test('' + process.env.NODE_DOCUMENT_TEST_AUTH)) {
+            done();
+            return;
+          }
+
+          var storage = new Storage(process.env.ELASTICSEARCH_URL_UNAUTHORIZED);
+
+          storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
+            assert.typeOf ( err, 'object')
+            done();
+          });
+        },
+
+        'authorized': function(done) {
+          if (!/true/i.test('' + process.env.NODE_DOCUMENT_TEST_AUTH)) {
+            done();
+            return;
+          }
+
+          var storage = new Storage(process.env.ELASTICSEARCH_URL_AUTHORIZED);
+
+          storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
+            assert.typeOf ( err, 'null')
+            done();
+          });
+        }
+      }
     },
 
     '#set': {

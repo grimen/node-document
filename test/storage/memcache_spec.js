@@ -8,6 +8,9 @@ var helper = require('../spec_helper'),
 
     native = require('./native/memcache');
 
+process.env.MEMCACHE_URL_AUTHORIZED = process.env.MEMCACHE_URL_AUTHORIZED || 'memcache://776617:00112ab7bcb3dc6ad345@dev1.ec2.memcachier.com:11211/test';
+process.env.MEMCACHE_URL_UNAUTHORIZED = process.env.MEMCACHE_URL_UNAUTHORIZED || 'memcache://776617:123@dev1.ec2.memcachier.com:11211/test';
+
 var Spec = {
 
   'MemcacheStorage': {
@@ -104,6 +107,38 @@ var Spec = {
     '#client': function() {
       assert.property ( storage, 'client' );
       assert.typeOf ( storage.client, 'object' );
+    },
+
+    'Connection': {
+      'auth': {
+        // 'unauthorized': function(done) {
+        //   if (!/true/i.test('' + process.env.NODE_DOCUMENT_TEST_AUTH)) {
+        //     done();
+        //     return;
+        //   }
+
+        //   var storage = new Storage(process.env.MEMCACHE_URL_UNAUTHORIZED);
+
+        //   storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
+        //     assert.typeOf ( err, 'object')
+        //     done();
+        //   });
+        // },
+
+        // 'authorized': function(done) {
+        //   if (!/true/i.test('' + process.env.NODE_DOCUMENT_TEST_AUTH)) {
+        //     done();
+        //     return;
+        //   }
+
+        //   var storage = new Storage(process.env.MEMCACHE_URL_AUTHORIZED);
+
+        //   storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
+        //     assert.typeOf ( err, 'null')
+        //     done();
+        //   });
+        // }
+      }
     },
 
     '#set': {
