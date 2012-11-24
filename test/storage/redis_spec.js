@@ -1,6 +1,7 @@
 require('sugar');
 var helper = require('../spec_helper'),
     assert = helper.assert,
+    flag = helper.flag,
     debug = helper.debug,
 
     Storage = require('../../lib/storage/redis'),
@@ -111,39 +112,43 @@ var Spec = {
 
     'Connection': {
       'auth': {
-        'unauthorized': function(done) {
-          if (!/true/i.test('' + process.env.NODE_DOCUMENT_TEST_AUTH)) {
+        'ERR': function(done) {
+          if (!flag(process.env.NODE_DOCUMENT_TEST_AUTH)) {
             done();
             return;
           }
 
-          assert.throws(function() {
-            var storage = new Storage(process.env.REDIS_URL_UNAUTHORIZED);
+          var storage = new Storage(process.env.REDIS_URL_UNAUTHORIZED);
 
-            storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function() {
-              console.log(arguments)
-              done()
+          storage.on('ready', function(err) {
+            assert.notTypeOf ( err, 'null' );
+
+            storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
+              assert.notTypeOf ( err, 'null' );
+              done();
             });
           });
-        },
+        }, // auth ERR
 
-        'authorized': function(done) {
-          if (!/true/i.test('' + process.env.NODE_DOCUMENT_TEST_AUTH)) {
+        'OK': function(done) {
+          if (!flag(process.env.NODE_DOCUMENT_TEST_AUTH)) {
             done();
             return;
           }
 
-          assert.doesNotThrow(function() {
-            var storage = new Storage(process.env.REDIS_URL_AUTHORIZED);
+          var storage = new Storage(process.env.REDIS_URL_AUTHORIZED);
+
+          storage.on('ready', function(err) {
+            assert.typeOf ( err, 'null' );
 
             storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
               assert.typeOf ( err, 'null')
               done();
             });
           });
-        }
-      }
-    },
+        } // auth OK
+      } // auth
+    }, // Connection
 
     '#set': {
       'one': {
