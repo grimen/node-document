@@ -1,6 +1,7 @@
 require('sugar');
 var helper = require('../spec_helper'),
     assert = helper.assert,
+    flag = helper.flag,
     debug = helper.debug,
 
     Storage = require('../../lib/storage/elasticsearch'),
@@ -8,8 +9,8 @@ var helper = require('../spec_helper'),
 
     native = require('./native/elasticsearch');
 
-process.env.ELASTICSEARCH_URL_AUTHORIZED = process.env.ELASTICSEARCH_URL_AUTHORIZED || 'http://vt4t5uu0:pk9q6whooingl4uo@jasmine-4473159.us-east-1.bonsai.io/test';
-process.env.ELASTICSEARCH_URL_UNAUTHORIZED = process.env.ELASTICSEARCH_URL_UNAUTHORIZED || 'http://vt4t5uu0:123@jasmine-4473159.us-east-1.bonsai.io/test';
+process.env.ELASTICSEARCH_URL_AUTHORIZED = process.env.ELASTICSEARCH_URL_AUTHORIZED || 'http://vt4t5uu0:pk9q6whooingl4uo@jasmine-4473159.us-east-1.bonsai.io:80/test';
+process.env.ELASTICSEARCH_URL_UNAUTHORIZED = process.env.ELASTICSEARCH_URL_UNAUTHORIZED || 'http://vt4t5uu0:123@jasmine-4473159.us-east-1.bonsai.io:80/test';
 
 var Spec = {
 
@@ -111,35 +112,47 @@ var Spec = {
 
     'Connection': {
       'auth': {
-        'unauthorized': function(done) {
-          if (!/true/i.test('' + process.env.NODE_DOCUMENT_TEST_AUTH)) {
+        'ERR': function(done) {
+          if (!flag(process.env.NODE_DOCUMENT_TEST_AUTH)) {
             done();
             return;
           }
+
+          // Storage.off('ready');
+
+          Storage.on('ready', function(err, storage) { // not triggered yet
+            assert.notTypeOf ( err, 'null' );
+
+            storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
+              assert.notTypeOf ( err, 'null')
+              done();
+            });
+          });
 
           var storage = new Storage(process.env.ELASTICSEARCH_URL_UNAUTHORIZED);
+        }, // auth ERR
 
-          storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
-            assert.typeOf ( err, 'object')
-            done();
-          });
-        },
-
-        'authorized': function(done) {
-          if (!/true/i.test('' + process.env.NODE_DOCUMENT_TEST_AUTH)) {
+        'OK': function(done) {
+          if (!flag(process.env.NODE_DOCUMENT_TEST_AUTH)) {
             done();
             return;
           }
 
-          var storage = new Storage(process.env.ELASTICSEARCH_URL_AUTHORIZED);
+          Storage.off('ready');
 
-          storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
-            assert.typeOf ( err, 'null')
-            done();
+          Storage.on('ready', function(err, storage) {
+            assert.typeOf ( err, 'null' );
+
+            storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
+              assert.typeOf ( err, 'null')
+              done();
+            });
           });
-        }
-      }
-    },
+
+          var storage = new Storage(process.env.ELASTICSEARCH_URL_AUTHORIZED);
+        } // auth OK
+      } // auth
+    }, // Connection
 
     '#set': {
       'one': {
