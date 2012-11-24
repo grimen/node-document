@@ -91,6 +91,24 @@ var Spec = {
       Storage.reset();
 
       assert.equal ( Storage.url, null );
+    },
+
+    '.on': function() {
+      assert.property ( Storage, 'on' );
+      assert.typeOf ( Storage.on, 'function' );
+      assert.throws ( Storage.on, Error );
+    },
+
+    '.off': function() {
+      assert.property ( Storage, 'off' );
+      assert.typeOf ( Storage.off, 'function' );
+      assert.throws ( Storage.off, Error );
+    },
+
+    '.emit': function() {
+      assert.property ( Storage, 'emit' );
+      assert.typeOf ( Storage.emit, 'function' );
+      assert.throws ( Storage.emit, Error );
     }
   },
 
@@ -142,6 +160,24 @@ var Spec = {
       assert.property ( storage, 'end' );
       assert.typeOf ( storage.end, 'function' );
       assert.throws ( storage.end, Error );
+    },
+
+    '#on': function() {
+      assert.property ( storage, 'on' );
+      assert.typeOf ( storage.on, 'function' );
+      assert.throws ( storage.on, Error );
+    },
+
+    '#off': function() {
+      assert.property ( storage, 'off' );
+      assert.typeOf ( storage.off, 'function' );
+      assert.throws ( storage.off, Error );
+    },
+
+    '#emit': function() {
+      assert.property ( storage, 'emit' );
+      assert.typeOf ( storage.emit, 'function' );
+      assert.throws ( storage.emit, Error );
     }
   }
 }
