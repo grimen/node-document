@@ -1,6 +1,9 @@
 process.env.NODE_ENV = 'test';
 
-var chai = require('chai');
+var chai = require('chai'),
+    longjohn = require('longjohn');
+
+longjohn.async_trace_limit = 3;
 
 // REVIEW: http://chaijs.com/plugins
 chai.Assertion.includeStack = true;
