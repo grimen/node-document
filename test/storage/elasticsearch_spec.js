@@ -118,7 +118,7 @@ var Spec = {
             return;
           }
 
-          // Storage.off('ready');
+          Storage.off('ready');
 
           Storage.on('ready', function(err, storage) { // not triggered yet
             assert.notTypeOf ( err, 'null' );

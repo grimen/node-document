@@ -118,9 +118,9 @@ var Spec = {
             return;
           }
 
-          var storage = new Storage(process.env.REDIS_URL_UNAUTHORIZED);
+          Storage.off('ready');
 
-          storage.on('ready', function(err) {
+          Storage.on('ready', function(err, storage) {
             assert.notTypeOf ( err, 'null' );
 
             storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
@@ -128,6 +128,8 @@ var Spec = {
               done();
             });
           });
+
+          var storage = new Storage(process.env.REDIS_URL_UNAUTHORIZED);
         }, // auth ERR
 
         'OK': function(done) {
@@ -136,9 +138,9 @@ var Spec = {
             return;
           }
 
-          var storage = new Storage(process.env.REDIS_URL_AUTHORIZED);
+          Storage.off('ready');
 
-          storage.on('ready', function(err) {
+          Storage.on('ready', function(err, storage) {
             assert.typeOf ( err, 'null' );
 
             storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(err) {
@@ -146,6 +148,8 @@ var Spec = {
               done();
             });
           });
+
+          var storage = new Storage(process.env.REDIS_URL_AUTHORIZED);
         } // auth OK
       } // auth
     }, // Connection
