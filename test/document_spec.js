@@ -51,9 +51,8 @@ var Spec = {
         assert.typeOf ( Post.get, 'function' );
       },
 
-      '.del | .delete': function() {
+      '.del': function() {
         assert.typeOf ( Post.del, 'function' );
-        assert.typeOf ( Post.delete, 'function' );
       },
 
       '.end': function() {

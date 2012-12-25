@@ -1,8 +1,6 @@
 
 ::::: CURRENT/NEXT ::
 
-- [FEATURE]: Deprecate `delete` alias.
-
 - [REFACTOR]: Rewrite `MemcacheStorage` to driver that support SASL (auth).
 
 - [DOC]: README v1

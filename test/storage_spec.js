@@ -156,14 +156,10 @@ var Spec = {
       assert.throws ( storage.get, Error );
     },
 
-    '#del | delete': function() {
+    '#del': function() {
       assert.property ( storage, 'del' );
       assert.typeOf ( storage.del, 'function' );
       assert.throws ( storage.del, Error );
-
-      assert.property ( storage, 'delete' );
-      assert.typeOf ( storage.delete, 'function' );
-      assert.throws ( storage.delete, Error );
     },
 
     '#end': function() {
