@@ -128,6 +128,16 @@ var Spec = {
       assert.typeOf ( storage.client, 'null' );
     },
 
+    '#ready': function() {
+      assert.property ( storage, 'ready' );
+      assert.typeOf ( storage.ready, 'boolean' );
+    },
+
+    '#queue': function() {
+      assert.property ( storage, 'queue' );
+      assert.typeOf ( storage.queue, 'array' );
+    },
+
     '#key': function() {
       assert.property ( storage, 'key' );
       assert.typeOf ( storage.key, 'function' );

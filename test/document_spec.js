@@ -168,7 +168,7 @@ var Spec = {
 
 
     'Persistance': {
-      /*
+      /* FAILS / REVIEW
       '.create': {
         '()': function(done) {
           Post.create(function(err, doc) {
@@ -227,19 +227,23 @@ var Spec = {
 
         '([1, 2])': function() {
           assert.throws(function() {
-            Post.set([1, 2], function(err, result) {});
+            Post.set([1, 2], function(err) {
+              assert.notTypeOf ( err, 'null' );
+            });
           });
         },
 
         '([1, 2], {})': function() {
           assert.throws(function() {
-            Post.set([1, 2], {foo: 'bar 1'}, function(err, result) {});
+            Post.set([1, 2], {foo: 'bar 1'}, function(err) {
+              assert.notTypeOf ( err, 'null' );
+            });
           });
         },
 
         '([1, 2], [{}])': function() {
           assert.throws(function() {
-            Post.set([1, 2], [{foo: 'bar 1'}], function(err, result) {});
+            Post.set([1, 2], [{foo: 'bar 1'}], function(err) {});
           });
         },
 

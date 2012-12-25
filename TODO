@@ -1,16 +1,24 @@
 
 ::::: CURRENT/NEXT ::
 
-- [SPEC]: Add tests for storage authentication for the different adapters.
+- [FEATURE]: Deprecate `delete` alias.
+
+- [REFACTOR]: Rewrite `MemcacheStorage` to driver that support SASL (auth).
 
 - [DOC]: README v1
 
 
 ::::: HIGH ::
 
+- [BUG]: #del response order bug, i.e. "expected [ true, false ] to deeply equal [ false, true ]". Affected: Memcache, Redis
+
+- [REFACTOR]: Move the rest of the shared logic from storage adapters into `Storage`.
 
 
 ::::: MEDIUM ::
+
+- [FEATURE]: Connection pool for storage connections
+      - https://github.com/coopernurse/node-pool
 
 - [FEATURE]: IDGenerator adapter support.
 
@@ -39,20 +47,21 @@
 
 - [FEATURE]: Storage.clear
 
+- [FEATURE]: Support "expires" for documents (Storage).
+
 - [FEATURE]: Schema default values?
 
 
 ::::: LOW ::
 
-- [SPEC]: Add test-case for "invalid attributes" (schema validation) on `save()`.
+- [FEATURE]: Support advanced URL convention (multiple hosts, options, etc.)
+      - http://docs.mongodb.org/manual/reference/connection-string
 
 - [FEATURE]: Get/Set/Del nested attribute values in some convenient way.
 
-- [FEATURE]: Support "expires" for documents (Storage).
-
 - [REFACTOR/DISCUSS]: Move our every `Document` function/property to own module for easier managment?
 
-- REVIEW: <#DocumentCollection [<#Document>, <#Document>, ...]>
+- REVIEW: Proxy object for collections: <#DocumentCollection [<#Document>, <#Document>, ...]>
 
 - [FEATURE]: AmazonS3Storage
       - https://github.com/LearnBoost/knox
@@ -71,6 +80,8 @@
 - [FEATURE]: RavenDB
 
 - [FEATURE]: CouchDB
+
+- [FEATURE]: Riak
 
 - [FEATURE]: Cassandra
 

@@ -3,19 +3,19 @@ var helper = require('../spec_helper'),
     assert = helper.assert,
     debug = helper.debug,
 
-    JSONDiffDiffer = require('../../lib/differ/jsondiff'),
-    differ = new JSONDiffDiffer();
+    Differ = require('../../lib/differ/jsondiff'),
+    differ = new Differ();
 
 var Spec = {
 
-  'JSONDiffDiffer': {
+  'JSONDiff': {
     'new': {
       '()': function() {
         assert.instanceOf ( differ, require('../../lib/differ') );
 
-        JSONDiffDiffer.reset();
+        Differ.reset();
 
-        var differ2 = new JSONDiffDiffer();
+        var differ2 = new Differ();
 
         assert.equal ( differ2.url, null );
         assert.typeOf ( differ2.options, 'object' );
@@ -23,9 +23,9 @@ var Spec = {
       },
 
       '(options)': function() {
-        JSONDiffDiffer.reset();
+        Differ.reset();
 
-        var differ2 = new JSONDiffDiffer({custom: {foo: 'bar'}});
+        var differ2 = new Differ({custom: {foo: 'bar'}});
 
         assert.equal ( differ2.url, null );
         assert.typeOf ( differ2.options, 'object' );
@@ -35,36 +35,36 @@ var Spec = {
 
     '.klass': function() {
       assert.property ( differ, 'klass' );
-      assert.equal ( differ.klass, JSONDiffDiffer );
+      assert.equal ( differ.klass, Differ );
     },
 
     '.defaults': function() {
-      assert.property ( JSONDiffDiffer, 'defaults' );
+      assert.property ( Differ, 'defaults' );
 
-      assert.equal ( JSONDiffDiffer.defaults.url, null );
-      assert.typeOf ( JSONDiffDiffer.defaults.options, 'object' );
+      assert.equal ( Differ.defaults.url, null );
+      assert.typeOf ( Differ.defaults.options, 'object' );
     },
 
     '.options': function() {
-      assert.property ( JSONDiffDiffer, 'options' );
-      assert.typeOf ( JSONDiffDiffer.options, 'object' );
-      assert.deepEqual ( JSONDiffDiffer.options, {} );
+      assert.property ( Differ, 'options' );
+      assert.typeOf ( Differ.options, 'object' );
+      assert.deepEqual ( Differ.options, {} );
     },
 
     '.reset()': function() {
-      assert.property ( JSONDiffDiffer, 'reset' );
-      assert.typeOf ( JSONDiffDiffer.reset, 'function' );
+      assert.property ( Differ, 'reset' );
+      assert.typeOf ( Differ.reset, 'function' );
 
-      JSONDiffDiffer.options = {foo: "bar"};
-      assert.deepEqual ( JSONDiffDiffer.options, {foo: "bar"} );
+      Differ.options = {foo: "bar"};
+      assert.deepEqual ( Differ.options, {foo: "bar"} );
 
-      JSONDiffDiffer.reset();
+      Differ.reset();
 
-      assert.equal ( JSONDiffDiffer.url, null );
+      assert.equal ( Differ.url, null );
     }
   },
 
-  'JSONDiffDiffer.prototype': {
+  'JSONDiff.prototype': {
     '#options': function() {
       assert.property ( differ, 'options' );
       assert.typeOf ( differ.options, 'object' );

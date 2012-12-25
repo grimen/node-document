@@ -3,21 +3,21 @@ var helper = require('../spec_helper'),
     assert = helper.assert,
     debug = helper.debug,
 
-    AmandaValidator = require('../../lib/validator/amanda'),
-    validator = new AmandaValidator();
+    Validator = require('../../lib/validator/amanda'),
+    validator = new Validator();
 
 var schema;
 
 var Spec = {
 
-  'AmandaAmandaValidator': {
+  'Amanda': {
     'new': {
       '()': function() {
         assert.instanceOf ( validator, require('../../lib/validator/amanda') );
 
-        AmandaValidator.reset();
+        Validator.reset();
 
-        var validator2 = new AmandaValidator();
+        var validator2 = new Validator();
 
         assert.equal ( validator2.url, null );
         assert.typeOf ( validator2.options, 'object' );
@@ -25,9 +25,9 @@ var Spec = {
       },
 
       '(options)': function() {
-        AmandaValidator.reset();
+        Validator.reset();
 
-        var validator2 = new AmandaValidator({custom: {foo: 'bar'}});
+        var validator2 = new Validator({custom: {foo: 'bar'}});
 
         assert.equal ( validator2.url, null );
         assert.typeOf ( validator2.options, 'object' );
@@ -37,36 +37,36 @@ var Spec = {
 
     '.klass': function() {
       assert.property ( validator, 'klass' );
-      assert.equal ( validator.klass, AmandaValidator );
+      assert.equal ( validator.klass, Validator );
     },
 
     '.defaults': function() {
-      assert.property ( AmandaValidator, 'defaults' );
+      assert.property ( Validator, 'defaults' );
 
-      assert.equal ( AmandaValidator.defaults.url, null );
-      assert.typeOf ( AmandaValidator.defaults.options, 'object' );
+      assert.equal ( Validator.defaults.url, null );
+      assert.typeOf ( Validator.defaults.options, 'object' );
     },
 
     '.options': function() {
-      assert.property ( AmandaValidator, 'options' );
-      assert.typeOf ( AmandaValidator.options, 'object' );
-      assert.deepEqual ( AmandaValidator.options, {singleError: false} );
+      assert.property ( Validator, 'options' );
+      assert.typeOf ( Validator.options, 'object' );
+      assert.deepEqual ( Validator.options, {singleError: false} );
     },
 
     '.reset()': function() {
-      assert.property ( AmandaValidator, 'reset' );
-      assert.typeOf ( AmandaValidator.reset, 'function' );
+      assert.property ( Validator, 'reset' );
+      assert.typeOf ( Validator.reset, 'function' );
 
-      AmandaValidator.options = {foo: "bar"};
-      assert.deepEqual ( AmandaValidator.options, {foo: "bar"} );
+      Validator.options = {foo: "bar"};
+      assert.deepEqual ( Validator.options, {foo: "bar"} );
 
-      AmandaValidator.reset();
+      Validator.reset();
 
-      assert.equal ( AmandaValidator.url, null );
+      assert.equal ( Validator.url, null );
     }
   },
 
-  'AmandaValidator.prototype': {
+  'Amanda.prototype': {
     '#options': function() {
       assert.property ( validator, 'options' );
       assert.typeOf ( validator.options, 'object' );
