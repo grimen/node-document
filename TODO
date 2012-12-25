@@ -8,7 +8,7 @@
 
 ::::: HIGH ::
 
-- [BUG]: #del response order bug, i.e. "expected [ true, false ] to deeply equal [ false, true ]". Affected: Memcache, Redis
+- [BUG]: #del response order bug, i.e. "expected [ true, false ] to deeply equal [ false, true ]". Affected: Memcache
 
 - [REFACTOR]: Move the rest of the shared logic from storage adapters into `Storage`.
 
@@ -19,6 +19,8 @@
       - https://github.com/coopernurse/node-pool
 
 - [FEATURE]: IDGenerator adapter support.
+
+- [FEATURE]: Logger adapter support.
 
 - [FEATURE]: Implement some more "differs" as separate packages.
       - https://github.com/NV/objectDiff.js
