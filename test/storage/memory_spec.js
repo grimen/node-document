@@ -244,7 +244,7 @@ var Spec = {
       } // many
     }, // #get
 
-    '#del | #delete': {
+    '#del': {
       'one': {
         '<NEW_KEY>': {
           "(<NEW_KEY>)  =>  [false]": function(done) {

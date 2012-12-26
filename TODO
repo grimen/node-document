@@ -1,12 +1,12 @@
 
 ::::: CURRENT/NEXT ::
 
-- [REFACTOR]: Rewrite `MemcacheStorage` to driver that support SASL (auth).
-
 - [DOC]: README v1
 
 
 ::::: HIGH ::
+
+- [REFACTOR]: Rewrite `MemcacheStorage` to driver that support SASL (auth).
 
 - [BUG]: #del response order bug, i.e. "expected [ true, false ] to deeply equal [ false, true ]". Affected: Memcache
 
