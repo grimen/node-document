@@ -31,6 +31,7 @@
   "main": "./index.js",
   "scripts": {
     "test": "make test",
+    "test-ci": "make test-ci",
     "test-remote": "make test-remote"
   },
   "bin": {},
@@ -55,6 +56,7 @@
     "mocha": "latest",
     "chai": "latest",
     "cover": "latest",
-    "node-inspector": "latest"
+    "node-inspector": "latest",
+    "longjohn": "latest"
   }
 }
