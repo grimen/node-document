@@ -20,7 +20,7 @@ var Spec = {
 
         var storage2 = new Storage();
 
-        assert.equal ( storage2.url, 'memory://localhost/default-test' );
+        assert.equal ( storage2.url, 'memory:///default-test' );
         assert.typeOf ( storage2.options, 'object' );
         assert.deepEqual ( storage2.options.custom, undefined );
       },
@@ -28,9 +28,9 @@ var Spec = {
       '("url")': function() {
         Storage.reset();
 
-        var storage2 = new Storage('memory://127.0.0.1/custom');
+        var storage2 = new Storage('memory:///custom');
 
-        assert.equal ( storage2.url, 'memory://127.0.0.1/custom' );
+        assert.equal ( storage2.url, 'memory:///custom' );
         assert.typeOf ( storage2.options, 'object' );
         assert.deepEqual ( storage2.options.custom, undefined );
       },
@@ -40,7 +40,7 @@ var Spec = {
 
         var storage2 = new Storage({custom: {foo: 'bar'}});
 
-        assert.equal ( storage2.url, 'memory://localhost/default-test' );
+        assert.equal ( storage2.url, 'memory:///default-test' );
         assert.typeOf ( storage2.options, 'object' );
         assert.deepEqual ( storage2.options.custom, {foo: 'bar'} );
       },
@@ -48,9 +48,9 @@ var Spec = {
       '("url", options)': function() {
         Storage.reset();
 
-        var storage2 = new Storage('memory://127.0.0.1/custom', {custom: {foo: 'bar'}});
+        var storage2 = new Storage('memory:///custom', {custom: {foo: 'bar'}});
 
-        assert.equal ( storage2.url, 'memory://127.0.0.1/custom' );
+        assert.equal ( storage2.url, 'memory:///custom' );
 
         assert.typeOf ( storage2.options, 'object' );
         assert.deepEqual ( storage2.options.custom, {foo: 'bar'} );
@@ -65,13 +65,13 @@ var Spec = {
     '.defaults': function() {
       assert.property ( Storage, 'defaults' );
 
-      assert.equal ( Storage.defaults.url, 'memory://localhost/default-test' );
+      assert.equal ( Storage.defaults.url, 'memory:///default-test' );
       assert.typeOf ( Storage.defaults.options, 'object' );
     },
 
     '.url': function() {
       assert.typeOf ( Storage.url, 'string' );
-      assert.equal ( Storage.url, 'memory://localhost/default-test' );
+      assert.equal ( Storage.url, 'memory:///default-test' );
     },
 
     '.options': function() {
@@ -81,12 +81,12 @@ var Spec = {
     '.reset()': function() {
       assert.typeOf ( Storage.reset, 'function' );
 
-      Storage.url = "memory://127.0.0.1/custom";
-      assert.equal ( Storage.url, "memory://127.0.0.1/custom" );
+      Storage.url = "memory:///custom";
+      assert.equal ( Storage.url, "memory:///custom" );
 
       Storage.reset();
 
-      assert.equal ( Storage.url, 'memory://localhost/default-test' );
+      assert.equal ( Storage.url, 'memory:///default-test' );
     }
   },
 
