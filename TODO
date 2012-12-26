@@ -16,6 +16,9 @@
 - [FEATURE]: Connection pool for storage connections
       - https://github.com/coopernurse/node-pool
 
+- [FEATURE]: FileSystemStorage
+      - http://nodejs.org/api/fs.html
+
 - [FEATURE]: Implement some more "differs" as separate packages.
       - https://github.com/NV/objectDiff.js
       - https://github.com/mikolalysenko/patcher.js
@@ -25,11 +28,6 @@
       - https://github.com/akidee/schema.js
 
 - [REFACTOR]: Refactor out all adapters except "MemoryStorage" and "FileSystemStorage" to own NPM modules, e.g. "node-document-storage-redis", "node-document-validator-amanda", "node-document-differ-jsondiff", etc.
-
-- [REVIEW]: What API/conventions should be used for triggered document events?
-
-- [FEATURE]: FileSystemStorage
-      - http://nodejs.org/api/fs.html
 
 - [FEATURE]: Storage.count
 
