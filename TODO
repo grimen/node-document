@@ -8,16 +8,11 @@
 
 - [REFACTOR]: Rewrite `MemcacheStorage` to driver that support SASL (auth).
 
-- [BUG]: #del response order bug, i.e. "expected [ true, false ] to deeply equal [ false, true ]". Affected: Memcache
-
 
 ::::: MEDIUM ::
 
 - [FEATURE]: Connection pool for storage connections
       - https://github.com/coopernurse/node-pool
-
-- [FEATURE]: FileSystemStorage
-      - http://nodejs.org/api/fs.html
 
 - [FEATURE]: Implement some more "differs" as separate packages.
       - https://github.com/NV/objectDiff.js
