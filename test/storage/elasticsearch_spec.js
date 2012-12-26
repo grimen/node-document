@@ -230,7 +230,7 @@ var Spec = {
         }, // <NEW_KEY>
 
         '<EXISTING_KEY>': {
-          "(<EXISTING_KEY>)  =>  [<JSON_VALUE>]default-test', 'set', '": function(done) {
+          "(<EXISTING_KEY>)  =>  [<JSON_VALUE>]', 'set', '": function(done) {
             native.set('default-test', 'get', 'existing-one-foo_1-b', {foo: 'bar_1'}, function() {
               storage.get(['get/existing-one-foo_1-b'], function(storage_err, storage_response) {
                 assert.deepEqual ( storage_response, [{foo: 'bar_1'}] );

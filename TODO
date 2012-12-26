@@ -10,17 +10,11 @@
 
 - [BUG]: #del response order bug, i.e. "expected [ true, false ] to deeply equal [ false, true ]". Affected: Memcache
 
-- [REFACTOR]: Move the rest of the shared logic from storage adapters into `Storage`.
-
 
 ::::: MEDIUM ::
 
 - [FEATURE]: Connection pool for storage connections
       - https://github.com/coopernurse/node-pool
-
-- [FEATURE]: IDGenerator adapter support.
-
-- [FEATURE]: Logger adapter support.
 
 - [FEATURE]: Implement some more "differs" as separate packages.
       - https://github.com/NV/objectDiff.js
@@ -33,10 +27,6 @@
 - [REFACTOR]: Refactor out all adapters except "MemoryStorage" and "FileSystemStorage" to own NPM modules, e.g. "node-document-storage-redis", "node-document-validator-amanda", "node-document-differ-jsondiff", etc.
 
 - [REVIEW]: What API/conventions should be used for triggered document events?
-
-- [DOC]: Proper function documentation (JSDoc-style).
-      - http://en.wikipedia.org/wiki/JSDoc
-      - https://developers.google.com/closure/compiler/docs/js-for-compiler
 
 - [FEATURE]: FileSystemStorage
       - http://nodejs.org/api/fs.html
@@ -53,6 +43,14 @@
 
 
 ::::: LOW ::
+
+- [FEATURE]: IDGenerator adapter support.
+
+- [FEATURE]: Logger adapter support.
+
+- [DOC]: Proper function documentation (JSDoc-style).
+      - http://en.wikipedia.org/wiki/JSDoc
+      - https://developers.google.com/closure/compiler/docs/js-for-compiler
 
 - [FEATURE]: Support advanced URL convention (multiple hosts, options, etc.)
       - http://docs.mongodb.org/manual/reference/connection-string
