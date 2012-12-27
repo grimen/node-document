@@ -11,7 +11,7 @@ Work in progress; see **[TODO](https://github.com/grimen/node-document/blob/mast
 
 A **minimalistic ODM** for the most atomic operations - such as `GET`/`SET`/`DEL` - on different kinds of "document(-ish)" stores using **one unified API**; switching database should be a matter of changing a line of code.
 
-To stick to this philosophy more advanced operations such as "queries" won't be a core feature, but as *node-document* won't mess with your data it can be used along with any 3rd-party drivers as if there was no tomorrow.
+To stick to this philosophy more advanced operations such as "queries" won't be a core feature, but as `node-document` won't mess with your data it can be used along with any 3rd-party drivers as if there was no tomorrow.
 
 
 ## Features
@@ -126,9 +126,15 @@ More usage examples coming soon, unil then checkout the [tests](https://github.c
   $ make test-remote
 ```
 
+
 ## Notes
 
 This project is very much work-in-progress; the API will most probably change between the first couple of minor version numbers until it will be settled.
+
+
+## Credit
+
+* [Christian Landgren](https://github.com/irony) - input and feedback.
 
 
 ## License
