@@ -1,54 +1,51 @@
 
 ::::: CURRENT/NEXT ::
 
-- [DOC]: README v1
+- [REFACTOR]: Rewrite `Memcache` storage to driver that support SASL (auth).
 
 
 ::::: HIGH ::
 
-- [REFACTOR]: Rewrite `MemcacheStorage` to driver that support SASL (auth).
+- [FEATURE]: ID-factory support, e.g. `Post.id = function() { return this.attributes.name; }`.
 
 
 ::::: MEDIUM ::
 
-- [FEATURE]: Connection pool for storage connections
-      - https://github.com/coopernurse/node-pool
+- [REFACTOR]: Rewrite `ElasticSearch` storage using vanilla HTTP agent.
 
 - [FEATURE]: Implement some more "differs" as separate packages.
       - https://github.com/NV/objectDiff.js
       - https://github.com/mikolalysenko/patcher.js
       - https://github.com/iriscouch/obj_diff
+      - https://npmjs.org/package/deep-diff
 
 - [FEATURE]: Implement some more "schemas" as separate packages.
       - https://github.com/akidee/schema.js
 
-- [REFACTOR]: Refactor out all adapters except "MemoryStorage" and "FileSystemStorage" to own NPM modules, e.g. "node-document-storage-redis", "node-document-validator-amanda", "node-document-differ-jsondiff", etc.
+- [REFACTOR]: Refactor out all adapters except "Memory" and "FileSystem" to own NPM modules, e.g. "node-document-storage-redis", "node-document-validator-amanda", "node-document-differ-jsondiff", etc.
 
-- [FEATURE]: Storage.count
-
-- [FEATURE]: Storage.exists
-
-- [FEATURE]: Storage.clear
-
-- [FEATURE]: Support "expires" for documents (Storage).
-
-- [FEATURE]: Schema default values?
+- [FEATURE]: Connection pool for storage connections
+      - https://github.com/coopernurse/node-pool
 
 
 ::::: LOW ::
 
-- [FEATURE]: ID-factory support, e.g. `Post.id = function() { return this.attributes.name; }`.
+- [FEATURE]: Support "expires" for documents (Storage).
 
-- [FEATURE]: Logger adapter support.
+- [FEATURE]: Storage.exists
+
+- [FEATURE]: Storage.count
+
+- [FEATURE]: Storage.clear
 
 - [DOC]: Proper function documentation (JSDoc-style).
       - http://en.wikipedia.org/wiki/JSDoc
       - https://developers.google.com/closure/compiler/docs/js-for-compiler
 
-- [FEATURE]: Get/Set/Del nested attribute values in some convenient way.
-
 
 ::::: MAYBE/CRAZY ::
+
+- [FEATURE]: Get/Set/Del nested attribute values in some convenient way.
 
 - REVIEW: Proxy object for collections: <#DocumentCollection [<#Document>, <#Document>, ...]>
 

@@ -134,7 +134,7 @@ This project is very much work-in-progress; the API will most probably change be
 
 ## Credit
 
-* [Christian Landgren](https://github.com/irony) - input and feedback.
+* [Christian Landgren](https://github.com/irony) - input and feedback
 
 
 ## License
