@@ -7,14 +7,55 @@
 Work in progress; see **[TODO](https://github.com/grimen/node-document/blob/master/TODO)**.
 
 
-## What it is
+## What it is - and what it's not
 
-*TODO*
+A minimalistic *ODM* for the most atomic operations - such as `GET`/`SET`/`DEL` - on different kinds of "document(-ish)" stores using **one unified API**; switching database should be a matter of changing a line of code.
+
+To stick to this philosophy more advanced operations such as "queries" won't be a core feature, but as *node-document* won't mess with your data it can be used along with any 3rd-party drivers as if there was no tomorrow.
 
 
 ## Features
 
-*TODO*
+* Document
+	* Class 	
+		* new
+		* create
+		* clear
+		* get
+		* set
+		* del
+	* Instance
+		* save
+		* destroy
+		* fetch
+		* validate
+		* diff
+		* clone
+		* inspect
+	* Events
+* Storage
+	* Auto-connect on first operation (operation queue)
+	* Operations: Single + Bulk
+		* get
+		* set
+		* del
+	* Adapters
+		* Memory
+		* FileSystem
+		* Memcache
+		* Redis
+		* MongoDB
+		* ElasticSearch
+		* ...
+	* Events	
+* Validation / Schema
+	* Adapters
+		* Amanda
+		* ...
+* Diffing
+	* Adapters	 	
+		* JSONDiff
+		* ...
 
 
 ## Installation
