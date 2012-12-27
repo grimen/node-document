@@ -36,11 +36,11 @@
   },
   "bin": {},
   "engines": {
-    "node": ">= 0.6.5"
+    "node": ">= 0.8.0"
   },
   "dependencies": {
     "funargs": "latest",
-    "sugar": "1.2",
+    "sugar": "latest",
     "node-fs": "latest",
     "amanda": "latest",
     "node-uuid": "latest",
