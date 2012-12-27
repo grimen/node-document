@@ -9,7 +9,7 @@ Work in progress; see **[TODO](https://github.com/grimen/node-document/blob/mast
 
 ## What it is - and what it's not
 
-A minimalistic *ODM* for the most atomic operations - such as `GET`/`SET`/`DEL` - on different kinds of "document(-ish)" stores using **one unified API**; switching database should be a matter of changing a line of code.
+A **minimalistic ODM** for the most atomic operations - such as `GET`/`SET`/`DEL` - on different kinds of "document(-ish)" stores using **one unified API**; switching database should be a matter of changing a line of code.
 
 To stick to this philosophy more advanced operations such as "queries" won't be a core feature, but as *node-document* won't mess with your data it can be used along with any 3rd-party drivers as if there was no tomorrow.
 
@@ -17,7 +17,7 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 ## Features
 
 * Document
-	* Class 	
+	* Class
 		* new
 		* create
 		* clear
@@ -47,13 +47,13 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 		* MongoDB
 		* ElasticSearch
 		* ...
-	* Events	
+	* Events
 * Validation / Schema
 	* Adapters
 		* Amanda
 		* ...
 * Diffing
-	* Adapters	 	
+	* Adapters
 		* JSONDiff
 		* ...
 
