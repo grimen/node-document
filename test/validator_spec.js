@@ -38,6 +38,11 @@ var Spec = {
       assert.equal ( validator.klass, Validator );
     },
 
+    '.name': function() {
+      assert.property ( Validator, 'name' );
+      assert.equal ( Validator.name, 'Validator' );
+    },
+
     '.defaults': function() {
       assert.property ( Validator, 'defaults' );
 
@@ -64,6 +69,11 @@ var Spec = {
   },
 
   'Validator.prototype': {
+    '#name': function() {
+      assert.property ( validator, 'name' );
+      assert.equal ( validator.name, 'Validator' );
+    },
+
     '#options': function() {
       assert.property ( validator, 'options' );
       assert.typeOf ( validator.options, 'object' );

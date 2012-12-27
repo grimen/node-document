@@ -128,6 +128,18 @@ var Spec = {
         assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
         assert.equal ( doc.id, doc.attributes.id );
       }
+    },
+
+    'require': {
+      '(valid_adapter_path)': function() {
+        assert.equal ( Document.require('storage/redis'), Redis );
+      },
+
+      '(invalid_adapter_path)': function() {
+        assert.throws (function() {
+          Document.require('storage/bogus');
+        });
+      }
     }
   }, // Document
 
@@ -511,6 +523,18 @@ var Spec = {
 
       '#type': function() {
         assert.equal ( doc.type, 'Post' );
+      },
+
+      '#storage': function() {
+        assert.equal ( doc.storage, doc.klass.storage );
+      },
+
+      '#validator': function() {
+        assert.equal ( doc.validator, doc.klass.validator );
+      },
+
+      '#differ': function() {
+        assert.equal ( doc.differ, doc.klass.differ );
       }
     },
 

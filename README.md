@@ -7,6 +7,16 @@
 Work in progress; see **[TODO](https://github.com/grimen/node-document/blob/master/TODO)**.
 
 
+## What it is
+
+*TODO*
+
+
+## Features
+
+*TODO*
+
+
 ## Installation
 
 ```shell
@@ -16,7 +26,49 @@ Work in progress; see **[TODO](https://github.com/grimen/node-document/blob/mast
 
 ## Usage
 
-*TODO*
+**Basic:**
+
+```javascript
+  var Document = require('node-document');
+
+  // Some storages of choice
+  var Redis = Document.require('storage/redis');
+  var FileSystem = Document.require('storage/filesystem');
+
+  // A model
+  var Post = Document('Post', new Redis('redis://localhost:6379/app'));
+
+  // A record
+  var post = new Post({title: "Once upon a time"});
+
+  // Save it
+  post.save(function(err, res) {
+    console.log("SAVE  Persisted: %s | Storage: %s | Type: %s | ID: %s  ->  %s", post.persisted, post.storage.name, post.type, post.id, post);
+
+    // Find it
+    Post.get(post.id, function() {
+      console.log("GET  Persisted: %s | Storage: %s | Type: %s | ID: %s  ->  %s", post.persisted, post.storage.name, post.type, post.id, post);
+
+      // Destroy it
+      post.destroy(function(err, res) {
+        console.log("DESTROY  Persisted: %s | Storage: %s | Type: %s | ID: %s  ->  %s", post.persisted, post.storage.name, post.type, post.id, post);
+
+        // Switch storage
+        Post.storage = new FileSystem('file:///tmp/app');
+
+        // Save to file instead
+        post.save(function(err, res) {
+          console.log("SAVE  Persisted: %s | Storage: %s | Type: %s | ID: %s  ->  %s", post.persisted, post.storage.klass.name, post.type, post.id, post);
+        });
+      });
+    });
+  });
+
+  // etc.
+})
+```
+
+More usage examples coming soon, unil then checkout the [tests](https://github.com/grimen/node-document/blob/master/test/document_spec.js).
 
 
 ## Test

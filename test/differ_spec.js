@@ -37,6 +37,11 @@ var Spec = {
       assert.equal ( differ.klass, Differ );
     },
 
+    '.name': function() {
+      assert.property ( Differ, 'name' );
+      assert.equal ( Differ.name, 'Differ' );
+    },
+
     '.defaults': function() {
       assert.property ( Differ, 'defaults' );
 
@@ -63,6 +68,11 @@ var Spec = {
   },
 
   'Differ.prototype': {
+    '.name': function() {
+      assert.property ( differ, 'name' );
+      assert.equal ( differ.name, 'Differ' );
+    },
+
     '#options': function() {
       assert.property ( differ, 'options' );
       assert.typeOf ( differ.options, 'object' );

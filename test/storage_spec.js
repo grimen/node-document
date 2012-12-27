@@ -59,6 +59,11 @@ var Spec = {
       assert.equal ( storage.klass, require('../lib/storage') );
     },
 
+    '.name': function() {
+      assert.property ( Storage, 'name' );
+      assert.equal ( Storage.name, 'Storage' );
+    },
+
     '.defaults': function() {
       assert.property ( Storage, 'defaults' );
 
@@ -113,6 +118,11 @@ var Spec = {
   },
 
   'Storage.prototype': {
+    '#name': function() {
+      assert.property ( storage, 'name' );
+      assert.equal ( storage.name, 'Storage' );
+    },
+
     '#url': function() {
       assert.property ( storage, 'url' );
       assert.typeOf ( storage.url, 'null' );

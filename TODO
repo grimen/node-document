@@ -37,7 +37,7 @@
 
 ::::: LOW ::
 
-- [FEATURE]: IDGenerator adapter support.
+- [FEATURE]: ID-factory support, e.g. `Post.id = function() { return this.attributes.name; }`.
 
 - [FEATURE]: Logger adapter support.
 
@@ -45,26 +45,24 @@
       - http://en.wikipedia.org/wiki/JSDoc
       - https://developers.google.com/closure/compiler/docs/js-for-compiler
 
-- [FEATURE]: Support advanced URL convention (multiple hosts, options, etc.)
-      - http://docs.mongodb.org/manual/reference/connection-string
-
 - [FEATURE]: Get/Set/Del nested attribute values in some convenient way.
-
-- [REFACTOR/DISCUSS]: Move our every `Document` function/property to own module for easier managment?
-
-- REVIEW: Proxy object for collections: <#DocumentCollection [<#Document>, <#Document>, ...]>
-
-- [FEATURE]: AmazonS3Storage
-      - https://github.com/LearnBoost/knox
 
 
 ::::: MAYBE/CRAZY ::
+
+- REVIEW: Proxy object for collections: <#DocumentCollection [<#Document>, <#Document>, ...]>
+
+- [FEATURE]: Support advanced URL convention (multiple hosts, options, etc.)
+      - http://docs.mongodb.org/manual/reference/connection-string
 
 - [ENHANCEMENT]: Make `validate`/`valid`/`sync` optionally synchronous
       - ./test/experiments/async2sync.js
 
 - [FEATURE]: FileStorage (one file)
       - https://github.com/nearinfinity/node-docstore
+
+- [FEATURE]: AmazonS3Storage
+      - https://github.com/LearnBoost/knox
 
 - [FEATURE]: HyperDexStorage
 
