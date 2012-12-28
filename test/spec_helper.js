@@ -1,18 +1,21 @@
 process.env.NODE_ENV = 'test';
 
 var chai = require('chai'),
-    longjohn = require('longjohn'),
-    flag = require('../lib/util/flag');
+    longjohn = require('longjohn');
 
 longjohn.async_trace_limit = 3;
 
 // REVIEW: http://chaijs.com/plugins
 chai.Assertion.includeStack = true;
 
-var Helpers = {
-  assert: chai.assert,
-  debug: console.log,
-  flag: flag
+module.exports.flag = function(value, default_value) {
+  if (typeof value === 'undefined') {
+    return (default_value === undefined) ? false : default_value;
+  } else {
+    return (/^1|true$/i).test('' + value); // ...to avoid the boolean/truthy ghetto.
+  }
 };
 
-module.exports = Helpers;
+module.exports.assert = chai.assert;
+
+module.exports.debug = console.log;
