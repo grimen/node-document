@@ -16,8 +16,8 @@ post.save(function(err, res) {
   console.log("SAVE  Persisted: %s | Storage: %s | Type: %s | ID: %s  ->  %s", post.persisted, post.storage.name, post.type, post.id, post);
 
   // Find it
-  Post.get(post.id, function() {
-    console.log("GET  Persisted: %s | Storage: %s | Type: %s | ID: %s  ->  %s", post.persisted, post.storage.name, post.type, post.id, post);
+  Post.get(post.id, function(err, res) {
+    console.log("GET  Storage: %s | Type: %s | ID: %s  ->  %s", post.storage.name, post.type, post.id, JSON.stringify(res));
 
     // Destroy it
     post.destroy(function(err, res) {
@@ -30,7 +30,12 @@ post.save(function(err, res) {
       post.save(function(err, res) {
         console.log("SAVE  Persisted: %s | Storage: %s | Type: %s | ID: %s  ->  %s", post.persisted, post.storage.name, post.type, post.id, post);
 
-        process.exit();
+        // Find it again
+        Post.get(post.id, function(err, res) {
+          console.log("GET  Storage: %s | Type: %s | ID: %s  ->  %s", post.storage.name, post.type, post.id, JSON.stringify(res));
+
+          process.exit();
+        });
       });
     });
   });

@@ -87,8 +87,8 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
     console.log("SAVE  Persisted: %s | Storage: %s | Type: %s | ID: %s  ->  %s", post.persisted, post.storage.name, post.type, post.id, post);
 
     // Find it
-    Post.get(post.id, function() {
-      console.log("GET  Persisted: %s | Storage: %s | Type: %s | ID: %s  ->  %s", post.persisted, post.storage.name, post.type, post.id, post);
+    Post.get(post.id, function(err, res) {
+      console.log("GET  Storage: %s | Type: %s | ID: %s  ->  %s", post.storage.name, post.type, post.id, JSON.stringify(res));
 
       // Destroy it
       post.destroy(function(err, res) {
@@ -99,7 +99,12 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 
         // Save to file instead
         post.save(function(err, res) {
-          console.log("SAVE  Persisted: %s | Storage: %s | Type: %s | ID: %s  ->  %s", post.persisted, post.storage.klass.name, post.type, post.id, post);
+          console.log("SAVE  Persisted: %s | Storage: %s | Type: %s | ID: %s  ->  %s", post.persisted, post.storage.name, post.type, post.id, post);
+
+          // Find it again
+          Post.get(post.id, function(err, res) {
+            console.log("GET  Storage: %s | Type: %s | ID: %s  ->  %s", post.storage.name, post.type, post.id, JSON.stringify(res));
+          });
         });
       });
     });
