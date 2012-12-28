@@ -27,6 +27,8 @@
 - [FEATURE]: Connection pool for storage connections
       - https://github.com/coopernurse/node-pool
 
+- [FEATURE]: Detect and handle lost connections in a reliable and automatic way.
+
 
 ::::: LOW ::
 
