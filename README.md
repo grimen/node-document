@@ -20,7 +20,6 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 	* Class
 		* new
 		* create
-		* clear
 		* get
 		* set
 		* del
