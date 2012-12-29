@@ -1,17 +1,15 @@
 
 ::::: CURRENT/NEXT ::
 
+- [FEATURE]: ID-factory support, e.g. `Post.id = function() { return this.attributes.name; }`.
+
 - [REFACTOR]: Rewrite `Memcache` storage to driver that support SASL (auth).
 
 
 ::::: HIGH ::
 
-- [FEATURE]: ID-factory support, e.g. `Post.id = function() { return this.attributes.name; }`.
-
 
 ::::: MEDIUM ::
-
-- [REFACTOR]: Rewrite `ElasticSearch` storage using vanilla HTTP agent.
 
 - [FEATURE]: Implement some more "differs" as separate packages.
       - https://github.com/NV/objectDiff.js
@@ -32,6 +30,8 @@
 
 ::::: LOW ::
 
+- [REFACTOR]: Rewrite `ElasticSearch` storage using vanilla HTTP agent.
+
 - [FEATURE]: Support "expires" for documents (Storage).
 
 - [FEATURE]: Storage.exists
@@ -43,6 +43,9 @@
 - [DOC]: Proper function documentation (JSDoc-style).
       - http://en.wikipedia.org/wiki/JSDoc
       - https://developers.google.com/closure/compiler/docs/js-for-compiler
+
+- [FEATURE]: FileStorage (one file)
+      - https://github.com/nearinfinity/node-docstore
 
 
 ::::: MAYBE/CRAZY ::
@@ -56,12 +59,6 @@
 
 - [ENHANCEMENT]: Make `validate`/`valid`/`sync` optionally synchronous
       - ./test/experiments/async2sync.js
-
-- [FEATURE]: FileStorage (one file)
-      - https://github.com/nearinfinity/node-docstore
-
-- [FEATURE]: AmazonS3Storage
-      - https://github.com/LearnBoost/knox
 
 - [FEATURE]: HyperDexStorage
 

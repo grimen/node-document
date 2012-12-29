@@ -45,7 +45,8 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 		* Memcache
 		* Redis
 		* MongoDB
-		* ElasticSearch
+    	* ElasticSearch
+    	* AmazonS3
 		* ...
 	* Events
 * Validation / Schema

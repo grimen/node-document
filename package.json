@@ -1,7 +1,7 @@
 {
   "name": "node-document",
   "description": "Many document stores, Y U NO interface?",
-  "version": "0.1.0-pre",
+  "version": "0.1.0-pre2",
   "repositories": [
     {
      "type": "git",
@@ -57,6 +57,7 @@
     "chai": "latest",
     "cover": "latest",
     "node-inspector": "latest",
-    "longjohn": "latest"
+    "longjohn": "latest",
+    "colors": "latest"
   }
 }
