@@ -1,8 +1,6 @@
 
 ::::: CURRENT/NEXT ::
 
-- [FEATURE]: ID-factory support, e.g. `Post.id = function() { return this.attributes.name; }`.
-
 - [REFACTOR]: Rewrite `Memcache` storage to driver that support SASL (auth).
 
 

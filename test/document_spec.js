@@ -361,6 +361,30 @@ var Spec = {
       } // .end
     }, // Persistance
 
+    'ID': {
+      '.id': {
+        'Default': function() {
+          assert.typeOf ( Post.id, 'function' );
+          assert.typeOf ( Post.id(), 'string' );
+          assert.equal ( Post.id().length, 36 );
+        },
+
+        'Custom': function() {
+          Document.id = function(record) { return [record.key, 123].join('-'); };
+
+          Post = Document('Post');
+
+          assert.equal ( Document.id({key: 'foo'}), 'foo-123' );
+          assert.equal ( Post.id({key: 'bar'}), 'bar-123' );
+
+          Post.id = function(record) { return [record.key, 'abc'].join('-'); };
+
+          assert.equal ( Document.id({key: 'foo'}), 'foo-123' );
+          assert.equal ( Post.id({key: 'bar'}), 'bar-abc' );
+        }
+      }
+    }, // ID
+
     'Validation / Schema': {
       '.validate': {
         before: function() {
