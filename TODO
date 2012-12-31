@@ -1,13 +1,33 @@
 
 ::::: CURRENT/NEXT ::
 
-- [REFACTOR]: Rewrite `Memcache` storage to driver that support SASL (auth).
-
 
 ::::: HIGH ::
 
+- [REFACTOR]: Rewrite `Memcache` storage to driver that support SASL (auth) - tried MemJS but it contains serious race-condition bug. =S
+
 
 ::::: MEDIUM ::
+
+- [REFACTOR]: Refactor out all adapters except "Memory" and "FileSystem" to own NPM modules, e.g. "node-document-storage-redis", "node-document-validator-amanda", "node-document-differ-jsondiff", etc.
+
+
+::::: LOW ::
+
+- [FEATURE]: Support "expires" for documents (Storage).
+
+- [FEATURE]: Support multiple endpoints - where applicable - for all storage adapters/clients.
+
+- [FEATURE]: Detect and handle lost connections in a reliable and automatic way.
+
+- [FEATURE]: Connection pool for storage connections
+      - https://github.com/coopernurse/node-pool
+
+- [REFACTOR]: Rewrite `ElasticSearch` storage using vanilla HTTP agent.
+
+- [DOC]: Proper function documentation (JSDoc-style).
+      - http://en.wikipedia.org/wiki/JSDoc
+      - https://developers.google.com/closure/compiler/docs/js-for-compiler
 
 - [FEATURE]: Implement some more "differs" as separate packages.
       - https://github.com/NV/objectDiff.js
@@ -18,19 +38,8 @@
 - [FEATURE]: Implement some more "schemas" as separate packages.
       - https://github.com/akidee/schema.js
 
-- [REFACTOR]: Refactor out all adapters except "Memory" and "FileSystem" to own NPM modules, e.g. "node-document-storage-redis", "node-document-validator-amanda", "node-document-differ-jsondiff", etc.
 
-- [FEATURE]: Connection pool for storage connections
-      - https://github.com/coopernurse/node-pool
-
-- [FEATURE]: Detect and handle lost connections in a reliable and automatic way.
-
-
-::::: LOW ::
-
-- [REFACTOR]: Rewrite `ElasticSearch` storage using vanilla HTTP agent.
-
-- [FEATURE]: Support "expires" for documents (Storage).
+::::: MAYBE/CRAZY ::
 
 - [FEATURE]: Storage.exists
 
@@ -38,25 +47,10 @@
 
 - [FEATURE]: Storage.clear
 
-- [DOC]: Proper function documentation (JSDoc-style).
-      - http://en.wikipedia.org/wiki/JSDoc
-      - https://developers.google.com/closure/compiler/docs/js-for-compiler
+- [REVIEW]: Get/Set/Del nested attribute values in some convenient way.
 
-- [FEATURE]: FileStorage (one file)
-      - https://github.com/nearinfinity/node-docstore
-
-
-::::: MAYBE/CRAZY ::
-
-- [FEATURE]: Get/Set/Del nested attribute values in some convenient way.
-
-- REVIEW: Proxy object for collections: <#DocumentCollection [<#Document>, <#Document>, ...]>
-
-- [FEATURE]: Support advanced URL convention (multiple hosts, options, etc.)
+- [REVIEW]: Support advanced URL convention (multiple hosts, options, etc.)
       - http://docs.mongodb.org/manual/reference/connection-string
-
-- [ENHANCEMENT]: Make `validate`/`valid`/`sync` optionally synchronous
-      - ./test/experiments/async2sync.js
 
 - [FEATURE]: HyperDexStorage
 
