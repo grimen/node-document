@@ -1,7 +1,7 @@
 {
   "name": "node-document",
   "description": "Many document stores, Y U NO interface?",
-  "version": "0.1.0-pre3",
+  "version": "0.1.0-pre4",
   "repositories": [
     {
      "type": "git",
@@ -51,7 +51,10 @@
     "elastical": "latest",
     "mongodb": "latest",
     "json-diff": "latest",
-    "schema": "latest"
+    "schema": "latest",
+    "patcher": "latest",
+    "deep-diff": "latest",
+    "objectdiff": "latest"
   },
   "devDependencies": {
     "mocha": "latest",

@@ -29,12 +29,6 @@
       - http://en.wikipedia.org/wiki/JSDoc
       - https://developers.google.com/closure/compiler/docs/js-for-compiler
 
-- [FEATURE]: Implement some more "differs" as separate packages.
-      - https://github.com/NV/objectDiff.js
-      - https://github.com/mikolalysenko/patcher.js
-      - https://github.com/iriscouch/obj_diff
-      - https://github.com/flitbit/diff
-
 
 ::::: MAYBE/CRAZY ::
 
