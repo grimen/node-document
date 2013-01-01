@@ -35,9 +35,6 @@
       - https://github.com/iriscouch/obj_diff
       - https://github.com/flitbit/diff
 
-- [FEATURE]: Implement some more "schemas" as separate packages.
-      - https://github.com/akidee/schema.js
-
 
 ::::: MAYBE/CRAZY ::
 
