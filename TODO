@@ -14,7 +14,11 @@
 
 ::::: LOW ::
 
+- [FEATURE]: Storage.exists
+
 - [FEATURE]: Support "expires" for documents (Storage).
+
+- [FEATURE]: Support "versioning" for documents (Storage).
 
 - [FEATURE]: Support multiple endpoints - where applicable - for all storage adapters/clients.
 
@@ -30,9 +34,42 @@
       - https://developers.google.com/closure/compiler/docs/js-for-compiler
 
 
-::::: MAYBE/CRAZY ::
+::::: MAYBE ::
 
-- [FEATURE]: Storage.exists
+- [FEATURE]: Riak
+      - http://riakjs.com
+      - http://docs.basho.com/riak/1.2.1/tutorials/querying/Basic-Operations/
+
+- [FEATURE]: CouchDB
+      - HTTP
+
+- [FEATURE]: Cassandra
+      - https://github.com/racker/node-cassandra-client
+      - https://github.com/simplereach/helenus
+
+- [FEATURE]: SQLiteStorage
+      - https://github.com/developmentseed/node-sqlite3
+
+- [FEATURE]: PostgreSQLStorage (HStore)
+      - https://github.com/brianc/node-postgres
+      - https://github.com/nonuby/node-postgres-hstore
+
+- [FEATURE]: MySQLStorage
+      - https://github.com/felixge/node-mysql
+
+- [FEATURE]: RavenDB
+      - ?
+
+- [FEATURE]: In-process stores
+      - https://github.com/creationix/nstore
+      - https://github.com/felixge/node-dirty
+      - https://github.com/pgte/alfred
+
+- [FEATURE]: RESTStorage (client/server-side)
+      - https://github.com/danwrong/restler
+
+- [FEATURE]: HyperDexStorage
+      - https://github.com/rescrv/HyperDex/tree/master/hyperclient/nodejs
 
 - [FEATURE]: Storage.count
 
@@ -42,22 +79,3 @@
 
 - [REVIEW]: Support advanced URL convention (multiple hosts, options, etc.)
       - http://docs.mongodb.org/manual/reference/connection-string
-
-- [FEATURE]: HyperDexStorage
-
-- [FEATURE]: RavenDB
-
-- [FEATURE]: CouchDB
-
-- [FEATURE]: Riak
-
-- [FEATURE]: Cassandra
-
-- [FEATURE]: PostgreSQLStorage (HStore)
-
-- [FEATURE]: SQLiteStorage
-
-- [FEATURE]: MySQLStorage
-
-- [FEATURE]: RESTStorage (client/server-side)
-

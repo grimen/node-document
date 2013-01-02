@@ -16,46 +16,48 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 
 ## Features
 
-* Document
+* **Document**
 	* Class
-		* new
-		* create
-		* get
-		* set
-		* del
+		* `new`
+		* `create`
+		* `get`
+		* `set`
+		* `del`
 	* Instance
-		* save
-		* destroy
-		* fetch
-		* validate
-		* diff
-		* clone
-		* inspect
+		* `save`
+		* `destroy`
+		* `fetch`
+		* `validate`
+		* `diff`
+		* `clone`
+		* `inspect`
 	* Events
-* Storage
-	* Auto-connect on first operation (operation queue)
+* **Storage**
 	* Operations: Single + Bulk
-		* get
-		* set
-		* del
+    	* `get`
+    	* `set`
+    	* `del`
+    * Connect-on-demand: Auto-connect on first operation (operation queue)
 	* Adapters
 		* Memory
-		* FileSystem
-		* Memcache
-		* Redis
-		* MongoDB
-    	* ElasticSearch
-    	* AmazonS3
-		* ...
-	* Events
-* Validation / Schema
+		* [FileSystem](http://nodejs.org/api/fs.html)
+		* [Memcache](http://memcached.org)
+		* [Redis](http://redis.io)
+		* [MongoDB](http://mongodb.org)
+		* [ElasticSearch](http://elasticsearch.org)
+		* [AmazonS3](http://aws.amazon.com/s3)
+    * Events
+* **Validation (Schema)**
+	* Spec: [JSON Schema](http://json-schema.org)
 	* Adapters
-		* Amanda
-		* ...
-* Diffing
+		* [Amanda](https://github.com/Baggz/Amanda)
+		* [Schema.js](https://github.com/akidee/schema.js)
+* **Diffing**
 	* Adapters
-		* JSONDiff
-		* ...
+    	* [JSONDiff](https://github.com/andreyvit/json-diff)
+		* [DeepDiff](https://github.com/flitbit/diff)
+		* [ObjectDiff](https://github.com/NV/objectDiff.js)
+		* [Patcher.js](https://github.com/mikolalysenko/patcher.js)
 
 
 ## Installation
