@@ -1,6 +1,8 @@
 
 ::::: CURRENT/NEXT ::
 
+- [REFACTOR]: Refactor out all adapters except "Memory" and "FileSystem" to own NPM modules, e.g. "node-document-storage-redis", "node-document-validator-amanda", "node-document-differ-jsondiff", etc.
+
 
 ::::: HIGH ::
 
@@ -15,44 +17,79 @@
       - Memcache: http://code.google.com/p/memcached/wiki/NewCommands#Standard_Protocol
       - AmazonS3: http://aws.typepad.com/aws/2011/12/amazon-s3-object-expiration.html (i.e. note really => invalidate on fetch)
 
+- [FEATURE]: KyotoTycoon
+      - https://github.com/weaver/node-kyoto
 
-::::: MEDIUM ::
+- [FEATURE]: BerkelyDB
+      - https://github.com/mcavage/node-bdb
 
-- [REFACTOR]: Refactor out all adapters except "Memory" and "FileSystem" to own NPM modules, e.g. "node-document-storage-redis", "node-document-validator-amanda", "node-document-differ-jsondiff", etc.
+- [FEATURE]: SimpleDB
+      - https://github.com/rjrodger/simpledb
+
+- [FEATURE]: DynamoDB
+      - https://github.com/jed/dynamo
+
+- [FEATURE]: RavenDB
+      - ?
 
 - [FEATURE]: Riak
       - http://riakjs.com
       - http://docs.basho.com/riak/1.2.1/tutorials/querying/Basic-Operations/
 
+- [FEATURE]: CouchBase
+      - https://github.com/couchbase/couchnode
+
 - [FEATURE]: CouchDB
-      - HTTP
+      - https://github.com/dscape/nano
 
 - [FEATURE]: Cassandra
       - https://github.com/racker/node-cassandra-client
       - https://github.com/simplereach/helenus
 
-- [FEATURE]: SQLiteStorage
+- [FEATURE]: HBase
+      - https://github.com/wdavidw/node-hbase
+
+- [FEATURE]: SQLite3
       - https://github.com/developmentseed/node-sqlite3
 
-- [FEATURE]: PostgreSQLStorage (HStore)
+- [FEATURE]: PostgreSQL (HStore)
       - https://github.com/brianc/node-postgres
       - https://github.com/nonuby/node-postgres-hstore
 
-- [FEATURE]: MySQLStorage
+- [FEATURE]: MySQL
       - https://github.com/felixge/node-mysql
-
-- [FEATURE]: RavenDB
-      - ?
 
 - [FEATURE]: In-process stores
       - https://github.com/creationix/nstore
       - https://github.com/felixge/node-dirty
       - https://github.com/pgte/alfred
 
-- [FEATURE]: Support "versioning" for documents (Storage).
-
 
 ::::: LOW ::
+
+- [FEATURE]: Count records by type: `Storage#count(<TYPE>)`
+      - Memory: `Object.keys`
+      - FileSystem: http://nodejs.org/docs/v0.3.1/api/fs.html#fs.readdir
+      - Memcache: https://gist.github.com/1365005 (HACK)
+      - Redis: http://redis.io/commands/keys
+      - MongoDB: http://docs.mongodb.org/manual/reference/method/db.collection.count
+      - ElasticSearch: http://www.elasticsearch.org/guide/reference/api/count.html
+      - AmazonS3: http://docs.amazonwebservices.com/AmazonS3/2006-03-01/API/RESTBucketGET.html (HACK - bad one)
+
+- [FEATURE]: Clear records by type: `Storage#clear(<TYPE>)`
+      - Memory: `Object.keys`
+      - FileSystem: http://nodejs.org/docs/v0.3.1/api/fs.html#fs.readdir
+      - Memcache: https://gist.github.com/1365005 (HACK)
+      - Redis: http://redis.io/commands/keys
+      - MongoDB: http://docs.mongodb.org/manual/reference/method/db.collection.remove
+      - ElasticSearch: http://www.elasticsearch.org/guide/reference/api/delete-by-query.html
+      - AmazonS3:
+            http://docs.aws.amazon.com/AmazonS3/latest/API/multiobjectdeleteapi.html
+            http://docs.amazonwebservices.com/AmazonS3/2006-03-01/API/RESTBucketGET.html (HACK - bad one)
+
+- [FEATURE]: Migrate from one DB to another via storage instances: `Storage#export(storage)` + `Storage#import(storage)`
+
+- [FEATURE]: Support "versioning" for documents (Storage).
 
 - [FEATURE]: Support multiple endpoints - where applicable - for all storage adapters/clients.
 
@@ -70,15 +107,11 @@
 
 ::::: MAYBE ::
 
-- [FEATURE]: RESTStorage (client/server-side)
-      - https://github.com/danwrong/restler
-
-- [FEATURE]: HyperDexStorage
+- [FEATURE]: HyperDex
       - https://github.com/rescrv/HyperDex/tree/master/hyperclient/nodejs
 
-- [FEATURE]: Storage.count
-
-- [FEATURE]: Storage.clear
+- [FEATURE]: REST (storage adapter)
+      - https://github.com/danwrong/restler
 
 - [REVIEW]: Get/Set/Del nested attribute values in some convenient way.
 
