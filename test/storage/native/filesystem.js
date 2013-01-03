@@ -1,12 +1,10 @@
 
-var filesystem = require('../../../lib/storage/filesystem');
+var fs = require('node-fs');
 
 module.exports = {
   get: function(db, type, id, callback) {
     var path = [db, type].join('/'),
         file = [path, id].join('/') + '.json';
-
-    var fs = require('node-fs');
 
     fs.exists(path, function(exists) {
       if (exists) {
@@ -23,8 +21,6 @@ module.exports = {
     var path = [db, type].join('/'),
         file = [path, id].join('/') + '.json';
 
-    var fs = require('node-fs');
-
     fs.mkdir(path, 0777, true, function(err1) {
       fs.writeFile(file, data, 'utf8', function(err) {
         callback(err, !err);
@@ -36,8 +32,6 @@ module.exports = {
     var path = [db, type].join('/'),
         file = [path, id].join('/') + '.json';
 
-    var fs = require('node-fs');
-
     fs.exists(path, function(exists) {
       if (exists) {
         fs.unlink(file, function(err) {
@@ -46,6 +40,14 @@ module.exports = {
       } else {
         callback(null, false);
       }
+    });
+  },
+
+  exists: function(db, type, id, callback) {
+    var path = [db, type].join('/');
+
+    fs.exists(path, function(exists) {
+      callback(err, exists);
     });
   }
 };

@@ -28,5 +28,15 @@ module.exports = {
     client.del(key, function(err, res) {
       callback(err, res);
     });
+  },
+
+  exists: function(db, type, id, callback) {
+    var key = [db, type, id].join('/');
+
+    var client = require('redis').createClient(6379, 'localhost');
+
+    client.exists(key, function(err, res) {
+      callback(err, res);
+    });
   }
 };

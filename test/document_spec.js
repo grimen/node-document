@@ -354,6 +354,80 @@ var Spec = {
         }
       }, // .del
 
+      '.exists': {
+        '()': function() {
+          assert.throws(function() {
+            Post.exists(function(err, result) {});
+          });
+        },
+
+        // .exists 1
+
+        '(1)': function(done) {
+          Post.del(1, function(err, result) {
+            Post.exists(1, function(err, result) {
+              assert.deepEqual ( result, [false] );
+
+              Post.set(1, {foo: 'bar 1'}, function(err, result) {
+                Post.exists(1, function(err, result) {
+                  assert.deepEqual ( result, [true] );
+                });
+              });
+
+              done();
+            });
+          });
+        },
+
+        '(1, {})': function(done) {
+          Post.del(1, function(err, result) {
+            Post.exists(1, {}, function(err, result) {
+              assert.deepEqual ( result, [false] );
+
+              Post.set(1, {foo: 'bar 1'}, function(err, result) {
+                Post.exists(1, {}, function(err, result) {
+                  assert.deepEqual ( result, [true] );
+                });
+              });
+
+              done();
+            });
+          });
+        },
+
+        // .exists *
+
+        '([1, 2])': function(done) {
+          Post.del([1, 2], function() {
+            Post.exists([1, 2], function(err, result) {
+              assert.deepEqual ( result, [false, false] );
+
+              Post.set([1, 2], [{foo: 'bar 1'}, {foo: 'bar 2'}], function() {
+                Post.exists([1, 2], function(err, result) {
+                  assert.deepEqual ( result, [true, true] );
+                  done();
+                });
+              });
+            });
+          });
+        },
+
+        '([1, 2], {})': function(done) {
+          Post.del([1, 2], function() {
+            Post.exists([1, 2], {}, function(err, result) {
+              assert.deepEqual ( result, [false, false] );
+
+              Post.set([1, 2], [{foo: 'bar 1'}, {foo: 'bar 2'}], function(err, result) {
+                Post.exists([1, 2], {}, function(err, result) {
+                  assert.deepEqual ( result, [true, true] );
+                  done();
+                });
+              });
+            });
+          });
+        }
+      }, // .exists
+
       '.end': {
         '()': function() {
           assert.ok ( Post.end(function(err, result) {}) );

@@ -22,7 +22,8 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 		* `create`
 		* `get`
 		* `set`
-		* `del`
+   		* `del`
+		* `exists`
 	* Instance
 		* `save`
 		* `destroy`
@@ -36,7 +37,8 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 	* Operations: Single + Bulk
     	* `get`
     	* `set`
-    	* `del`
+      	* `del`
+      	* `exists`
     * Connect-on-demand: Auto-connect on first operation (operation queue)
 	* Adapters
 		* Memory

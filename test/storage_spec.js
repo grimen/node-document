@@ -154,10 +154,28 @@ var Spec = {
       assert.throws ( storage.del, Error );
     },
 
+    '#exists': function() {
+      assert.property ( storage, 'exists' );
+      assert.typeOf ( storage.exists, 'function' );
+      assert.throws ( storage.exists, Error );
+    },
+
     '#end': function() {
       assert.property ( storage, 'end' );
       assert.typeOf ( storage.end, 'function' );
-      // assert.throws ( storage.end, Error );
+      assert.doesNotThrow ( storage.end, Error );
+    },
+
+    '#pack': function() {
+      assert.property ( storage, 'pack' );
+      assert.typeOf ( storage.pack, 'function' );
+      assert.deepEqual ( storage.pack({foo: 'bar'}), {foo: 'bar'} );
+    },
+
+    '#unpack': function() {
+      assert.property ( storage, 'unpack' );
+      assert.typeOf ( storage.unpack, 'function' );
+      assert.deepEqual ( storage.pack({foo: 'bar'}), {foo: 'bar'} );
     },
 
     '#on': function() {

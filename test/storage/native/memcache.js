@@ -30,5 +30,15 @@ module.exports = {
     client.del(key, function(err, res) {
       callback(err, res);
     });
+  },
+
+  exists: function(db, type, id, callback) {
+    var key = [db, type, id].join('/');
+
+    var client = new memcached('localhost:11211');
+
+    client.append(key, null, function(err, res) {
+      callback(err, res);
+    });
   }
 };

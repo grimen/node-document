@@ -24,5 +24,17 @@ module.exports = {
     client.delete(db, type, id, {}, function(err, res) {
       callback(err, res);
     });
+  },
+
+  exists: function(db, type, id, callback) {
+    var client = new elasticsearch.Client('localhost', {port: 9200});
+
+    // client.count(db, type, {id: id}, function(err, res) {
+    //   callback(err, res);
+    // });
+
+    client.get(self.options.server.db, resource.id, {type: resource.type, ignoreMissing: true}, function(err, data, res) {
+      callback(err, res);
+    });
   }
 };

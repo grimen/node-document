@@ -173,7 +173,7 @@ var Spec = {
     '#set': {
       'one': {
         '<NEW_KEY>': {
-          "(<STRING_KEY>, <JSON_VALUE>)  =>  [true]": function(done) {
+          "(<STRING_KEY>, <VALUE>)  =>  [true]": function(done) {
             storage.set('set/new-one-foo_1-a', {foo: 'bar_1'}, function(storage_err, storage_response) {
               native.get('default-test', 'set', 'new-one-foo_1-a', function(client_err, client_response) {
                 assert.deepEqual ( storage_response, [true] );
@@ -185,7 +185,7 @@ var Spec = {
         }, // <NEW_KEY>
 
         '[<NEW_KEY>]': {
-          "([<STRING_KEY>], [<JSON_VALUE>])  =>  [true]": function(done) {
+          "([<STRING_KEY>], [<VALUE>])  =>  [true]": function(done) {
             storage.set(['set/new-one-foo_1-b'], [{foo: 'bar_1'}], function(storage_err, storage_response) {
               native.get('default-test', 'set', 'new-one-foo_1-b', function(client_err, client_response) {
                 assert.deepEqual ( storage_response, [true] );
@@ -199,7 +199,7 @@ var Spec = {
 
       'many': {
         '[<NEW_KEY>, <NEW_KEY]': {
-          "([<STRING_KEY_1>, <STRING_KEY_2>], [<JSON_VALUE_1>, <JSON_VALUE_2>])  =>  [true, true]": function(done) {
+          "([<STRING_KEY_1>, <STRING_KEY_2>], [<VALUE_1>, <VALUE_2>])  =>  [true, true]": function(done) {
             storage.set(['set/new-many-foo_1-c', 'set/new-many-foo_2-c'], [{foo: 'bar_1'}, {foo: 'bar_2'}], function(storage_err, storage_response) {
               native.get('default-test', 'set', 'new-many-foo_1-c', function(client_err_1, client_response_1) {
                 native.get('default-test', 'set', 'new-many-foo_2-c', function(client_err_2, client_response_2) {
@@ -230,7 +230,7 @@ var Spec = {
         }, // <NEW_KEY>
 
         '<EXISTING_KEY>': {
-          "(<EXISTING_KEY>)  =>  [<JSON_VALUE>]', 'set', '": function(done) {
+          "(<EXISTING_KEY>)  =>  [<VALUE>]', 'set', '": function(done) {
             native.set('default-test', 'get', 'existing-one-foo_1-b', {foo: 'bar_1'}, function() {
               storage.get(['get/existing-one-foo_1-b'], function(storage_err, storage_response) {
                 assert.deepEqual ( storage_response, [{foo: 'bar_1'}] );
@@ -250,7 +250,7 @@ var Spec = {
         }, // [<NEW_KEY>]
 
         '[<EXISTING_KEY>]': {
-          "([<EXISTING_KEY>])  =>  [<JSON_VALUE>]": function(done) {
+          "([<EXISTING_KEY>])  =>  [<VALUE>]": function(done) {
             native.set('default-test', 'get', 'existing-one-foo_1-d', {foo: 'bar_1'}, function() {
               storage.get(['get/existing-one-foo_1-d'], function(storage_err, storage_response) {
                 assert.deepEqual ( storage_response, [{foo: 'bar_1'}] );
@@ -272,7 +272,7 @@ var Spec = {
         }, // [<NEW_KEY>, <NEW_KEY>]
 
         '[<NEW_KEY>, <EXISTING_KEY>]': {
-          "([<NEW_KEY>, <EXISTING_KEY>])  =>  [null, JSON_VALUE]": function(done) {
+          "([<NEW_KEY>, <EXISTING_KEY>])  =>  [null, <VALUE>]": function(done) {
             native.set('default-test', 'get', 'existing-many-foo_1-b', {foo: 'bar_1'}, function() {
               storage.get(['get/new-many-foo_1-b', 'get/existing-many-foo_1-b'], function(storage_err, storage_response) {
                 assert.deepEqual ( storage_response, [null, {foo: 'bar_1'}] );
@@ -283,7 +283,7 @@ var Spec = {
         }, // [<NEW_KEY>, <EXISTING_KEY>]
 
         '[<EXISTING_KEY>, <NEW_KEY>]': {
-          "([<EXISTING_KEY>, <NEW_KEY>])  =>  [JSON_VALUE, null]": function(done) {
+          "([<EXISTING_KEY>, <NEW_KEY>])  =>  [<VALUE>, null]": function(done) {
             native.set('default-test', 'get', 'existing-many-foo_1-c', {foo: 'bar_1'}, function() {
               storage.get(['get/existing-many-foo_1-c', 'get/new-many-foo_1-c'], function(storage_err, storage_response) {
                 assert.deepEqual ( storage_response, [{foo: 'bar_1'}, null] );
@@ -294,7 +294,7 @@ var Spec = {
         }, // [<EXISTING_KEY>, <NEW_KEY>]
 
         '[<EXISTING_KEY>, <EXISTING_KEY>]': {
-          "([<EXISTING_KEY>, <EXISTING_KEY>])  =>  [<JSON_VALUE>, <JSON_VALUE>]": function(done) {
+          "([<EXISTING_KEY>, <EXISTING_KEY>])  =>  [<VALUE>, <VALUE>]": function(done) {
             native.set('default-test', 'get', 'existing-many-foo_1-d', {foo: 'bar_1'}, function() {
               native.set('default-test', 'get', 'existing-many-foo_2-d', {foo: 'bar_2'}, function() {
                 storage.get(['get/existing-many-foo_1-d', 'get/existing-many-foo_2-d'], function(storage_err, storage_response) {
@@ -427,7 +427,97 @@ var Spec = {
           }
         } // [<EXISTING_KEY>, <EXISTING_KEY>]
       } // many
-    } // #del
+    }, // #del
+
+    '#exists': {
+      'one': {
+        '<NEW_KEY>': {
+          "(<NEW_KEY>)  =>  [false]": function(done) {
+            storage.exists('exists/new-one-foo_1-a', function(err, storage_response) {
+              assert.deepEqual ( storage_response, [false] );
+              done();
+            });
+          }
+        }, // <NEW_KEY>
+
+        '<EXISTING_KEY>': {
+          "(<EXISTING_KEY>)  =>  [true]": function(done) {
+            native.set('default-test', 'exists', 'existing-one-foo_1-a', {foo: 'bar_1'}, function() {
+              storage.exists('exists/existing-one-foo_1-a', function(err, storage_response) {
+                assert.deepEqual ( storage_response, [true] );
+                done();
+              });
+            });
+          }
+        }, // <EXISTING_KEY>
+
+        '[<NEW_KEY>]': {
+          "([<NEW_KEY>])  =>  [false]": function(done) {
+            storage.exists(['exists/new-one-foo_1-b'], function(err, storage_response) {
+              assert.deepEqual ( storage_response, [false] );
+              done();
+            });
+          }
+        }, // [<NEW_KEY>]
+
+        '[<EXISTING_KEY>]': {
+          "([<EXISTING_KEY>])  =>  [true]": function(done) {
+            native.set('default-test', 'exists', 'existing-one-foo_1-c', {foo: 'bar_1'}, function() {
+              storage.exists(['exists/existing-one-foo_1-c'], function(err, storage_response) {
+                assert.deepEqual ( storage_response, [true] );
+                done();
+              });
+            });
+          }
+        } // [<EXISTING_KEY>]
+      }, // oned
+
+      'many': {
+        '[<NEW_KEY>, <NEW_KEY>]': {
+          "([<NEW_KEY>, <NEW_KEY>])  =>  [false, false]": function(done) {
+            storage.exists(['exists/new-many-foo_1-a', 'exists/new-many-foo_2-a'], function(err, storage_response) {
+              assert.deepEqual ( storage_response, [false, false] );
+              done();
+            });
+          }
+        }, // [<NEW_KEY>, <NEW_KEY>]
+
+        '[<NEW_KEY>, <EXISTING_KEY>]': {
+          "([<NEW_KEY>, <EXISTING_KEY>])  =>  [false, true]": function(done) {
+            native.set('default-test', 'exists', 'existing-many-foo_1-b', {foo: 'bar_1'}, function() {
+              storage.exists(['exists/new-many-foo_1-b', 'exists/existing-many-foo_1-b'], function(err, storage_response) {
+                assert.deepEqual ( storage_response, [false, true] );
+                done();
+              });
+            });
+          }
+        }, // [<NEW_KEY>, <EXISTING_KEY>]
+
+        '[<EXISTING_KEY>, <NEW_KEY>]': {
+          "([<EXISTING_KEY>, <NEW_KEY>])  =>  [true, false]": function(done) {
+            native.set('default-test', 'exists', 'existing-many-foo_1-c', {foo: 'bar_1'}, function() {
+              storage.exists(['exists/existing-many-foo_1-c', 'exists/new-many-foo_1-c'], function(err, storage_response) {
+                assert.deepEqual ( storage_response, [true, false] );
+                done();
+              });
+            });
+          }
+        }, // [<EXISTING_KEY>, <NEW_KEY>]
+
+        '[<EXISTING_KEY>, <EXISTING_KEY>]': {
+          "([<EXISTING_KEY>, <EXISTING_KEY>])  =>  [true, true]": function(done) {
+            native.set('default-test', 'exists', 'existing-many-foo_1-d', {foo: 'bar_1'}, function() {
+              native.set('default-test', 'exists', 'existing-many-foo_2-d', {foo: 'bar_2'}, function() {
+                storage.exists(['exists/existing-many-foo_1-d', 'exists/existing-many-foo_2-d'], function(err, storage_response) {
+                  assert.deepEqual ( storage_response, [true, true] );
+                  done();
+                });
+              });
+            });
+          }
+        } // [<EXISTING_KEY>, <EXISTING_KEY>]
+      } // many
+    } // #exists
   }
 
 };

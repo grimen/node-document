@@ -4,37 +4,21 @@
 
 ::::: HIGH ::
 
-- [REFACTOR]: Rewrite `Memcache` storage to driver that support SASL (auth) - tried MemJS but it contains serious race-condition bug. =S
+- [REFACTOR/HALTED]: Rewrite `Memcache` storage to driver that support SASL (auth) - tried MemJS but it contains serious race-condition bug. =S
+
+- [FEATURE]: Support "expires" for documents (Storage).
+      - Memory: Invalidate on fetch
+      - FileSystem: Invalidate on fetch
+      - Redis: http://redis.io/commands/expire
+      - MongoDB: http://docs.mongodb.org/manual/tutorial/expire-data
+      - ElasticSearch: http://www.elasticsearch.org/guide/reference/mapping/ttl-field.html
+      - Memcache: http://code.google.com/p/memcached/wiki/NewCommands#Standard_Protocol
+      - AmazonS3: http://aws.typepad.com/aws/2011/12/amazon-s3-object-expiration.html (i.e. note really => invalidate on fetch)
 
 
 ::::: MEDIUM ::
 
 - [REFACTOR]: Refactor out all adapters except "Memory" and "FileSystem" to own NPM modules, e.g. "node-document-storage-redis", "node-document-validator-amanda", "node-document-differ-jsondiff", etc.
-
-
-::::: LOW ::
-
-- [FEATURE]: Storage.exists
-
-- [FEATURE]: Support "expires" for documents (Storage).
-
-- [FEATURE]: Support "versioning" for documents (Storage).
-
-- [FEATURE]: Support multiple endpoints - where applicable - for all storage adapters/clients.
-
-- [FEATURE]: Detect and handle lost connections in a reliable and automatic way.
-
-- [FEATURE]: Connection pool for storage connections
-      - https://github.com/coopernurse/node-pool
-
-- [REFACTOR]: Rewrite `ElasticSearch` storage using vanilla HTTP agent.
-
-- [DOC]: Proper function documentation (JSDoc-style).
-      - http://en.wikipedia.org/wiki/JSDoc
-      - https://developers.google.com/closure/compiler/docs/js-for-compiler
-
-
-::::: MAYBE ::
 
 - [FEATURE]: Riak
       - http://riakjs.com
@@ -64,6 +48,27 @@
       - https://github.com/creationix/nstore
       - https://github.com/felixge/node-dirty
       - https://github.com/pgte/alfred
+
+- [FEATURE]: Support "versioning" for documents (Storage).
+
+
+::::: LOW ::
+
+- [FEATURE]: Support multiple endpoints - where applicable - for all storage adapters/clients.
+
+- [FEATURE]: Detect and handle lost connections in a reliable and automatic way.
+
+- [FEATURE]: Connection pool for storage connections
+      - https://github.com/coopernurse/node-pool
+
+- [REFACTOR]: Rewrite `ElasticSearch` storage using vanilla HTTP agent.
+
+- [DOC]: Proper function documentation (JSDoc-style).
+      - http://en.wikipedia.org/wiki/JSDoc
+      - https://developers.google.com/closure/compiler/docs/js-for-compiler
+
+
+::::: MAYBE ::
 
 - [FEATURE]: RESTStorage (client/server-side)
       - https://github.com/danwrong/restler

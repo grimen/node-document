@@ -15,12 +15,18 @@ module.exports = {
       .on('response', function(res){
         res.setEncoding('utf8');
 
+        var error = null, body = '';
+
         res.on('data', function(data){
-          callback(null, data);
+          body += data;
         });
 
         res.on('error', function(err){
-          callback(err);
+          error = err;
+        });
+
+        res.on('end', function(err){
+          callback(err, body);
         });
       })
       .end();
@@ -36,16 +42,18 @@ module.exports = {
       .on('response', function(res){
         res.setEncoding('utf8');
 
-        // res.on('data', function(data){
-        //   callback(null, data);
-        // });
+        var error = null, body = '';
+
+        res.on('data', function(data){
+          body += data;
+        });
 
         res.on('error', function(err){
-          callback(err);
+          error = err;
         });
 
         res.on('end', function(){
-          callback(null, true);
+          callback(error, !error);
         });
       })
       .end(data, 'utf8');
@@ -61,16 +69,45 @@ module.exports = {
       .on('response', function(res){
         res.setEncoding('utf8');
 
-        // res.on('data', function(data){
-        //   callback(null, data);
-        // });
+        var error = null, body = '';
+
+        res.on('data', function(data){
+          body += data;
+        });
 
         res.on('error', function(err){
-          callback(err);
+          error = err;
         });
 
         res.on('end', function(){
-          callback(null, true);
+          callback(error, !error);
+        });
+      })
+      .end();
+  },
+
+  exists: function(db, type, id, callback) {
+    var key = '/' + [type, id].join('/') + '.json';
+
+    var client = require('knox').createClient({key: auth.key, secret: auth.secret, bucket: db});
+
+    client
+      .get(key)
+      .on('response', function(res){
+        res.setEncoding('utf8');
+
+        var error = null, body = '';
+
+        res.on('data', function(data){
+          body += data;
+        });
+
+        res.on('error', function(err){
+          error = err;
+        });
+
+        res.on('end', function(){
+          callback(error, (res.statusCode < 400));
         });
       })
       .end();

@@ -13,6 +13,8 @@ test-local:
 	&& \
 	(echo test/storage/memory_spec.js && . ./.env && NODE_DOCUMENT_TEST_AUTH=false && ./node_modules/.bin/mocha ./test/storage/memory_spec.js) \
 	&& \
+	(echo test/storage/filesystem_spec.js && . ./.env && NODE_DOCUMENT_TEST_AUTH=false && ./node_modules/.bin/mocha ./test/storage/filesystem_spec.js) \
+	&& \
 	(echo test/storage/memcache_spec.js && . ./.env && NODE_DOCUMENT_TEST_AUTH=false && ./node_modules/.bin/mocha ./test/storage/memcache_spec.js) \
 	&& \
 	(echo test/storage/redis_spec.js && . ./.env && NODE_DOCUMENT_TEST_AUTH=false && ./node_modules/.bin/mocha ./test/storage/redis_spec.js) \
@@ -32,6 +34,8 @@ test-remote:
 	&& \
 	(echo test/storage/memory_spec.js && source ./.env && NODE_DOCUMENT_TEST_AUTH=true && ./node_modules/.bin/mocha ./test/storage/memory_spec.js) \
 	&& \
+	(echo test/storage/filesystem_spec.js && . ./.env && NODE_DOCUMENT_TEST_AUTH=false && ./node_modules/.bin/mocha ./test/storage/filesystem_spec.js) \
+	&& \
 	(echo test/storage/memcache_spec.js && source ./.env && NODE_DOCUMENT_TEST_AUTH=true && ./node_modules/.bin/mocha ./test/storage/memcache_spec.js) \
 	&& \
 	(echo test/storage/redis_spec.js && source ./.env && NODE_DOCUMENT_TEST_AUTH=true && ./node_modules/.bin/mocha ./test/storage/redis_spec.js) \
@@ -41,6 +45,5 @@ test-remote:
 	(echo test/storage/elasticsearch_spec.js && source ./.env && NODE_DOCUMENT_TEST_AUTH=true && ./node_modules/.bin/mocha ./test/storage/elasticsearch_spec.js) \
 	&& \
 	(echo test/storage/amazons3_spec.js && source ./.env && NODE_DOCUMENT_TEST_AUTH=true && ./node_modules/.bin/mocha ./test/storage/amazons3_spec.js) \
-
 
 .PHONY: test
