@@ -179,7 +179,6 @@ var Spec = {
 
 
     'Persistance': {
-      /* FAILS / REVIEW
       '.create': {
         '()': function(done) {
           Post.create(function(err, doc) {
@@ -203,7 +202,6 @@ var Spec = {
           });
         }
       },
-      */
 
       '.set': {
         '()': function() {
