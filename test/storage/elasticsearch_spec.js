@@ -1,12 +1,10 @@
-require('sugar');
-var helper = require('../spec_helper'),
+var helper = require('../helper'),
     assert = helper.assert,
     flag = helper.flag,
-    debug = helper.debug,
+    debug = helper.debug;
 
-    Storage = require('../../lib/storage/elasticsearch'),
+var Storage = require('../../lib/storage/elasticsearch'),
     storage = new Storage(),
-
     native = require('./native/elasticsearch');
 
 process.env.ELASTICSEARCH_URL_AUTHORIZED = process.env.ELASTICSEARCH_URL_AUTHORIZED || 'http://vt4t5uu0:pk9q6whooingl4uo@jasmine-4473159.us-east-1.bonsai.io:80/test';

@@ -1,4 +1,7 @@
-require('colors');
+var helper = require('../helper'),
+    assert = helper.assert,
+    flag = helper.flag,
+    debug = helper.debug;
 
 if (!process.env.AMAZON_S3_URL) {
   console.warn('\n[NOTICE]: Required to run all tests: `process.env.AMAZON_S3_URL`'.red);
@@ -16,15 +19,8 @@ if (!process.env.AMAZON_S3_URL_UNAUTHORIZED) {
   return;
 }
 
-require('sugar');
-var helper = require('../spec_helper'),
-    assert = helper.assert,
-    flag = helper.flag,
-    debug = helper.debug,
-
-    Storage = require('../../lib/storage/amazons3'),
+var Storage = require('../../lib/storage/amazons3'),
     storage = new Storage(),
-
     native = require('./native/amazons3');
 
 process.env.AMAZON_S3_URL_AUTHORIZED = process.env.AMAZON_S3_URL_AUTHORIZED || '<AUTHORIZED-URL>';

@@ -1,12 +1,10 @@
-require('sugar');
-var helper = require('../spec_helper'),
+var helper = require('../helper'),
     assert = helper.assert,
     flag = helper.flag,
     debug = helper.debug;
 
-    Storage = require('../../lib/storage/mongodb'),
-    storage = new Storage();
-
+var Storage = require('../../lib/storage/mongodb'),
+    storage = new Storage(),
     native = require('./native/mongodb');
 
 process.env.MONGODB_URL_AUTHORIZED = process.env.MONGODB_URL_AUTHORIZED || 'mongodb://heroku:f51b96d19b73a934b3d2a0d43e4b7aa7@alex.mongohq.com:10020/app9156953';

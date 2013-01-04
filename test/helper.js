@@ -1,5 +1,8 @@
 process.env.NODE_ENV = 'test';
 
+require('sugar');
+require('colors');
+
 var chai = require('chai'),
     longjohn = require('longjohn');
 

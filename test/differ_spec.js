@@ -1,5 +1,4 @@
-require('sugar');
-var helper = require('./spec_helper'),
+var helper = require('./helper'),
     assert = helper.assert,
     debug = helper.debug,
 

@@ -1,7 +1,6 @@
-require('sugar');
-var helper = require('./spec_helper'),
+var helper = require('./helper'),
     assert = helper.assert,
-    debug = console.log,
+    debug = helper.debug,
 
     Document = require('../lib/document'),
 
@@ -9,7 +8,6 @@ var helper = require('./spec_helper'),
 
 var Post = undefined,
     doc = undefined;
-
 
 var Spec = {
 

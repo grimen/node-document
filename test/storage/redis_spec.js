@@ -1,12 +1,10 @@
-require('sugar');
-var helper = require('../spec_helper'),
+var helper = require('../helper'),
     assert = helper.assert,
     flag = helper.flag,
-    debug = helper.debug,
+    debug = helper.debug;
 
-    Storage = require('../../lib/storage/redis'),
+var Storage = require('../../lib/storage/redis'),
     storage = new Storage(),
-
     native = require('./native/redis');
 
 process.env.REDIS_URL_AUTHORIZED = process.env.REDIS_URL_AUTHORIZED || 'redis://redistogo:57c5cf5c220a6b376cf3740297e0f69f@slimehead.redistogo.com:9501/test';

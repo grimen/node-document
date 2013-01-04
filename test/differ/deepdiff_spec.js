@@ -1,9 +1,9 @@
-require('sugar');
-var helper = require('../spec_helper'),
+var helper = require('../helper'),
     assert = helper.assert,
-    debug = helper.debug,
+    flag = helper.flag,
+    debug = helper.debug;
 
-    Differ = require('../../lib/differ/deepdiff'),
+var Differ = require('../../lib/differ/deepdiff'),
     differ = new Differ();
 
 var Spec = {

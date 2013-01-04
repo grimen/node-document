@@ -1,12 +1,10 @@
-require('sugar');
-var helper = require('../spec_helper'),
+var helper = require('../helper'),
     assert = helper.assert,
     flag = helper.flag,
-    debug = helper.debug,
+    debug = helper.debug;
 
-    Storage = require('../../lib/storage/memcache'),
+var Storage = require('../../lib/storage/memcache'),
     storage = new Storage(),
-
     native = require('./native/memcache');
 
 process.env.MEMCACHE_URL_AUTHORIZED = process.env.MEMCACHE_URL_AUTHORIZED || 'memcache://776617:00112ab7bcb3dc6ad345@dev1.ec2.memcachier.com:11211/test';

@@ -1,11 +1,10 @@
-require('sugar');
-var helper = require('../spec_helper'),
+var helper = require('../helper'),
     assert = helper.assert,
-    debug = helper.debug,
+    flag = helper.flag,
+    debug = helper.debug;
 
-    Storage = require('../../lib/storage/filesystem'),
+var Storage = require('../../lib/storage/filesystem'),
     storage = new Storage(),
-
     native = require('./native/filesystem');
 
 var Spec = {

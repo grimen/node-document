@@ -67,6 +67,12 @@
 
 ::::: LOW ::
 
+- [FEATURE]: `Serialiser` adapters support (for storages where it makes sense)
+      - JSON
+      - BSON
+      - MessagePack
+      - ProtocolBuffers
+
 - [FEATURE]: Count records by type: `Storage#count(<TYPE>)`
       - Memory: `Object.keys`
       - FileSystem: http://nodejs.org/docs/v0.3.1/api/fs.html#fs.readdir
