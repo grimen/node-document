@@ -1,12 +1,42 @@
 
 ::::: CURRENT/NEXT ::
 
-- [REFACTOR]: Refactor out all adapters except "Memory" and "FileSystem" to own NPM modules, e.g. "node-document-storage-redis", "node-document-validator-amanda", "node-document-differ-jsondiff", etc.
+- [FEATURE]: KyotoTycoon
+      - https://github.com/weaver/node-kyoto
+
+- [FEATURE]: BerkelyDB
+      - https://github.com/mcavage/node-bdb
+
+- [FEATURE]: SimpleDB
+      - https://github.com/rjrodger/simpledb
+
+- [FEATURE]: CouchDB
+      - https://github.com/dscape/nano
+
+- [FEATURE]: CouchBase
+      - https://github.com/couchbase/couchnode
+
+- [FEATURE]: Riak
+      - http://riakjs.com
 
 
 ::::: HIGH ::
 
 - [REFACTOR/HALTED]: Rewrite `Memcache` storage to driver that support SASL (auth) - tried MemJS but it contains serious race-condition bug. =S
+
+- [FEATURE]: Close DB connections properly on system exception/exit:
+
+      // In constructor:
+
+      process.on('exit', function() {
+        self.end();
+      });
+
+      process.on('uncaughtException', function() {
+        self.end();
+      });
+
+      // + https://github.com/0ctave/node-sync
 
 - [FEATURE]: Support "expires" for documents (Storage).
       - Memory: Invalidate on fetch
@@ -17,30 +47,11 @@
       - Memcache: http://code.google.com/p/memcached/wiki/NewCommands#Standard_Protocol
       - AmazonS3: http://aws.typepad.com/aws/2011/12/amazon-s3-object-expiration.html (i.e. note really => invalidate on fetch)
 
-- [FEATURE]: KyotoTycoon
-      - https://github.com/weaver/node-kyoto
-
-- [FEATURE]: BerkelyDB
-      - https://github.com/mcavage/node-bdb
-
-- [FEATURE]: SimpleDB
-      - https://github.com/rjrodger/simpledb
-
 - [FEATURE]: DynamoDB
       - https://github.com/jed/dynamo
 
 - [FEATURE]: RavenDB
       - ?
-
-- [FEATURE]: Riak
-      - http://riakjs.com
-      - http://docs.basho.com/riak/1.2.1/tutorials/querying/Basic-Operations/
-
-- [FEATURE]: CouchBase
-      - https://github.com/couchbase/couchnode
-
-- [FEATURE]: CouchDB
-      - https://github.com/dscape/nano
 
 - [FEATURE]: Cassandra
       - https://github.com/racker/node-cassandra-client
@@ -67,7 +78,7 @@
 
 ::::: LOW ::
 
-- [FEATURE]: `Serialiser` adapters support (for storages where it makes sense)
+- [FEATURE]: `Serializer` adapters support (for storages where it makes sense)
       - JSON
       - BSON
       - MessagePack
@@ -109,6 +120,8 @@
 - [DOC]: Proper function documentation (JSDoc-style).
       - http://en.wikipedia.org/wiki/JSDoc
       - https://developers.google.com/closure/compiler/docs/js-for-compiler
+
+- [REVIEW]: http://howtonode.org/understanding-process-next-tick
 
 
 ::::: MAYBE ::

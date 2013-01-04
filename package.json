@@ -1,7 +1,7 @@
 {
   "name": "node-document",
   "description": "Many document stores, Y U NO interface?",
-  "version": "0.1.0-pre4",
+  "version": "0.1.0-pre5",
   "repositories": [
     {
      "type": "git",
@@ -41,20 +41,13 @@
   "dependencies": {
     "funargs": "latest",
     "sugar": "latest",
-    "node-fs": "latest",
-    "amanda": "latest",
     "node-uuid": "latest",
-    "patcher": "latest",
-    "memcached": "latest",
-    "redis": "latest",
-    "hiredis": "latest",
-    "elastical": "latest",
-    "mongodb": "latest",
-    "json-diff": "latest",
-    "schema": "latest",
-    "patcher": "latest",
-    "deep-diff": "latest",
-    "objectdiff": "latest"
+    "node-document-storage": "latest",
+    "node-document-validator": "latest",
+    "node-document-differ": "latest",
+    "node-document-storage-global": "latest",
+    "node-document-validator-amanda": "latest",
+    "node-document-differ-jsondiff": "latest"
   },
   "devDependencies": {
     "mocha": "latest",

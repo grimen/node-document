@@ -1,15 +1,18 @@
 var helper = require('./helper'),
     assert = helper.assert,
-    debug = helper.debug,
+    debug = helper.debug;
 
-    Document = require('../lib/document'),
-
-    Redis = require('../lib/storage/redis');
+var Document = require('../'),
+    Storage = Document.DefaultStorage;
 
 var Post = undefined,
     doc = undefined;
 
-var Spec = {
+// -----------------------
+//  Test
+// --------------------
+
+module.exports= {
 
   'Document': {
     '()': {
@@ -60,7 +63,7 @@ var Spec = {
 
     '("type", storage)': {
       before: function() {
-        Post = Document('Post', new Redis());
+        Post = Document('Post', new Storage());
       },
 
       'should successfully create a model': function() {
@@ -76,13 +79,13 @@ var Spec = {
       },
 
       '.storage': function() {
-        assert.instanceOf ( Post.storage, Redis );
+        assert.instanceOf ( Post.storage, Storage );
       }
     },
 
     '("type", Storage)': {
       before: function() {
-        Post = Document('Post', Redis);
+        Post = Document('Post', Storage);
       },
 
       'should successfully create a model': function() {
@@ -98,7 +101,7 @@ var Spec = {
       },
 
       '.storage': function() {
-        assert.instanceOf ( Post.storage, Redis );
+        assert.instanceOf ( Post.storage, Storage );
       }
     },
 
@@ -130,7 +133,7 @@ var Spec = {
 
     'require': {
       '(valid_adapter_path)': function() {
-        assert.equal ( Document.require('storage/redis'), Redis );
+        assert.equal ( Document.require('class'), Document.Class );
       },
 
       '(invalid_adapter_path)': function() {
@@ -790,7 +793,7 @@ var Spec = {
       '.Differ': {
         '': function() {
           assert.property ( Document, 'Differ' );
-          assert.equal ( Document.Differ, require('../lib/differ/jsondiff') );
+          assert.equal ( Document.Differ, Document.DefaultDiffer );
         }
       },
 
@@ -874,7 +877,7 @@ var Spec = {
       '.Validator': {
         '': function() {
           assert.property ( Document, 'Validator' );
-          assert.equal ( Document.Validator, require('../lib/validator/amanda') );
+          assert.equal ( Document.Validator, Document.DefaultValidator );
         }
       },
 
@@ -1210,5 +1213,3 @@ var Spec = {
   } // Document.Model.prototype
 
 };
-
-module.exports = Spec;

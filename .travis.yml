@@ -3,10 +3,5 @@ node_js:
   - 0.8
 script:
   - "make test-ci"
-services:
-  - memcached
-  - redis-server
-  - mongodb
-  - elasticsearch
 notifications:
   email: false

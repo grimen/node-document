@@ -2,8 +2,18 @@
 var Document = require('../'); // i.e. 'node-document'
 
 // Some storages of choice
-var Redis = Document.require('storage/redis');
-var FileSystem = Document.require('storage/filesystem');
+try {
+  var Redis = require('node-document-storage-redis');
+} catch (err) {
+  console.error("Install dependeny: $ npm install node-document-storage-redis");
+  process.exit(0);
+}
+try {
+  var FileSystem = require('node-document-storage-fs');
+} catch (err) {
+  console.error("Install dependeny: $ npm install node-document-storage-fs");
+  process.exit(0);
+}
 
 // A model
 var Post = Document('Post', new Redis('redis://localhost:6379/app'));

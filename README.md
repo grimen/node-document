@@ -7,7 +7,7 @@
 Work in progress; see **[TODO](https://github.com/grimen/node-document/blob/master/TODO)**.
 
 
-## What it is - and what it's not
+## About
 
 A **minimalistic ODM** for the most atomic operations - such as `GET`/`SET`/`DEL` - on different kinds of "document(-ish)" stores using **one unified API**; switching database should be a matter of changing a line of code.
 
@@ -33,7 +33,8 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 		* `clone`
 		* `inspect`
 	* Events
-* **Storage**
+* [**Storage**](https://github.com/grimen/node-document-storage)
+	* Unified interface so persist data into differen kinds of storages/databases.
 	* Operations: Single + Bulk
     	* `get`
     	* `set`
@@ -41,25 +42,30 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
       	* `exists`
     * Connect-on-demand: Auto-connect on first operation (operation queue)
 	* Adapters
-		* Memory
-		* [FileSystem](http://nodejs.org/api/fs.html)
-		* [Memcache](http://memcached.org)
-		* [Redis](http://redis.io)
-		* [MongoDB](http://mongodb.org)
-		* [ElasticSearch](http://elasticsearch.org)
-		* [AmazonS3](http://aws.amazon.com/s3)
+		* [Global](https://github.com/grimen/node-document-storage-global) *Memory*
+		* [FS](https://github.com/grimen/node-document-storage-fs) *FileSystem*
+		* [Memcached](https://github.com/grimen/node-document-storage-memcached)
+		* [Redis](https://github.com/grimen/node-document-storage-redis)
+		* [MongoDB](https://github.com/grimen/node-document-storage-mongodb)
+		* [ElasticSearch](https://github.com/grimen/node-document-storage-elasticsearch)
+		* [AmazonS3](https://github.com/grimen/node-document-storage-amazons3)
     * Events
-* **Validation (Schema)**
-	* Spec: [JSON Schema](http://json-schema.org)
+* [**Validator**](https://github.com/grimen/node-document-validator)
+	* Unified interface for validate data based on a custom [JSON Schema](http://json-schema.org).
+	* Operations:
+		* `validate`
 	* Adapters
-		* [Amanda](https://github.com/Baggz/Amanda)
-		* [Schema.js](https://github.com/akidee/schema.js)
-* **Diffing**
+		* [Amanda](https://github.com/grimen/node-document-validator-amanda)
+		* [Schema.js](https://github.com/grimen/node-document-validator-schema)
+* [**Differ**](https://github.com/grimen/node-document-differ)
+	* Unified interface for diffing objects to see changes between the two (additions/removals/edits).
+	* Operations:
+		* `diff`
 	* Adapters
-    	* [JSONDiff](https://github.com/andreyvit/json-diff)
-		* [DeepDiff](https://github.com/flitbit/diff)
-		* [ObjectDiff](https://github.com/NV/objectDiff.js)
-		* [Patcher.js](https://github.com/mikolalysenko/patcher.js)
+    	* [JSONDiff](https://github.com/grimen/node-document-differ-jsondiff)
+		* [DeepDiff](https://github.com/grimen/node-document-differ-deepdiff)		
+		* [ObjectDiff](https://github.com/grimen/node-document-differ-objectdiff)
+		* [Patcher.js](https://github.com/grimen/node-document-differ-patcher)
 
 
 ## Installation
@@ -76,9 +82,9 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 ```javascript
   var Document = require('node-document');
 
-  // Some storages of choice
-  var Redis = Document.require('storage/redis');
-  var FileSystem = Document.require('storage/filesystem');
+  // Some storages of choice - install via NPM
+  var Redis = require('node-document-storage-redis'); // NOTE: $ npm install node-document-storage-redis
+  var FileSystem = require('node-document-storage-fs'); // NOTE: $ npm install node-document-storage-fs
 
   // A model
   var Post = Document('Post', new Redis('redis://localhost:6379/app'));
