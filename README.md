@@ -47,8 +47,9 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 		* [Memcached](https://github.com/grimen/node-document-storage-memcached)
 		* [Redis](https://github.com/grimen/node-document-storage-redis)
 		* [KyotoCabinet](https://github.com/grimen/node-document-storage-kyotocabinet)
-		* [MongoDB](https://github.com/grimen/node-document-storage-mongodb)
-		* [ElasticSearch](https://github.com/grimen/node-document-storage-elasticsearch)
+    	* [MongoDB](https://github.com/grimen/node-document-storage-mongodb)
+		* [CouchDB](https://github.com/grimen/node-document-storage-couchdb)
+    	* [ElasticSearch](https://github.com/grimen/node-document-storage-elasticsearch)
 		* [AmazonS3](https://github.com/grimen/node-document-storage-amazons3)
     * Events
 * [**Validator**](https://github.com/grimen/node-document-validator)
@@ -64,7 +65,7 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 		* `diff`
 	* Adapters
     	* [JSONDiff](https://github.com/grimen/node-document-differ-jsondiff)
-		* [DeepDiff](https://github.com/grimen/node-document-differ-deepdiff)		
+		* [DeepDiff](https://github.com/grimen/node-document-differ-deepdiff)
 		* [ObjectDiff](https://github.com/grimen/node-document-differ-objectdiff)
 		* [Patcher.js](https://github.com/grimen/node-document-differ-patcher)
 

@@ -4,9 +4,6 @@
 - [FEATURE]: SimpleDB
       - https://github.com/rjrodger/simpledb
 
-- [FEATURE]: CouchDB
-      - https://github.com/dscape/nano
-
 - [FEATURE]: CouchBase
       - https://github.com/couchbase/couchnode
 
@@ -17,6 +14,8 @@
 ::::: HIGH ::
 
 - [REFACTOR/HALTED]: Rewrite `Memcache` storage to driver that support SASL (auth) - tried MemJS but it contains serious race-condition bug. =S
+
+- [FEATURE]: Always set `_id` and `_type` on the document- and optionally `created_at` and `updated_at`. ISSUE: Reserved keywoards (e.g. CouchDB)
 
 - [FEATURE]: Close DB connections properly on system exception/exit:
 
@@ -40,6 +39,13 @@
       - ElasticSearch: http://www.elasticsearch.org/guide/reference/mapping/ttl-field.html
       - Memcache: http://code.google.com/p/memcached/wiki/NewCommands#Standard_Protocol
       - AmazonS3: http://aws.typepad.com/aws/2011/12/amazon-s3-object-expiration.html (i.e. note really => invalidate on fetch)
+
+- [REFACTOR]: var MyStorageAdapter = Storage.adapter('MyStorageAdapter', function() { /* ... */ })
+
+- [REFACTOR]: var MyStorageAdapterSpecs = Storage.spec('MyStorageAdapter', {pack: JSON.stringify, unpack: JSON.parse}})
+
+- [FEATURE]: Dropbox
+      - https://github.com/sintaxi/node-dbox
 
 - [FEATURE]: DynamoDB
       - https://github.com/jed/dynamo
