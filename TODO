@@ -1,19 +1,41 @@
 
 ::::: CURRENT/NEXT ::
 
-- [FEATURE]: SimpleDB
+- [FEATURE]: AmazonSimpleDB
+      - https://github.com/SaltwaterC/aws2js/wiki/SDB-Client
       - https://github.com/rjrodger/simpledb
+      - http://aws.amazon.com/simpledb/
 
-- [FEATURE]: CouchBase
-      - https://github.com/couchbase/couchnode
+- [FEATURE]: AmazonElastiCache
+      - https://github.com/SaltwaterC/aws2js/wiki/ElastiCache-client
+      - https://console.aws.amazon.com/elasticache/home?region=us-east-1
 
-- [FEATURE]: Riak
-      - http://riakjs.com
+- [FEATURE]: AmazonDynamoDB
+      - https://github.com/SaltwaterC/aws2js/wiki/DynamoDB-Client
+      - https://github.com/jed/dynamo
+      - https://console.aws.amazon.com/dynamodb/home?region=us-east-1
+
+- [FEATURE]: Dropbox
+      - https://github.com/sintaxi/node-dbox
+
+- [FEATURE]: RavenDB
+      - ?
+
+- [FEATURE]: HBase
+      - https://github.com/wdavidw/node-hbase
+
+- [FEATURE]: Cassandra
+      - https://github.com/racker/node-cassandra-client
+      - https://github.com/simplereach/helenus
 
 
 ::::: HIGH ::
 
-- [REFACTOR/HALTED]: Rewrite `Memcache` storage to driver that support SASL (auth) - tried MemJS but it contains serious race-condition bug. =S
+- [REFACTOR]: Storage#key should always return same format (+ move to Storage baseclass): {db: <database>, key: '<type>/<id>', type: <type>, :id: <id>}
+
+- [REFACTOR]: var MyStorageAdapter = Storage.adapter('MyStorageAdapter', function() { /* ... */ })
+
+- [REFACTOR]: var MyStorageAdapterSpecs = Storage.spec('MyStorageAdapter', {pack: JSON.stringify, unpack: JSON.parse}})
 
 - [FEATURE]: Always set `_id` and `_type` on the document- and optionally `created_at` and `updated_at`. ISSUE: Reserved keywoards (e.g. CouchDB)
 
@@ -30,35 +52,6 @@
       });
 
       // + https://github.com/0ctave/node-sync
-
-- [FEATURE]: Support "expires" for documents (Storage).
-      - Memory: Invalidate on fetch
-      - FileSystem: Invalidate on fetch
-      - Redis: http://redis.io/commands/expire
-      - MongoDB: http://docs.mongodb.org/manual/tutorial/expire-data
-      - ElasticSearch: http://www.elasticsearch.org/guide/reference/mapping/ttl-field.html
-      - Memcache: http://code.google.com/p/memcached/wiki/NewCommands#Standard_Protocol
-      - AmazonS3: http://aws.typepad.com/aws/2011/12/amazon-s3-object-expiration.html (i.e. note really => invalidate on fetch)
-
-- [REFACTOR]: var MyStorageAdapter = Storage.adapter('MyStorageAdapter', function() { /* ... */ })
-
-- [REFACTOR]: var MyStorageAdapterSpecs = Storage.spec('MyStorageAdapter', {pack: JSON.stringify, unpack: JSON.parse}})
-
-- [FEATURE]: Dropbox
-      - https://github.com/sintaxi/node-dbox
-
-- [FEATURE]: DynamoDB
-      - https://github.com/jed/dynamo
-
-- [FEATURE]: RavenDB
-      - ?
-
-- [FEATURE]: Cassandra
-      - https://github.com/racker/node-cassandra-client
-      - https://github.com/simplereach/helenus
-
-- [FEATURE]: HBase
-      - https://github.com/wdavidw/node-hbase
 
 - [FEATURE]: SQLite3
       - https://github.com/developmentseed/node-sqlite3
@@ -84,6 +77,15 @@
       - MessagePack
       - ProtocolBuffers
 
+- [FEATURE]: Support "expires" for documents (Storage).
+      - Memory: Invalidate on fetch
+      - FileSystem: Invalidate on fetch
+      - Redis: http://redis.io/commands/expire
+      - MongoDB: http://docs.mongodb.org/manual/tutorial/expire-data
+      - ElasticSearch: http://www.elasticsearch.org/guide/reference/mapping/ttl-field.html
+      - Memcache: http://code.google.com/p/memcached/wiki/NewCommands#Standard_Protocol
+      - AmazonS3: http://aws.typepad.com/aws/2011/12/amazon-s3-object-expiration.html (i.e. note really => invalidate on fetch)
+
 - [FEATURE]: Count records by type: `Storage#count(<TYPE>)`
       - Memory: `Object.keys`
       - FileSystem: http://nodejs.org/docs/v0.3.1/api/fs.html#fs.readdir
@@ -104,9 +106,11 @@
             http://docs.aws.amazon.com/AmazonS3/latest/API/multiobjectdeleteapi.html
             http://docs.amazonwebservices.com/AmazonS3/2006-03-01/API/RESTBucketGET.html (HACK - bad one)
 
-- [FEATURE]: Migrate from one DB to another via storage instances: `Storage#export(storage)` + `Storage#import(storage)`
+- [FEATURE]: Migrate from one DB to another via storage instances: `Storage#export(storage, ...)` + `Storage#import(storage, ...)`, and maybe Storage#sync(storage, ...)
 
-- [FEATURE]: Support "versioning" for documents (Storage).
+- [FEATURE/DISCUSS]: Wherever it makes sense; `Storage#index` + `Storage#unindex`
+
+- [FEATURE/DISCUSS]: Support "versioning" for documents (Storage).
 
 - [FEATURE]: Support multiple endpoints - where applicable - for all storage adapters/clients.
 
@@ -114,6 +118,8 @@
 
 - [FEATURE]: Connection pool for storage connections
       - https://github.com/coopernurse/node-pool
+
+- [REFACTOR/HALTED]: Rewrite `Memcache` storage to driver that support SASL (auth) - tried MemJS but it contains serious race-condition bug. =S
 
 - [REFACTOR]: Rewrite `ElasticSearch` storage using vanilla HTTP agent.
 
@@ -125,6 +131,14 @@
 
 
 ::::: MAYBE ::
+
+- [REFACTOR]: Switch to lower-lever driver for `AmazonS3` storage adapter
+      - https://github.com/SaltwaterC/aws2js/wiki/S3-Client
+
+- [FEATURE]: CouchBase
+      - https://github.com/couchbase/couchnode
+      - https://github.com/membase/manifest
+      - https://github.com/clojurewerkz/spyglass/blob/master/.travis.yml
 
 - [FEATURE]: HyperDex
       - https://github.com/rescrv/HyperDex/tree/master/hyperclient/nodejs

@@ -49,6 +49,7 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 		* [KyotoCabinet](https://github.com/grimen/node-document-storage-kyotocabinet)
     	* [MongoDB](https://github.com/grimen/node-document-storage-mongodb)
 		* [CouchDB](https://github.com/grimen/node-document-storage-couchdb)
+		* [Riak](https://github.com/grimen/node-document-storage-riak)
     	* [ElasticSearch](https://github.com/grimen/node-document-storage-elasticsearch)
 		* [AmazonS3](https://github.com/grimen/node-document-storage-amazons3)
     * Events
