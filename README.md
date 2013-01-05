@@ -46,6 +46,7 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 		* [FS](https://github.com/grimen/node-document-storage-fs) *FileSystem*
 		* [Memcached](https://github.com/grimen/node-document-storage-memcached)
 		* [Redis](https://github.com/grimen/node-document-storage-redis)
+		* [KyotoCabinet](https://github.com/grimen/node-document-storage-kyotocabinet)
 		* [MongoDB](https://github.com/grimen/node-document-storage-mongodb)
 		* [ElasticSearch](https://github.com/grimen/node-document-storage-elasticsearch)
 		* [AmazonS3](https://github.com/grimen/node-document-storage-amazons3)

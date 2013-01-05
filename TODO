@@ -1,12 +1,6 @@
 
 ::::: CURRENT/NEXT ::
 
-- [FEATURE]: KyotoTycoon
-      - https://github.com/weaver/node-kyoto
-
-- [FEATURE]: BerkelyDB
-      - https://github.com/mcavage/node-bdb
-
 - [FEATURE]: SimpleDB
       - https://github.com/rjrodger/simpledb
 
@@ -128,6 +122,10 @@
 
 - [FEATURE]: HyperDex
       - https://github.com/rescrv/HyperDex/tree/master/hyperclient/nodejs
+
+- [FEATURE]: BerkelyDB
+      - https://github.com/mcavage/node-bdb
+            - OS X: './build/default/*' => './build/Release/*'
 
 - [FEATURE]: REST (storage adapter)
       - https://github.com/danwrong/restler
