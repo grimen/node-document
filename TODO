@@ -1,6 +1,12 @@
 
 ::::: CURRENT/NEXT ::
 
+- [REFACTOR]: Storage#key should always return same format (+ move to Storage baseclass): {db: <database>, key: '<type>/<id>', type: <type>, :id: <id>}
+
+- [FEATURE]: Storege#set should accept Object as well; makes more sense: {key1: value1, key2: value2, ...}
+
+- [FEATURE]: Storege#get/del/exists should accept [<type>, <id>] as key as alternative to "<type>/<id>".
+
 - [FEATURE]: AmazonSimpleDB
       - https://github.com/SaltwaterC/aws2js/wiki/SDB-Client
       - https://github.com/rjrodger/simpledb
@@ -28,10 +34,11 @@
       - https://github.com/racker/node-cassandra-client
       - https://github.com/simplereach/helenus
 
+- [FEATURE]: SQLite3
+      - https://github.com/developmentseed/node-sqlite3
+
 
 ::::: HIGH ::
-
-- [REFACTOR]: Storage#key should always return same format (+ move to Storage baseclass): {db: <database>, key: '<type>/<id>', type: <type>, :id: <id>}
 
 - [REFACTOR]: var MyStorageAdapter = Storage.adapter('MyStorageAdapter', function() { /* ... */ })
 
@@ -39,34 +46,12 @@
 
 - [FEATURE]: Always set `_id` and `_type` on the document- and optionally `created_at` and `updated_at`. ISSUE: Reserved keywoards (e.g. CouchDB)
 
-- [FEATURE]: Close DB connections properly on system exception/exit:
-
-      // In constructor:
-
-      process.on('exit', function() {
-        self.end();
-      });
-
-      process.on('uncaughtException', function() {
-        self.end();
-      });
-
-      // + https://github.com/0ctave/node-sync
-
-- [FEATURE]: SQLite3
-      - https://github.com/developmentseed/node-sqlite3
-
 - [FEATURE]: PostgreSQL (HStore)
       - https://github.com/brianc/node-postgres
       - https://github.com/nonuby/node-postgres-hstore
 
 - [FEATURE]: MySQL
       - https://github.com/felixge/node-mysql
-
-- [FEATURE]: In-process stores
-      - https://github.com/creationix/nstore
-      - https://github.com/felixge/node-dirty
-      - https://github.com/pgte/alfred
 
 
 ::::: LOW ::
@@ -76,6 +61,8 @@
       - BSON
       - MessagePack
       - ProtocolBuffers
+
+- [FEATURE]: `Storage#keys` - export all document keys.
 
 - [FEATURE]: Support "expires" for documents (Storage).
       - Memory: Invalidate on fetch
@@ -128,6 +115,10 @@
       - https://developers.google.com/closure/compiler/docs/js-for-compiler
 
 - [REVIEW]: http://howtonode.org/understanding-process-next-tick
+
+- [DOC]: In README; split up into parts "Document", "Storage", "Valdiator", "Differ", ("Serialiser") with adapter tables and build status.
+
+- [DOC]: In each storage README; list support table, connection-URL/key mapping table, connection URL format, etc.
 
 
 ::::: MAYBE ::

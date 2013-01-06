@@ -9,9 +9,9 @@ Work in progress; see **[TODO](https://github.com/grimen/node-document/blob/mast
 
 ## About
 
-A **minimalistic ODM** for the most atomic operations - such as `GET`/`SET`/`DEL` - on different kinds of "document(-ish)" stores using **one unified API**; switching database should be a matter of changing a line of code.
+**Minimalistic ODM** for [Node.js](http://nodejs.org) implementing the most fundamental operations (such as `GET`/`SET`/`DEL`) on different kinds of "document(-ish)" stores using **one unified API**. Switching database should be a matter of changing a line of code.
 
-To stick to this philosophy more advanced operations such as "queries" won't be a core feature, but as `node-document` won't mess with your data it can be used along with any 3rd-party drivers as if there was no tomorrow.
+To stick to this philosophy more advanced operations won't be supported in core, but `node-document` can be used along with any 3rd-party drivers.
 
 
 ## Features
@@ -33,8 +33,7 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 		* `clone`
 		* `inspect`
 	* Events
-* [**Storage**](https://github.com/grimen/node-document-storage)
-	* Unified interface so persist data into differen kinds of storages/databases.
+* [**Storage**](https://github.com/grimen/node-document-storage) - Unified interface for persisting data into differen kinds of storages/databases.
 	* Operations: Single + Bulk
     	* `get`
     	* `set`
@@ -44,6 +43,7 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
 	* Adapters
 		* [Global](https://github.com/grimen/node-document-storage-global) *Memory*
 		* [FS](https://github.com/grimen/node-document-storage-fs) *FileSystem*
+		* [NStore](https://github.com/grimen/node-document-storage-nstore) *Memory/File/Process*
 		* [Memcached](https://github.com/grimen/node-document-storage-memcached)
 		* [Redis](https://github.com/grimen/node-document-storage-redis)
 		* [KyotoCabinet](https://github.com/grimen/node-document-storage-kyotocabinet)
@@ -53,15 +53,13 @@ To stick to this philosophy more advanced operations such as "queries" won't be 
     	* [ElasticSearch](https://github.com/grimen/node-document-storage-elasticsearch)
 		* [AmazonS3](https://github.com/grimen/node-document-storage-amazons3)
     * Events
-* [**Validator**](https://github.com/grimen/node-document-validator)
-	* Unified interface for validate data based on a custom [JSON Schema](http://json-schema.org).
+* [**Validator**](https://github.com/grimen/node-document-validator) - Unified interface for validating data based on a custom [JSON Schema](http://json-schema.org).
 	* Operations:
 		* `validate`
 	* Adapters
 		* [Amanda](https://github.com/grimen/node-document-validator-amanda)
 		* [Schema.js](https://github.com/grimen/node-document-validator-schema)
-* [**Differ**](https://github.com/grimen/node-document-differ)
-	* Unified interface for diffing objects to see changes between the two (additions/removals/edits).
+* [**Differ**](https://github.com/grimen/node-document-differ) - Unified interface for diffing objects to see changes between the two (additions/removals/edits).
 	* Operations:
 		* `diff`
 	* Adapters
