@@ -849,14 +849,21 @@ module.exports= {
       '#toString': {
         '=> JSON string (#attributes)': function() {
           assert.typeOf ( doc.toString, 'function' );
-          assert.deepEqual ( doc.toString(), JSON.stringify({title: "A title", description: "Lorem ipsum..."}) )
+          assert.deepEqual ( doc.toString(), JSON.stringify({title: "A title", description: "Lorem ipsum..."}) );
+        }
+      },
+
+      '#valueOf': {
+        '=> JSON string (#attributes)': function() {
+          assert.typeOf ( doc.valueOf, 'function' );
+          assert.deepEqual ( doc.valueOf(), doc );
         }
       },
 
       '#inspect': {
         '=> JSON object (#)': function() {
           assert.typeOf ( doc.inspect, 'function' );
-          assert.deepEqual ( doc.inspect(), require('util').inspect({title: "A title", description: "Lorem ipsum..."}) )
+          assert.deepEqual ( doc.inspect(), require('util').inspect({title: "A title", description: "Lorem ipsum..."}) );
         }
       }
     }, // Serialization
