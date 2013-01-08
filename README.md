@@ -33,12 +33,12 @@ To stick to this philosophy more advanced operations won't be supported in core,
 		* `clone`
 		* `inspect`
 	* Events
-* [**Storage**](https://github.com/grimen/node-document-storage) - Unified interface for persisting data into differen kinds of storages/databases.
+* [**Storage**](https://github.com/grimen/node-document-storage) - Unified interface for write/read data to/from differen kinds of storages/databases.
 	* Operations: Single + Bulk
-    	* `get`
-    	* `set`
-      	* `del`
-      	* `exists`
+		* `get`
+		* `set`
+		* `del`
+		* `exists`
     * Connect-on-demand: Auto-connect on first operation (operation queue)
 	* Adapters
 		* [Global](https://github.com/grimen/node-document-storage-global) *Memory*
@@ -59,6 +59,8 @@ To stick to this philosophy more advanced operations won't be supported in core,
 	* Adapters
 		* [Amanda](https://github.com/grimen/node-document-validator-amanda)
 		* [Schema.js](https://github.com/grimen/node-document-validator-schema)
+		* [JSONSchema](https://github.com/grimen/node-document-validator-jsonschema)
+		* [JSV](https://github.com/grimen/node-document-validator-jsv)
 * [**Differ**](https://github.com/grimen/node-document-differ) - Unified interface for diffing objects to see changes between the two (additions/removals/edits).
 	* Operations:
 		* `diff`
