@@ -1,5 +1,5 @@
 
-var Document = require('../'); // i.e. 'node-document'
+var Document = require('..'); // NPM: 'node-document'
 
 // Some storages of choice
 try {

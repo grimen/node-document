@@ -1,66 +1,60 @@
 
 ::::: CURRENT/NEXT ::
 
-- [REFACTOR]: Storage#key should always return same format (+ move to Storage baseclass): {db: <database>, key: '<type>/<id>', type: <type>, :id: <id>}
+- [REFACTOR]: Make `Differ#diff` and `Validator#validate` synchronous - worst case drop support for `Amanda` or "fake it".
 
-- [FEATURE]: Storege#set should accept Object as well; makes more sense: {key1: value1, key2: value2, ...}
-
-- [FEATURE]: Storege#get/del/exists should accept [<type>, <id>] as key as alternative to "<type>/<id>".
-
-- [FEATURE]: AmazonSimpleDB
-      - https://github.com/SaltwaterC/aws2js/wiki/SDB-Client
-      - https://github.com/rjrodger/simpledb
-      - http://aws.amazon.com/simpledb/
-
-- [FEATURE]: AmazonElastiCache
-      - https://github.com/SaltwaterC/aws2js/wiki/ElastiCache-client
-      - https://console.aws.amazon.com/elasticache/home?region=us-east-1
-
-- [FEATURE]: AmazonDynamoDB
-      - https://github.com/SaltwaterC/aws2js/wiki/DynamoDB-Client
-      - https://github.com/jed/dynamo
-      - https://console.aws.amazon.com/dynamodb/home?region=us-east-1
-
-- [FEATURE]: Dropbox
-      - https://github.com/sintaxi/node-dbox
-
-- [FEATURE]: RavenDB
-      - ?
-
-- [FEATURE]: HBase
-      - https://github.com/wdavidw/node-hbase
-
-- [FEATURE]: Cassandra
-      - https://github.com/racker/node-cassandra-client
-      - https://github.com/simplereach/helenus
-
-- [FEATURE]: SQLite3
-      - https://github.com/developmentseed/node-sqlite3
-
-
-::::: HIGH ::
+- [DOC]: In all `package.json`:
+      - keywords
 
 - [REFACTOR]: var MyStorageAdapter = Storage.adapter('MyStorageAdapter', function() { /* ... */ })
 
 - [REFACTOR]: var MyStorageAdapterSpecs = Storage.spec('MyStorageAdapter', {pack: JSON.stringify, unpack: JSON.parse}})
 
-- [FEATURE]: Always set `_id` and `_type` on the document- and optionally `created_at` and `updated_at`. ISSUE: Reserved keywoards (e.g. CouchDB)
+- [REVIEW]: `Storage#set.single`, `Storage#set.bulk`
 
-- [FEATURE]: PostgreSQL (HStore)
-      - https://github.com/brianc/node-postgres
-      - https://github.com/nonuby/node-postgres-hstore
+- [ADAPTER]: OrientDB
+      - https://github.com/gabipetrovay/node-orientdb
+      - http://www.orientdb.org
 
-- [FEATURE]: MySQL
-      - https://github.com/felixge/node-mysql
+- [ADAPTER]: ArangoDB
+      - https://github.com/kaerus/arango-client
+      - http://www.arangodb.org
+
+- [ADAPTER]: AmazonSimpleDB
+      - https://github.com/SaltwaterC/aws2js/wiki/SDB-Client
+      - https://github.com/rjrodger/simpledb
+      - http://aws.amazon.com/simpledb/
+
+- [ADAPTER]: AmazonElastiCache
+      - https://github.com/SaltwaterC/aws2js/wiki/ElastiCache-client
+      - https://console.aws.amazon.com/elasticache/home?region=us-east-1
+
+- [ADAPTER]: AmazonDynamoDB
+      - https://github.com/SaltwaterC/aws2js/wiki/DynamoDB-Client
+      - https://github.com/jed/dynamo
+      - https://console.aws.amazon.com/dynamodb/home?region=us-east-1
+
+- [ADAPTER]: Dropbox
+      - https://github.com/sintaxi/node-dbox
+
+- [ADAPTER]: RavenDB
+      - https://github.com/tchype/node-ravendb
+
+- [ADAPTER]: HBase
+      - https://github.com/wdavidw/node-hbase
+
+- [ADAPTER]: Cassandra
+      - https://github.com/racker/node-cassandra-client
+      - https://github.com/simplereach/helenus
 
 
-::::: LOW ::
+::::: HIGH ::
 
-- [FEATURE]: `Serializer` adapters support (for storages where it makes sense)
-      - JSON
-      - BSON
-      - MessagePack
-      - ProtocolBuffers
+- [FEATURE]: Always set: `_id`, `_type`, `_timestamp`, `_version` fields (and maybe `_expires`). ISSUE: Reserved keywoards (e.g. CouchDB)
+
+- [DOC]: In README; split up into parts "Document", "Storage", "Validator", "Differ", ("Serialiser") with adapter tables and build status.
+
+- [DOC]: In each storage README; list support table, connection-URL/key mapping table, connection URL format, etc.
 
 - [FEATURE]: `Storage#keys` - export all document keys.
 
@@ -93,55 +87,84 @@
             http://docs.aws.amazon.com/AmazonS3/latest/API/multiobjectdeleteapi.html
             http://docs.amazonwebservices.com/AmazonS3/2006-03-01/API/RESTBucketGET.html (HACK - bad one)
 
-- [FEATURE]: Migrate from one DB to another via storage instances: `Storage#export(storage, ...)` + `Storage#import(storage, ...)`, and maybe Storage#sync(storage, ...)
+- [FEATURE]: Migrate from one DB to another via storage instances: `Storage#export(storage, ...)` + `Storage#import(storage, ...)`, and maybe Storage#sync(storage, ...
 
-- [FEATURE/DISCUSS]: Wherever it makes sense; `Storage#index` + `Storage#unindex`
 
-- [FEATURE/DISCUSS]: Support "versioning" for documents (Storage).
-
-- [FEATURE]: Support multiple endpoints - where applicable - for all storage adapters/clients.
-
-- [FEATURE]: Detect and handle lost connections in a reliable and automatic way.
-
-- [FEATURE]: Connection pool for storage connections
-      - https://github.com/coopernurse/node-pool
+::::: LOW ::
 
 - [REFACTOR/HALTED]: Rewrite `Memcache` storage to driver that support SASL (auth) - tried MemJS but it contains serious race-condition bug. =S
 
 - [REFACTOR]: Rewrite `ElasticSearch` storage using vanilla HTTP agent.
 
+- [FEATURE/DISCUSS]: Support "versioning" for documents (Storage).
+
+- [FEATURE/DISCUSS]: Wherever it makes sense; `Storage#index` + `Storage#unindex`
+
 - [DOC]: Proper function documentation (JSDoc-style).
       - http://en.wikipedia.org/wiki/JSDoc
       - https://developers.google.com/closure/compiler/docs/js-for-compiler
 
-- [REVIEW]: http://howtonode.org/understanding-process-next-tick
+- [FEATURE]: Support multiple endpoints - where applicable - for all storage adapters/clients.
 
-- [DOC]: In README; split up into parts "Document", "Storage", "Valdiator", "Differ", ("Serialiser") with adapter tables and build status.
+- [ADAPTER]: SQLite3
+      - https://github.com/developmentseed/node-sqlite3
 
-- [DOC]: In each storage README; list support table, connection-URL/key mapping table, connection URL format, etc.
+- [ADAPTER]: PostgreSQL (HStore)
+      - https://github.com/brianc/node-postgres
+      - https://github.com/nonuby/node-postgres-hstore
+
+- [ADAPTER]: MySQL
+      - https://github.com/felixge/node-mysql
+      - http://www.igvita.com/2010/03/01/schema-free-mysql-vs-nosql
+      - https://github.com/igrigorik/em-proxy/blob/master/examples/schemaless-mysql/mysql_interceptor.rb
 
 
 ::::: MAYBE ::
 
+- [FEATURE]: Generic CLI for interacting with/between storages.
+
+- [ADAPTER/FEATURE]: Generic HTTP REST API
+
+- [ADAPTER/FEATURE]: Generic client-side HTTP GUI
+      - Something like: https://github.com/tldrio/mongo-edit
+
+- [ADAPTER/EXPERIMENT]: `Serializer` adapters support (...for storages where it makes sense)
+      - JSON - DONE
+      - BSON - DONE
+      - MsgPack - DONE
+
+- [ADAPTER/EXPERIMENT]: `Compressor` adapter support (...for storages where it makes sense)
+      - Deflate: DONE
+      - LZF - DONE
+      - Snappy - DONE
+
+- [ADAPTER]: BerkelyDB
+      - https://github.com/mcavage/node-bdb
+            - OS X: './build/default/*' => './build/Release/*' (fork it)
+            - https://npmjs.org/package/bindings - to fix the above problem
+            - NOTE: Got it working standalone, but fails when installed via `npm install`
+
+- [FEATURE]: Connection pool for storage connections
+      - https://github.com/coopernurse/node-pool
+
+- [FEATURE]: Detect and handle lost connections in a reliable and automatic way.
+
 - [REFACTOR]: Switch to lower-lever driver for `AmazonS3` storage adapter
       - https://github.com/SaltwaterC/aws2js/wiki/S3-Client
 
-- [FEATURE]: CouchBase
+- [ADAPTER]: CouchBase
       - https://github.com/couchbase/couchnode
       - https://github.com/membase/manifest
       - https://github.com/clojurewerkz/spyglass/blob/master/.travis.yml
 
-- [FEATURE]: HyperDex
+- [ADAPTER]: HyperDex
       - https://github.com/rescrv/HyperDex/tree/master/hyperclient/nodejs
 
-- [FEATURE]: BerkelyDB
-      - https://github.com/mcavage/node-bdb
-            - OS X: './build/default/*' => './build/Release/*'
-
-- [FEATURE]: REST (storage adapter)
+- [ADAPTER]: REST (storage adapter)
       - https://github.com/danwrong/restler
 
 - [REVIEW]: Get/Set/Del nested attribute values in some convenient way.
 
 - [REVIEW]: Support advanced URL convention (multiple hosts, options, etc.)
       - http://docs.mongodb.org/manual/reference/connection-string
+

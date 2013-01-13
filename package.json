@@ -1,13 +1,12 @@
 {
   "name": "node-document",
   "description": "Many document stores, Y U NO interface?",
-  "version": "0.1.0-pre5",
-  "repositories": [
-    {
-     "type": "git",
-     "url": "https://github.com/grimen/node-document.git"
-    }
-  ],
+  "version": "0.1.0-pre6",
+  "homepage": "https://github.com/grimen/node-document",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grimen/node-document.git"
+  },
   "bugs": {
     "web": "https://github.com/grimen/node-document/issues"
   },

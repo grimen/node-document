@@ -14,61 +14,77 @@ Work in progress; see **[TODO](https://github.com/grimen/node-document/blob/mast
 To stick to this philosophy more advanced operations won't be supported in core, but `node-document` can be used along with any 3rd-party drivers.
 
 
-## Features
+## Document
 
-* **Document**
-	* Class
-		* `new`
-		* `create`
-		* `get`
-		* `set`
-   		* `del`
-		* `exists`
-	* Instance
-		* `save`
-		* `destroy`
-		* `fetch`
-		* `validate`
-		* `diff`
-		* `clone`
-		* `inspect`
-	* Events
-* [**Storage**](https://github.com/grimen/node-document-storage) - Unified interface for write/read data to/from differen kinds of storages/databases.
-	* Operations: Single + Bulk
-		* `get`
-		* `set`
-		* `del`
-		* `exists`
-    * Connect-on-demand: Auto-connect on first operation (operation queue)
-	* Adapters
-		* [Global](https://github.com/grimen/node-document-storage-global) *Memory*
-		* [FS](https://github.com/grimen/node-document-storage-fs) *FileSystem*
-		* [NStore](https://github.com/grimen/node-document-storage-nstore) *Memory/File/Process*
-		* [Memcached](https://github.com/grimen/node-document-storage-memcached)
-		* [Redis](https://github.com/grimen/node-document-storage-redis)
-		* [KyotoCabinet](https://github.com/grimen/node-document-storage-kyotocabinet)
-    	* [MongoDB](https://github.com/grimen/node-document-storage-mongodb)
-		* [CouchDB](https://github.com/grimen/node-document-storage-couchdb)
-		* [Riak](https://github.com/grimen/node-document-storage-riak)
-    	* [ElasticSearch](https://github.com/grimen/node-document-storage-elasticsearch)
-		* [AmazonS3](https://github.com/grimen/node-document-storage-amazons3)
-    * Events
-* [**Validator**](https://github.com/grimen/node-document-validator) - Unified interface for validating data based on a custom [JSON Schema](http://json-schema.org).
-	* Operations:
-		* `validate`
-	* Adapters
-		* [Amanda](https://github.com/grimen/node-document-validator-amanda)
-		* [Schema.js](https://github.com/grimen/node-document-validator-schema)
-		* [JSONSchema](https://github.com/grimen/node-document-validator-jsonschema)
-		* [JSV](https://github.com/grimen/node-document-validator-jsv)
-* [**Differ**](https://github.com/grimen/node-document-differ) - Unified interface for diffing objects to see changes between the two (additions/removals/edits).
-	* Operations:
-		* `diff`
-	* Adapters
-    	* [JSONDiff](https://github.com/grimen/node-document-differ-jsondiff)
-		* [DeepDiff](https://github.com/grimen/node-document-differ-deepdiff)
-		* [ObjectDiff](https://github.com/grimen/node-document-differ-objectdiff)
-		* [Patcher.js](https://github.com/grimen/node-document-differ-patcher)
+The ODM.
+
+* Class
+	* `new`
+	* `create`
+	* `get`
+	* `set`
+	* `del`
+	* `exists`
+* Instance
+	* `save`
+	* `destroy`
+	* `fetch`
+	* `validate`
+	* `diff`
+	* `clone`
+	* `inspect`
+* Events
+
+
+### [**Storage**](https://github.com/grimen/node-document-storage)
+
+Unified interface for write/read data to/from differen kinds of storages/databases.
+
+* Operations: Single + Bulk
+	* `get`
+	* `set`
+	* `del`
+	* `exists`
+  * Connect-on-demand: Auto-connect on first operation (operation queue)
+* Adapters
+	* [Global](https://github.com/grimen/node-document-storage-global) *Memory*
+	* [FS](https://github.com/grimen/node-document-storage-fs) *FileSystem*
+	* [NStore](https://github.com/grimen/node-document-storage-nstore) *Memory/File/Process*
+	* [Memcached](https://github.com/grimen/node-document-storage-memcached)
+	* [Redis](https://github.com/grimen/node-document-storage-redis)
+	* [KyotoCabinet](https://github.com/grimen/node-document-storage-kyotocabinet)
+	* [MongoDB](https://github.com/grimen/node-document-storage-mongodb)
+	* [CouchDB](https://github.com/grimen/node-document-storage-couchdb)
+	* [Riak](https://github.com/grimen/node-document-storage-riak)
+	* [ElasticSearch](https://github.com/grimen/node-document-storage-elasticsearch)
+	* [AmazonS3](https://github.com/grimen/node-document-storage-amazons3)
+* Events
+
+
+### [**Validator**](https://github.com/grimen/node-document-validator)
+
+Unified interface for validating data based on a custom [JSON Schema](http://json-schema.org).
+
+* Operations:
+	* `validate`
+* Adapters
+	* [Amanda](https://github.com/grimen/node-document-validator-amanda)
+	* [Schema.js](https://github.com/grimen/node-document-validator-schema)
+	* [JSONSchema](https://github.com/grimen/node-document-validator-jsonschema)
+	* [JSV](https://github.com/grimen/node-document-validator-jsv)
+
+
+### [**Differ**](https://github.com/grimen/node-document-differ)
+
+Unified interface for diffing objects to see changes between the two (additions/removals/edits).
+
+* Operations:
+	* `diff`
+* Adapters
+	* [JSONDiff](https://github.com/grimen/node-document-differ-jsondiff)
+	* [DeepDiff](https://github.com/grimen/node-document-differ-deepdiff)
+	* [ObjectDiff](https://github.com/grimen/node-document-differ-objectdiff)
+	* [Patcher.js](https://github.com/grimen/node-document-differ-patcher)
 
 
 ## Installation
