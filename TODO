@@ -1,16 +1,9 @@
 
 ::::: CURRENT/NEXT ::
 
-- [REFACTOR]: Make `Differ#diff` and `Validator#validate` synchronous - worst case drop support for `Amanda` or "fake it".
-
-- [DOC]: In all `package.json`:
-      - keywords
-
 - [REFACTOR]: var MyStorageAdapter = Storage.adapter('MyStorageAdapter', function() { /* ... */ })
 
-- [REFACTOR]: var MyStorageAdapterSpecs = Storage.spec('MyStorageAdapter', {pack: JSON.stringify, unpack: JSON.parse}})
-
-- [REVIEW]: `Storage#set.single`, `Storage#set.bulk`
+- [REFACTOR]: Make `Differ#diff` and `Validator#validate` synchronous - worst case drop support for `Amanda` or "fake it".
 
 - [ADAPTER]: OrientDB
       - https://github.com/gabipetrovay/node-orientdb
@@ -50,9 +43,10 @@
 
 ::::: HIGH ::
 
-- [FEATURE]: Always set: `_id`, `_type`, `_timestamp`, `_version` fields (and maybe `_expires`). ISSUE: Reserved keywoards (e.g. CouchDB)
+- [DOC]: In all `package.json`:
+      - keywords
 
-- [DOC]: In README; split up into parts "Document", "Storage", "Validator", "Differ", ("Serialiser") with adapter tables and build status.
+- [FEATURE]: Always set: `_id`, `_type`, `_timestamp`, `_version` fields (and maybe `_expires`). ISSUE: Reserved keywords (e.g. CouchDB)
 
 - [DOC]: In each storage README; list support table, connection-URL/key mapping table, connection URL format, etc.
 
@@ -87,7 +81,12 @@
             http://docs.aws.amazon.com/AmazonS3/latest/API/multiobjectdeleteapi.html
             http://docs.amazonwebservices.com/AmazonS3/2006-03-01/API/RESTBucketGET.html (HACK - bad one)
 
-- [FEATURE]: Migrate from one DB to another via storage instances: `Storage#export(storage, ...)` + `Storage#import(storage, ...)`, and maybe Storage#sync(storage, ...
+- [FEATURE]: Migrate from one DB to another via storage instances: `Storage#export(storage || Stream, ...)` + `Storage#import(storage || Stream, ...)`, and maybe Storage#sync(storage, ...
+      - Inherit Stream? http://maxogden.com/node-streams
+      - Example:
+            function copy (srcdb, dstdb, callback) {
+              srcdb.readStream().pipe(dstdb.writeStream()).on('close', callback)
+            }
 
 
 ::::: LOW ::
@@ -121,12 +120,12 @@
 
 ::::: MAYBE ::
 
-- [FEATURE]: Generic CLI for interacting with/between storages.
+- [FEATURE]: Generic CLI for interacting with/between storages: `node-document-cli`
 
-- [ADAPTER/FEATURE]: Generic HTTP REST API
+- [ADAPTER/FEATURE]: Generic HTTP REST API: `node-document-api`
 
-- [ADAPTER/FEATURE]: Generic client-side HTTP GUI
-      - Something like: https://github.com/tldrio/mongo-edit
+- [ADAPTER/FEATURE]: Generic client-side HTTP GUI: `node-document-admin`
+      - Example: https://github.com/tldrio/mongo-edit
 
 - [ADAPTER/EXPERIMENT]: `Serializer` adapters support (...for storages where it makes sense)
       - JSON - DONE
@@ -138,24 +137,27 @@
       - LZF - DONE
       - Snappy - DONE
 
-- [ADAPTER]: BerkelyDB
-      - https://github.com/mcavage/node-bdb
-            - OS X: './build/default/*' => './build/Release/*' (fork it)
-            - https://npmjs.org/package/bindings - to fix the above problem
-            - NOTE: Got it working standalone, but fails when installed via `npm install`
+- [REFACTOR]: Switch to lower-lever driver for `AmazonS3` storage adapter
+      - https://github.com/SaltwaterC/aws2js/wiki/S3-Client
 
 - [FEATURE]: Connection pool for storage connections
       - https://github.com/coopernurse/node-pool
 
-- [FEATURE]: Detect and handle lost connections in a reliable and automatic way.
+- [REVIEW]: Support advanced URL convention (multiple hosts, options, etc.)
+      - http://docs.mongodb.org/manual/reference/connection-string
 
-- [REFACTOR]: Switch to lower-lever driver for `AmazonS3` storage adapter
-      - https://github.com/SaltwaterC/aws2js/wiki/S3-Client
+- [FEATURE]: Detect and handle lost connections in a reliable and automatic way.
 
 - [ADAPTER]: CouchBase
       - https://github.com/couchbase/couchnode
       - https://github.com/membase/manifest
       - https://github.com/clojurewerkz/spyglass/blob/master/.travis.yml
+
+- [ADAPTER]: BerkelyDB
+      - https://github.com/mcavage/node-bdb
+            - OS X: './build/default/*' => './build/Release/*' (fork it)
+            - https://npmjs.org/package/bindings - to fix the above problem
+            - NOTE: Got it working standalone, but fails when installed via `npm install`
 
 - [ADAPTER]: HyperDex
       - https://github.com/rescrv/HyperDex/tree/master/hyperclient/nodejs
@@ -164,7 +166,4 @@
       - https://github.com/danwrong/restler
 
 - [REVIEW]: Get/Set/Del nested attribute values in some convenient way.
-
-- [REVIEW]: Support advanced URL convention (multiple hosts, options, etc.)
-      - http://docs.mongodb.org/manual/reference/connection-string
 

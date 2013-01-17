@@ -52,6 +52,7 @@ Unified interface for write/read data to/from differen kinds of storages/databas
 	* [NStore](https://github.com/grimen/node-document-storage-nstore) *Memory/File/Process*
 	* [Memcached](https://github.com/grimen/node-document-storage-memcached)
 	* [Redis](https://github.com/grimen/node-document-storage-redis)
+	* [LevelDB](https://github.com/grimen/node-document-storage-leveldb)
 	* [KyotoCabinet](https://github.com/grimen/node-document-storage-kyotocabinet)
 	* [MongoDB](https://github.com/grimen/node-document-storage-mongodb)
 	* [CouchDB](https://github.com/grimen/node-document-storage-couchdb)
