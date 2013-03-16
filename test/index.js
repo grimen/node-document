@@ -105,6 +105,29 @@ module.exports= {
       }
     },
 
+    '("type", "<storage_url>")': {
+      before: function() {
+        Post = Document('Post', 'fs:///tmp/default-test');
+      },
+
+      'should successfully create a model': function() {
+        assert.typeOf ( Post, 'function' );
+      },
+
+      '.type': function() {
+        assert.deepEqual ( Post.type, 'Post' );
+      },
+
+      '.schema': function() {
+        assert.deepEqual ( Post.schema, {} );
+      },
+
+      '.storage': function() {
+        assert.equal ( Post.storage.klass.id, 'fs' );
+        assert.instanceOf ( Post.storage, require('node-document-storage-fs') );
+      }
+    },
+
     'new': {
       '()': function() {
         doc = new Post();
@@ -593,7 +616,6 @@ module.exports= {
 
         var callback = function(a, b, c) {
           assert.deepEqual ( [a, b, c], [1, 2, 3] );
-          done();
         };
 
         Post.on('event', callback);
@@ -1207,7 +1229,6 @@ module.exports= {
 
         var callback = function(a, b, c) {
           assert.deepEqual ( [a, b, c], [1, 2, 3] );
-          done();
         };
 
         doc.on('event', callback);

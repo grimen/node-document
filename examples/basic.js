@@ -17,6 +17,7 @@ try {
 
 // A model
 var Post = Document('Post', new Redis('redis://localhost:6379/app'));
+// ...or shortcut: var Post = Document('Post', 'redis://localhost:6379/app');
 
 // A record
 var post = new Post({title: "Once upon a time"});

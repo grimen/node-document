@@ -43,9 +43,6 @@
 
 ::::: HIGH ::
 
-- [DOC]: In all `package.json`:
-      - keywords
-
 - [FEATURE]: Always set: `_id`, `_type`, `_timestamp`, `_version` fields (and maybe `_expires`). ISSUE: Reserved keywords (e.g. CouchDB)
 
 - [DOC]: In each storage README; list support table, connection-URL/key mapping table, connection URL format, etc.
@@ -82,14 +79,21 @@
             http://docs.amazonwebservices.com/AmazonS3/2006-03-01/API/RESTBucketGET.html (HACK - bad one)
 
 - [FEATURE]: Migrate from one DB to another via storage instances: `Storage#export(storage || Stream, ...)` + `Storage#import(storage || Stream, ...)`, and maybe Storage#sync(storage, ...
-      - Inherit Stream? http://maxogden.com/node-streams
+      - Inherit Stream?
+            - http://maxogden.com/node-streams
+            - http://blog.nodejs.org/2012/12/20/streams2/
       - Example:
             function copy (srcdb, dstdb, callback) {
               srcdb.readStream().pipe(dstdb.writeStream()).on('close', callback)
             }
 
+- [FEATURE]: `node-document-seed` - simple seed generator
+      - https://github.com/acatl/datafixture.js
+
 
 ::::: LOW ::
+
+- [ADAPTER/ENHANCEMENT]: Support SCP in `File` adapter, e.g. `fs://localhost:1234/tmp/{db}-{env}`
 
 - [REFACTOR/HALTED]: Rewrite `Memcache` storage to driver that support SASL (auth) - tried MemJS but it contains serious race-condition bug. =S
 
