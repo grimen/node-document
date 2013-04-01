@@ -1,26 +1,6 @@
 
 ::::: CURRENT/NEXT ::
 
-* [ISSUE/FEATURE]: If schema is specified; populate attributes with fields that are required, use "default" attribute value if exists.
-
-      Example:
-
-            {
-                  type: "object",
-                  properties: {
-                        a: {
-                              type: "string",
-                              default: "hello"  /* fixed value */
-                        },
-                        b: {
-                              type: "string",
-                              default: function(doc) { /* macro */
-                                    return (new Date()).toString()
-                              }
-                        }
-                  }
-            }
-
 - [FEATURE]: Always set: `_id`, `_type`, `_timestamp`). ISSUE: Reserved keywords (e.g. CouchDB) => `{prefix}{field}`
 
 - [REFACTOR]: Make `Differ#diff` and `Validator#validate` synchronous - worst case drop support for `Amanda` or "fake it".
