@@ -1,7 +1,27 @@
 
 ::::: CURRENT/NEXT ::
 
-- [REFACTOR]: var MyStorageAdapter = Storage.adapter('MyStorageAdapter', function() { /* ... */ })
+* [ISSUE/FEATURE]: If schema is specified; populate attributes with fields that are required, use "default" attribute value if exists.
+
+      Example:
+
+            {
+                  type: "object",
+                  properties: {
+                        a: {
+                              type: "string",
+                              default: "hello"  /* fixed value */
+                        },
+                        b: {
+                              type: "string",
+                              default: function(doc) { /* macro */
+                                    return (new Date()).toString()
+                              }
+                        }
+                  }
+            }
+
+- [FEATURE]: Always set: `_id`, `_type`, `_timestamp`). ISSUE: Reserved keywords (e.g. CouchDB) => `{prefix}{field}`
 
 - [REFACTOR]: Make `Differ#diff` and `Validator#validate` synchronous - worst case drop support for `Amanda` or "fake it".
 
@@ -43,8 +63,6 @@
 
 ::::: HIGH ::
 
-- [FEATURE]: Always set: `_id`, `_type`, `_timestamp`, `_version` fields (and maybe `_expires`). ISSUE: Reserved keywords (e.g. CouchDB)
-
 - [DOC]: In each storage README; list support table, connection-URL/key mapping table, connection URL format, etc.
 
 - [FEATURE]: `Storage#keys` - export all document keys.
@@ -57,6 +75,8 @@
       - ElasticSearch: http://www.elasticsearch.org/guide/reference/mapping/ttl-field.html
       - Memcache: http://code.google.com/p/memcached/wiki/NewCommands#Standard_Protocol
       - AmazonS3: http://aws.typepad.com/aws/2011/12/amazon-s3-object-expiration.html (i.e. note really => invalidate on fetch)
+
+      * Always set `_expires` property.
 
 - [FEATURE]: Count records by type: `Storage#count(<TYPE>)`
       - Memory: `Object.keys`
@@ -87,11 +107,15 @@
               srcdb.readStream().pipe(dstdb.writeStream()).on('close', callback)
             }
 
-- [FEATURE]: `node-document-seed` - simple seed generator
+- [FEATURE]: Seeds (`node-document-seed`) - simple seed generator (interface)
       - https://github.com/acatl/datafixture.js
+
+- [FEATURE]: "Mappers" (`node-document-mapper`) - define how data should map between different databases. Major feature, will require a quite lot of work.
 
 
 ::::: LOW ::
+
+- [REFACTOR]: var MyStorageAdapter = Storage.adapter('MyStorageAdapter', function() { /* ... */ })
 
 - [ADAPTER/ENHANCEMENT]: Support SCP in `File` adapter, e.g. `fs://localhost:1234/tmp/{db}-{env}`
 
@@ -100,6 +124,7 @@
 - [REFACTOR]: Rewrite `ElasticSearch` storage using vanilla HTTP agent.
 
 - [FEATURE/DISCUSS]: Support "versioning" for documents (Storage).
+      * Always set `_version` property.
 
 - [FEATURE/DISCUSS]: Wherever it makes sense; `Storage#index` + `Storage#unindex`
 
