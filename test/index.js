@@ -5,8 +5,8 @@ var helper = require('./helper'),
 var Document = require('../'),
     Storage = Document.DefaultStorage;
 
-var Post = undefined,
-    doc = undefined;
+var Post,
+    doc;
 
 // -----------------------
 //  Test
@@ -204,6 +204,13 @@ module.exports= {
 
     'Persistance': {
       '.create': {
+        'this': function(done) {
+          Post.set(0, {}, function() {
+            assert.equal ( this, Post );
+            done();
+          });
+        },
+
         '()': function(done) {
           Post.create(function(err, doc) {
             assert.deepEqual ( doc.attributes, {id: doc.id} );
@@ -228,6 +235,13 @@ module.exports= {
       },
 
       '.set': {
+        'this': function(done) {
+          Post.set(0, {}, function() {
+            assert.equal ( this, Post );
+            done();
+          });
+        },
+
         '()': function() {
           assert.throws(function() {
             Post.set(function(err, result) {});
@@ -244,6 +258,7 @@ module.exports= {
 
         '(1, {})': function(done) {
           Post.set(1, {foo: 'bar 1'}, function(err, result) {
+            assert.equal ( this, Post );
             assert.deepEqual ( result, [true] );
             done();
           });
@@ -297,6 +312,13 @@ module.exports= {
 
 
       '.get': {
+        'this': function(done) {
+          Post.get(0, function() {
+            assert.equal ( this, Post );
+            done();
+          });
+        },
+
         '()': function() {
           assert.throws(function() {
             Post.get(function(err, result) {});
@@ -337,6 +359,13 @@ module.exports= {
       }, // .get
 
       '.del': {
+        'this': function(done) {
+          Post.del(0, function() {
+            assert.equal ( this, Post );
+            done();
+          });
+        },
+
         '()': function() {
           assert.throws(function() {
             Post.del(function(err, result) {});
@@ -377,6 +406,13 @@ module.exports= {
       }, // .del
 
       '.exists': {
+        'this': function(done) {
+          Post.exists(0, function() {
+            assert.equal ( this, Post );
+            done();
+          });
+        },
+
         '()': function() {
           assert.throws(function() {
             Post.exists(function(err, result) {});
@@ -451,13 +487,20 @@ module.exports= {
       }, // .exists
 
       '.end': {
+        'this': function(done) {
+          Post.end(function() {
+            assert.equal ( this, Post );
+            done();
+          });
+        },
+
         '()': function() {
           assert.ok ( Post.end(function(err, result) {}) );
         }
       } // .end
     }, // Persistance
 
-    'ID': {
+    'Generators': {
       '.id': {
         'Default': function() {
           assert.typeOf ( Post.id, 'function' );
@@ -479,7 +522,7 @@ module.exports= {
           assert.equal ( Post.id({key: 'bar'}), 'bar-abc' );
         }
       }
-    }, // ID
+    }, // Generators
 
     'Validation / Schema': {
       '.validate': {
@@ -490,6 +533,13 @@ module.exports= {
               type: 'string',
               length: 7
             }
+          });
+        },
+
+        'this': function(done) {
+          Post.validate({}, function() {
+            assert.equal ( this, Post );
+            done();
           });
         },
 
@@ -541,6 +591,13 @@ module.exports= {
       '.diff': {
         before: function() {
           Post = Document('Post');
+        },
+
+        'this': function(done) {
+          Post.diff({}, {}, function() {
+            assert.equal ( this, Post );
+            done();
+          });
         },
 
         '(attributes) - when identical data': function(done) {
@@ -837,6 +894,7 @@ module.exports= {
           doc.attributes = {a: "foo", b: "bar"};
 
           doc.diff(function(err, diff, identical) {
+            assert.equal ( this, doc );
             assert.typeOf ( diff, 'null' );
             assert.equal ( identical, true );
             done();
@@ -848,6 +906,7 @@ module.exports= {
           doc.attributes = {a: "foo", b: "bar", c: "baz"};
 
           doc.diff(function(err, diff, identical) {
+            assert.equal ( this, doc );
             assert.typeOf ( diff, 'object' );
             assert.equal ( identical, false );
             done();
@@ -954,6 +1013,7 @@ module.exports= {
           doc.attributes.title = "A title";
 
           doc.validate(function(err, errors, valid) {
+            assert.equal ( this, doc );
             assert.typeOf ( errors, 'null' );
             assert.equal ( valid, true );
             done();
@@ -964,6 +1024,7 @@ module.exports= {
           doc.attributes.title = "A";
 
           doc.validate(function(err, errors, valid) {
+            assert.equal ( this, doc );
             assert.typeOf ( errors, 'object' );
             assert.equal ( errors.length, 1 );
             assert.equal ( valid, false );
@@ -1065,12 +1126,29 @@ module.exports= {
       },
 
       '#destroy': {
+        'this': function(done) {
+          doc.destroy(function() {
+            assert.equal ( this, doc );
+            done();
+          });
+        },
+
         'new': {
           '()': function(done) {
             doc = new Post({title: "A title", description: "Lorem ipsum..."});
 
+            assert.deepEqual ( doc.id, undefined );
+            assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
+            assert.deepEqual ( doc.changes, null );
+            assert.deepEqual ( doc.errors, null );
+            assert.deepEqual ( doc.persisted, false );
+            assert.deepEqual ( doc.new, true );
+
             doc.destroy(function(err, result) {
               assert.typeOf ( err, 'null' );
+              assert.deepEqual ( result, false );
+
+              assert.typeOf ( doc.id, 'undefined' );
               assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
               assert.deepEqual ( doc.changes, null );
               assert.deepEqual ( doc.errors, null );
@@ -1085,10 +1163,19 @@ module.exports= {
           '()': function(done) {
             doc = new Post({id: 5, title: "A title", description: "Lorem ipsum..."});
 
+            assert.deepEqual ( doc.id, 5 );
+            assert.deepEqual ( doc.attributes, {id: 5, title: "A title", description: "Lorem ipsum..."} );
+            assert.deepEqual ( doc.changes, null );
+            assert.deepEqual ( doc.errors, null );
+            assert.deepEqual ( doc.persisted, false );
+            assert.deepEqual ( doc.new, true );
+
             Post.set(5, {title: "A title", description: "Lorem ipsum..."}, function() {
               doc.destroy(function(err, result) {
                 assert.typeOf ( err, 'null' );
-                assert.typeOf ( doc.id, 'undefined' );
+                assert.deepEqual ( result, false );
+
+                assert.deepEqual ( doc.id, undefined );
                 assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
                 assert.deepEqual ( doc.changes, null );
                 assert.deepEqual ( doc.errors, null );
@@ -1102,12 +1189,28 @@ module.exports= {
       }, // #destroy
 
       '#save': {
+        'this': function(done) {
+          doc.save(function() {
+            assert.equal ( this, doc );
+            done();
+          });
+        },
+
         'new': {
           '()': function(done) {
             var doc = new Post({title: "A title", description: "Lorem ipsum..."});
 
+            assert.deepEqual ( doc.id, undefined );
+            assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
+            assert.deepEqual ( doc.changes, null );
+            assert.deepEqual ( doc.errors, null );
+            assert.deepEqual ( doc.persisted, false );
+            assert.deepEqual ( doc.new, true );
+
             doc.save(function(err, result) {
               assert.typeOf ( err, 'null' );
+              assert.deepEqual ( result, true );
+
               assert.typeOf ( doc.id, 'string' );
               assert.deepEqual ( doc.attributes, {id: doc.id, title: "A title", description: "Lorem ipsum..."} );
               assert.deepEqual ( doc.changes, null );
@@ -1123,9 +1226,19 @@ module.exports= {
           '()': function(done) {
             var doc = new Post({id: 5, title: "A title", description: "Lorem ipsum..."});
 
-            Post.set(doc.id, {title: "A title", description: "Lorem ipsum..."}, function() {
+            assert.deepEqual ( doc.id, 5 );
+            assert.deepEqual ( doc.attributes, {id: 5, title: "A title", description: "Lorem ipsum..."} );
+            assert.deepEqual ( doc.changes, null );
+            assert.deepEqual ( doc.errors, null );
+            assert.deepEqual ( doc.persisted, false );
+            assert.deepEqual ( doc.new, true );
+
+            Post.set(5, {title: "A title", description: "Lorem ipsum..."}, function() {
               doc.save(function(err, result) {
+                assert.equal ( this, doc );
                 assert.typeOf ( err, 'null' );
+                assert.deepEqual ( result, true );
+
                 assert.typeOf ( doc.id, 'number' ); // REVIEW: ...or cast to string always?
                 assert.deepEqual ( doc.attributes, {id: doc.id, title: "A title", description: "Lorem ipsum..."} );
                 assert.deepEqual ( doc.changes, null );
@@ -1140,13 +1253,30 @@ module.exports= {
       }, // #save
 
       '#fetch': {
+        'this': function(done) {
+          doc.fetch(function() {
+            assert.equal ( this, doc );
+            done();
+          });
+        },
+
         'ID specified - new': {
           '()': function(done) {
             doc = new Post({id: 'fetch-1', title: "A title", description: "Lorem ipsum..."});
 
+            assert.deepEqual ( doc.id, 'fetch-1' );
+            assert.deepEqual ( doc.attributes, {id: 'fetch-1', title: "A title", description: "Lorem ipsum..."} );
+            assert.deepEqual ( doc.changes, null );
+            assert.deepEqual ( doc.errors, null );
+            assert.deepEqual ( doc.persisted, false );
+            assert.deepEqual ( doc.new, true );
+
             Post.del('fetch-1', function() {
               doc.fetch(function(err, result) {
+                assert.equal ( this, doc );
                 assert.typeOf ( err, 'null' );
+                assert.deepEqual ( result, null );
+
                 assert.deepEqual ( doc.id, 'fetch-1' );
                 assert.deepEqual ( doc.attributes, {id: 'fetch-1'} );
                 assert.deepEqual ( doc.changes, null );
@@ -1163,9 +1293,19 @@ module.exports= {
           '()': function(done) {
             doc = new Post({id: 2, title: "A title", description: "Lorem ipsum..."});
 
+            assert.deepEqual ( doc.id, 2 );
+            assert.deepEqual ( doc.attributes, {id: 2, title: "A title", description: "Lorem ipsum..."} );
+            assert.deepEqual ( doc.changes, null );
+            assert.deepEqual ( doc.errors, null );
+            assert.deepEqual ( doc.persisted, false );
+            assert.deepEqual ( doc.new, true );
+
             Post.set(2, {id: 2, title: "A title", description: "Lorem ipsum..."}, function() {
               doc.fetch(function(err, result) {
+                assert.equal ( this, doc );
                 assert.typeOf ( err, 'null' );
+                assert.deepEqual ( result, {id: 2, title: "A title", description: "Lorem ipsum..."} );
+
                 assert.deepEqual ( doc.id, 2 );
                 assert.deepEqual ( doc.attributes, {id: 2, title: "A title", description: "Lorem ipsum..."} );
                 assert.deepEqual ( doc.changes, null );
@@ -1182,8 +1322,18 @@ module.exports= {
           '()': function(done) {
             doc = new Post({title: "A title", description: "Lorem ipsum..."});
 
+            assert.deepEqual ( doc.id, undefined );
+            assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
+            assert.deepEqual ( doc.changes, null );
+            assert.deepEqual ( doc.errors, null );
+            assert.deepEqual ( doc.persisted, false );
+            assert.deepEqual ( doc.new, true );
+
             doc.fetch(function(err, result) {
+              assert.equal ( this, doc );
               assert.typeOf ( err, 'null' );
+              assert.deepEqual ( result, false );
+
               assert.typeOf ( doc.id, 'undefined' );
               assert.deepEqual ( doc.attributes, {title: "A title", description: "Lorem ipsum..."} );
               assert.deepEqual ( doc.changes, null );
