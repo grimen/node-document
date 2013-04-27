@@ -1,47 +1,43 @@
 
 ::::: CURRENT/NEXT ::
 
-- [FEATURE]: Always set: `_id`, `_type`, `_timestamp`). ISSUE: Reserved keywords (e.g. CouchDB) => `{prefix}{field}`
 
-- [REFACTOR]: Make `Differ#diff` and `Validator#validate` synchronous - worst case drop support for `Amanda` or "fake it".
+- [FEATURE/API]: Collection stupport (via `Array`): #fetch, #destroy, #save, ... (all methods that makes sense for "a document instance")
 
-- [ADAPTER]: OrientDB
-      - https://github.com/gabipetrovay/node-orientdb
-      - http://www.orientdb.org
+      // API sketch 1
+      Document([new Post, new Article, new Post]).save(function(err) { // Document array decorator
+        // Bulk DB operation - do it as efficient as possible using node-storage (native bulk if such)
+        assert.typeOf (this, 'array');
+        assert.instanceOf (this[0], Post);
+        assert.instanceOf (this[1], Article);
+        assert.instanceOf (this[2], Post);
+      });
 
-- [ADAPTER]: ArangoDB
-      - https://github.com/kaerus/arango-client
-      - http://www.arangodb.org
+      // API sketch 2
+      [new Post, new Article, new Post].save(function(err) { // Array.prototype.save wraps any existing #save and only use itself if array contains Document:s - to avoid introducing a Collection object like in Moongoose and such,
+        // Bulk DB operation - do it as efficient as possible using node-storage (native bulk if such)
+        assert.typeOf (this, 'array');
+        assert.instanceOf (this[0], Post);
+        assert.instanceOf (this[1], Article);
+        assert.instanceOf (this[2], Post);
+      });
 
-- [ADAPTER]: AmazonSimpleDB
-      - https://github.com/SaltwaterC/aws2js/wiki/SDB-Client
-      - https://github.com/rjrodger/simpledb
-      - http://aws.amazon.com/simpledb/
+      // Crazy mode - just for the cause
+      [(new Post).save, (new Article).fetch, (new Post).fetch].perform(function(err) { // Merge different operations on different document types into single bulk operation
+        assert.typeOf (this, 'array');
+        assert.instanceOf (this[0], Post);
+        assert.instanceOf (this[1], Article);
+        assert.instanceOf (this[2], Post);
+      });
 
-- [ADAPTER]: AmazonElastiCache
-      - https://github.com/SaltwaterC/aws2js/wiki/ElastiCache-client
-      - https://console.aws.amazon.com/elasticache/home?region=us-east-1
+- [REFACTOR]: Make `Differ#diff` and `Validator#validate` synchronous? - worst case drop support for `Amanda` or "fake it".
 
-- [ADAPTER]: AmazonDynamoDB
-      - https://github.com/SaltwaterC/aws2js/wiki/DynamoDB-Client
-      - https://github.com/jed/dynamo
-      - https://console.aws.amazon.com/dynamodb/home?region=us-east-1
-
-- [ADAPTER]: Dropbox
-      - https://github.com/sintaxi/node-dbox
-
-- [ADAPTER]: RavenDB
-      - https://github.com/tchype/node-ravendb
-
-- [ADAPTER]: HBase
-      - https://github.com/wdavidw/node-hbase
-
-- [ADAPTER]: Cassandra
-      - https://github.com/racker/node-cassandra-client
-      - https://github.com/simplereach/helenus
+- [ISSUE]: Reserved attribute keywords (e.g. CouchDB); meta attribute field prefix should be overrideable by storage adapter ("mapper light").
 
 
 ::::: HIGH ::
+
+- [FEATURE]: Review meta fields: `_updated_at`, `_created_at`
 
 - [DOC]: In each storage README; list support table, connection-URL/key mapping table, connection URL format, etc.
 
@@ -94,6 +90,43 @@
 
 
 ::::: LOW ::
+
+- [ADAPTER]: OrientDB
+      - https://github.com/gabipetrovay/node-orientdb
+      - http://www.orientdb.org
+
+- [ADAPTER]: ArangoDB
+      - https://github.com/kaerus/arango-client
+      - http://www.arangodb.org
+
+- [ADAPTER]: AmazonSimpleDB
+      - https://github.com/SaltwaterC/aws2js/wiki/SDB-Client
+      - https://github.com/rjrodger/simpledb
+      - http://aws.amazon.com/simpledb/
+
+- [ADAPTER]: AmazonElastiCache
+      - https://github.com/SaltwaterC/aws2js/wiki/ElastiCache-client
+      - https://console.aws.amazon.com/elasticache/home?region=us-east-1
+
+- [ADAPTER]: AmazonDynamoDB
+      - https://github.com/SaltwaterC/aws2js/wiki/DynamoDB-Client
+      - https://github.com/jed/dynamo
+      - https://console.aws.amazon.com/dynamodb/home?region=us-east-1
+
+- [ADAPTER]: Dropbox
+      - https://github.com/sintaxi/node-dbox
+
+- [ADAPTER]: RavenDB
+      - https://github.com/tchype/node-ravendb
+
+- [ADAPTER]: HBase
+      - https://github.com/wdavidw/node-hbase
+
+- [ADAPTER]: Cassandra
+      - https://github.com/racker/node-cassandra-client
+      - https://github.com/simplereach/helenus
+
+- [FEATURE]: "Middleware" API for storages, and such - e.g. `Post.use(storage_1).use(storage_2)` or `Post.storage.use(storage_1, storage_2)`.
 
 - [REFACTOR]: var MyStorageAdapter = Storage.adapter('MyStorageAdapter', function() { /* ... */ })
 
