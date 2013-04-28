@@ -91,6 +91,16 @@
 
 ::::: LOW ::
 
+- [FEATURE]: Generic CLI for interacting with/between storages: `node-document-cli`
+
+- [ADAPTER/FEATURE]: Generic HTTP REST API: `node-document-api`
+
+- [ADAPTER/FEATURE]: Generic client-side HTTP GUI: `node-document-admin`
+      - Example: https://github.com/tldrio/mongo-edit
+
+- [FEATURE]: Connection pool for storage connections
+      - https://github.com/coopernurse/node-pool
+
 - [ADAPTER]: OrientDB
       - https://github.com/gabipetrovay/node-orientdb
       - http://www.orientdb.org
@@ -126,6 +136,10 @@
       - https://github.com/racker/node-cassandra-client
       - https://github.com/simplereach/helenus
 
+
+- [REFACTOR]: Switch to lower-lever driver for `AmazonS3` storage adapter
+      - https://github.com/SaltwaterC/aws2js/wiki/S3-Client
+
 - [FEATURE]: "Middleware" API for storages, and such - e.g. `Post.use(storage_1).use(storage_2)` or `Post.storage.use(storage_1, storage_2)`.
 
 - [REFACTOR]: var MyStorageAdapter = Storage.adapter('MyStorageAdapter', function() { /* ... */ })
@@ -147,6 +161,9 @@
 
 - [FEATURE]: Support multiple endpoints - where applicable - for all storage adapters/clients.
 
+- [REVIEW]: Support advanced URL convention (multiple hosts, options, etc.)
+      - http://docs.mongodb.org/manual/reference/connection-string
+
 - [ADAPTER]: SQLite3
       - https://github.com/developmentseed/node-sqlite3
 
@@ -162,13 +179,6 @@
 
 ::::: MAYBE ::
 
-- [FEATURE]: Generic CLI for interacting with/between storages: `node-document-cli`
-
-- [ADAPTER/FEATURE]: Generic HTTP REST API: `node-document-api`
-
-- [ADAPTER/FEATURE]: Generic client-side HTTP GUI: `node-document-admin`
-      - Example: https://github.com/tldrio/mongo-edit
-
 - [ADAPTER/EXPERIMENT]: `Serializer` adapters support (...for storages where it makes sense)
       - JSON - DONE
       - BSON - DONE
@@ -179,16 +189,7 @@
       - LZF - DONE
       - Snappy - DONE
 
-- [REFACTOR]: Switch to lower-lever driver for `AmazonS3` storage adapter
-      - https://github.com/SaltwaterC/aws2js/wiki/S3-Client
-
-- [FEATURE]: Connection pool for storage connections
-      - https://github.com/coopernurse/node-pool
-
-- [REVIEW]: Support advanced URL convention (multiple hosts, options, etc.)
-      - http://docs.mongodb.org/manual/reference/connection-string
-
-- [FEATURE]: Detect and handle lost connections in a reliable and automatic way.
+- [FEATURE]: Detect and handle lost connections in a reliable and automatic way. Fallback to other storage?
 
 - [ADAPTER]: CouchBase
       - https://github.com/couchbase/couchnode
