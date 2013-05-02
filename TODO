@@ -1,29 +1,25 @@
 
 ::::: CURRENT/NEXT ::
 
+- [ENHANCEMENT/API]: `Document.Model.prototype.set` should allow additional boolean argument `merge` (`true`: merge, `false`: overwrite).
 
-- [FEATURE/API]: Collection stupport (via `Array`): #fetch, #destroy, #save, ... (all methods that makes sense for "a document instance")
+- [BUG]: See `test/index.js` comment. Probably related to the swallowed errors issue.
 
-      // API sketch 1
-      Document([new Post, new Article, new Post]).save(function(err) { // Document array decorator
-        // Bulk DB operation - do it as efficient as possible using node-storage (native bulk if such)
-        assert.typeOf (this, 'array');
-        assert.instanceOf (this[0], Post);
-        assert.instanceOf (this[1], Article);
-        assert.instanceOf (this[2], Post);
-      });
+- [FEATURE/API/PERFORMANCE]: Enhance `Collection` DB operations to not run as single operations, rather merge them and use bulk DB operation.
 
-      // API sketch 2
-      [new Post, new Article, new Post].save(function(err) { // Array.prototype.save wraps any existing #save and only use itself if array contains Document:s - to avoid introducing a Collection object like in Moongoose and such,
-        // Bulk DB operation - do it as efficient as possible using node-storage (native bulk if such)
-        assert.typeOf (this, 'array');
-        assert.instanceOf (this[0], Post);
-        assert.instanceOf (this[1], Article);
-        assert.instanceOf (this[2], Post);
-      });
+- [ENHANCEMENT/REVIEW/DISCUSS]: Event hooks both before and after (...and middle?):
+      - Document.Model.prototype.emit('save:before') - before (first)
+      - Document.Model.prototype.emit('save:each') - for each item (if many)
+      - Document.Model.prototype.emit('save:after') - after (last)
 
-      // Crazy mode - just for the cause
-      [(new Post).save, (new Article).fetch, (new Post).fetch].perform(function(err) { // Merge different operations on different document types into single bulk operation
+- [ISSUE]: Reserved attribute keywords (e.g. CouchDB); meta attribute field prefix should be overrideable by storage adapter ("mapper light").
+
+
+::::: HIGH ::
+
+- [FEATURE/API]: Extend the Collection API with "Perform collection of operations". Possible enhancement: Merge it into bulk-request under the hood.
+
+      [(new Post).save, (new Article).fetch, (new Post).fetch].exec(function(err) { // Merge different operations on different document types into single bulk operation
         assert.typeOf (this, 'array');
         assert.instanceOf (this[0], Post);
         assert.instanceOf (this[1], Article);
@@ -32,12 +28,7 @@
 
 - [REFACTOR]: Make `Differ#diff` and `Validator#validate` synchronous? - worst case drop support for `Amanda` or "fake it".
 
-- [ISSUE]: Reserved attribute keywords (e.g. CouchDB); meta attribute field prefix should be overrideable by storage adapter ("mapper light").
-
-
-::::: HIGH ::
-
-- [FEATURE]: Review meta fields: `_updated_at`, `_created_at`
+- [FEATURE]: Review meta fields: `_updated_at`, `_created_at`. Adapter and hook into events, e.g. "before save", etc.?
 
 - [DOC]: In each storage README; list support table, connection-URL/key mapping table, connection URL format, etc.
 
@@ -86,20 +77,24 @@
 - [FEATURE]: Seeds (`node-document-seed`) - simple seed generator (interface)
       - https://github.com/acatl/datafixture.js
 
-- [FEATURE]: "Mappers" (`node-document-mapper`) - define how data should map between different databases. Major feature, will require a quite lot of work.
-
-
-::::: LOW ::
-
-- [FEATURE]: Generic CLI for interacting with/between storages: `node-document-cli`
-
 - [ADAPTER/FEATURE]: Generic HTTP REST API: `node-document-api`
 
 - [ADAPTER/FEATURE]: Generic client-side HTTP GUI: `node-document-admin`
       - Example: https://github.com/tldrio/mongo-edit
 
+
+::::: LOW ::
+
+- [FEATURE]: "Mappers" (`node-document-mapper`) - define how data should map between different databases. Major feature, will require a quite lot of work.
+
+- [FEATURE]: Generic CLI for interacting with/between storages: `node-document-cli`
+
 - [FEATURE]: Connection pool for storage connections
       - https://github.com/coopernurse/node-pool
+
+- [ENHANCEMENT]: Make `Document.storage` a property, to later support more advanced shortcuts like in the constructor:
+
+    Post.storage = 'file:///app'
 
 - [ADAPTER]: OrientDB
       - https://github.com/gabipetrovay/node-orientdb

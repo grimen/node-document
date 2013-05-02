@@ -3,10 +3,10 @@ process.env.NODE_ENV = 'test';
 require('sugar');
 require('colors');
 
-var chai = require('chai'),
-    longjohn = require('longjohn');
+var chai = require('chai');
+// var longjohn = require('longjohn');
 
-longjohn.async_trace_limit = 3;
+// longjohn.async_trace_limit = 3;
 
 // REVIEW: http://chaijs.com/plugins
 chai.Assertion.includeStack = true;
