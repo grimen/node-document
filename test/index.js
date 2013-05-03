@@ -1431,7 +1431,7 @@ module.exports = {
     },
 
     'Attributes': {
-      before: function() {
+      beforeEach: function() {
         post = new Post({title: "A title", description: "Lorem ipsum..."});
         article = new Article({title: "A title", description: "Lorem ipsum..."});
       },
@@ -1494,106 +1494,131 @@ module.exports = {
       },
 
       '#get': {
-        '()': function() {
+        '': function() {
           assert.typeOf ( post.get, 'function' );
+        },
 
-          post = new Post({title: "A title", description: "Lorem ipsum..."});
-
+        '()': function() {
           assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
           assert.deepEqual ( post.get(), {title: "A title", description: "Lorem ipsum..."} );
+          assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
         },
 
         'Collection': {
-          '()': function() {
+          '': function() {
             assert.typeOf ( Document([post, article]).get, 'function' );
+          },
 
-            post = new Post({title: "A title", description: "Lorem ipsum..."});
-            article = new Article({title: "A title", description: "Lorem ipsum..."});
-
+          '()': function() {
             assert.deepEqual ( Document([post, article]).attributes, [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
             assert.deepEqual ( Document([post, article]).get(), [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
+            assert.deepEqual ( Document([post, article]).attributes, [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
           }
         }
       },
 
       '#set': {
-        '(object)': function() {
+        '': function() {
           assert.typeOf ( post.set, 'function' );
+        },
 
-          post = new Post({title: "A title", description: "Lorem ipsum..."});
-
+        '(object)': function() {
           assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
-
           assert.deepEqual ( post.set({title: "A modified title", published: true}), {title: "A modified title", published: true} );
           assert.deepEqual ( post.attributes, {title: "A modified title", published: true} );
+        },
 
-          // TODO: Merging?
-          // assert.deepEqual ( post.set({title: "A modified title", published: true}), {title: "A modified title", description: "Lorem ipsum...", published: true} );
-          // assert.deepEqual ( post.attributes, {title: "A modified title", description: "Lorem ipsum...", published: true} );
+        '(object, false)': function() {
+          assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
+          assert.deepEqual ( post.set({title: "A modified title", published: true}, false), {title: "A modified title", published: true} );
+          assert.deepEqual ( post.attributes, {title: "A modified title", published: true} );
+        },
+
+        '(object, true)': function() {
+          assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
+          assert.deepEqual ( post.set({title: "A modified title", published: true}, true), {title: "A modified title", description: "Lorem ipsum...", published: true} );
+          assert.deepEqual ( post.attributes, {title: "A modified title", description: "Lorem ipsum...", published: true} );
         },
 
         'Collection': {
-          '(object)': function() {
+          '': function() {
             assert.typeOf ( Document([post, article]).set, 'function' );
+          },
 
-            post = new Post({title: "A title", description: "Lorem ipsum..."});
-            article = new Article({title: "A title", description: "Lorem ipsum..."});
-
+          '(object)': function() {
             assert.deepEqual ( Document([post, article]).attributes, [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
             assert.deepEqual ( Document([post, article]).set({title: "A modified title", published: true}), [{title: "A modified title", published: true}, {title: "A modified title", published: true}] );
+          },
+
+          '(object, false)': function() {
+            assert.deepEqual ( Document([post, article]).attributes, [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
+            assert.deepEqual ( Document([post, article]).set({title: "A modified title", published: true}, false), [{title: "A modified title", published: true}, {title: "A modified title", published: true}] );
+          },
+
+          '(object, true)': function() {
+            assert.deepEqual ( Document([post, article]).attributes, [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
+            assert.deepEqual ( Document([post, article]).set({title: "A modified title", published: true}, true), [{title: "A modified title", description: "Lorem ipsum...", published: true}, {title: "A modified title", description: "Lorem ipsum...", published: true}] );
           }
         }
       },
 
       '#attr': {
-        '()': function() {
+        '': function() {
           assert.typeOf ( post.attr, 'function' );
+        },
 
-          post = new Post({title: "A title", description: "Lorem ipsum..."});
-
+        '()': function() {
           assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
           assert.deepEqual ( post.attr(), {title: "A title", description: "Lorem ipsum..."} );
+          assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
         },
 
         '(object)': function() {
-          assert.typeOf ( post.attr, 'function' );
-
-          post = new Post({title: "A title", description: "Lorem ipsum..."});
-
           assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
           assert.deepEqual ( post.attr({title: "A modified title", published: true}), {title: "A modified title", published: true} );
           assert.deepEqual ( post.attributes, {title: "A modified title", published: true} );
+        },
 
-          // TODO: Merging?
-          // assert.deepEqual ( post.attr({title: "A modified title", published: true}), {title: "A modified title", description: "Lorem ipsum...", published: true} );
-          // assert.deepEqual ( post.attributes, {title: "A modified title", description: "Lorem ipsum...", published: true} );
+        '(object, false)': function() {
+          assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
+          assert.deepEqual ( post.attr({title: "A modified title", published: true}, false), {title: "A modified title", published: true} );
+          assert.deepEqual ( post.attributes, {title: "A modified title", published: true} );
+        },
+
+        '(object, true)': function() {
+          assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
+          assert.deepEqual ( post.attr({title: "A modified title", published: true}, true), {title: "A modified title", description: "Lorem ipsum...", published: true} );
+          assert.deepEqual ( post.attributes, {title: "A modified title", description: "Lorem ipsum...", published: true} );
         },
 
         'Collection': {
-          '()': function() {
+          '': function() {
             assert.typeOf ( Document([post, article]).attr, 'function' );
+          },
 
-            post = new Post({title: "A title", description: "Lorem ipsum..."});
-            article = new Article({title: "A title", description: "Lorem ipsum..."});
-
+          '()': function() {
             assert.deepEqual ( Document([post, article]).attributes, [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
             assert.deepEqual ( Document([post, article]).attr(), [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
+            assert.deepEqual ( Document([post, article]).attributes, [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
           },
 
           '(object)': function() {
-            assert.typeOf ( Document([post, article]).attr, 'function' );
-
-            post = new Post({title: "A title", description: "Lorem ipsum..."});
-
             assert.deepEqual ( Document([post, article]).attributes, [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
-
             assert.deepEqual ( Document([post, article]).attr({title: "A modified title", published: true}), [{title: "A modified title", published: true}, {title: "A modified title", published: true}] );
             assert.deepEqual ( Document([post, article]).attributes, [{title: "A modified title", published: true}, {title: "A modified title", published: true}] );
-
-            // TODO: Merging?
-            // assert.deepEqual ( post.attr({title: "A modified title", published: true}), {title: "A modified title", description: "Lorem ipsum...", published: true} );
-            // assert.deepEqual ( post.attributes, {title: "A modified title", description: "Lorem ipsum...", published: true} );
           },
+
+          '(object, false)': function() {
+            assert.deepEqual ( Document([post, article]).attributes, [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
+            assert.deepEqual ( Document([post, article]).attr({title: "A modified title", published: true}, false), [{title: "A modified title", published: true}, {title: "A modified title", published: true}] );
+            assert.deepEqual ( Document([post, article]).attributes, [{title: "A modified title", published: true}, {title: "A modified title", published: true}] );
+          },
+
+          '(object, true)': function() {
+            assert.deepEqual ( Document([post, article]).attributes, [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
+            assert.deepEqual ( Document([post, article]).attr({title: "A modified title", published: true}, true), [{title: "A modified title", description: "Lorem ipsum...", published: true}, {title: "A modified title", description: "Lorem ipsum...", published: true}] );
+            assert.deepEqual ( Document([post, article]).attributes, [{title: "A modified title", description: "Lorem ipsum...", published: true}, {title: "A modified title", description: "Lorem ipsum...", published: true}] );
+          }
         }
       },
 
@@ -1640,8 +1665,6 @@ module.exports = {
 
       '#clear': {
         '()': function() {
-          post = new Post({title: "A title", description: "Lorem ipsum..."});
-
           assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
 
           post.clear();
@@ -1652,8 +1675,6 @@ module.exports = {
         },
 
         '("attributes")': function() {
-          post = new Post({title: "A title", description: "Lorem ipsum..."});
-
           assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
 
           post.clear('attributes');
@@ -1664,8 +1685,6 @@ module.exports = {
         },
 
         '("changes")': function() {
-          post = new Post({title: "A title", description: "Lorem ipsum..."});
-
           assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
 
           post.clear('changes');
@@ -1676,8 +1695,6 @@ module.exports = {
         },
 
         '("errors")': function() {
-          post = new Post({title: "A title", description: "Lorem ipsum..."});
-
           assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
 
           post.clear('errors');
@@ -1688,11 +1705,6 @@ module.exports = {
         },
 
         'Collection': {
-          beforeEach: function() {
-            post = new Post({title: "A title", description: "Lorem ipsum..."});
-            article = new Article({title: "A title", description: "Lorem ipsum..."});
-          },
-
           '()': function() {
             assert.deepEqual ( Document([post, article]).attributes, [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
 
@@ -1737,11 +1749,6 @@ module.exports = {
     }, // Attributes
 
     'Serialization': {
-      before: function() {
-        post = new Post({title: "A title", description: "Lorem ipsum..."});
-        article = new Article({title: "A title", description: "Lorem ipsum..."});
-      },
-
       '#toJSON': {
         '=> JSON object (#attributes)': function() {
           assert.typeOf ( post.toJSON, 'function' );

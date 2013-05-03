@@ -1,8 +1,6 @@
 
 ::::: CURRENT/NEXT ::
 
-- [ENHANCEMENT/API]: `Document.Model.prototype.set` should allow additional boolean argument `merge` (`true`: merge, `false`: overwrite).
-
 - [BUG]: See `test/index.js` comment. Probably related to the swallowed errors issue.
 
 - [FEATURE/API/PERFORMANCE]: Enhance `Collection` DB operations to not run as single operations, rather merge them and use bulk DB operation.
