@@ -181,6 +181,7 @@
       - Deflate: DONE
       - LZF - DONE
       - Snappy - DONE
+      - ZIP/TAR - https://github.com/ctalkington/node-archiver
 
 - [FEATURE]: Detect and handle lost connections in a reliable and automatic way. Fallback to other storage?
 
