@@ -5,13 +5,13 @@ var Document = require('..'); // NPM: 'node-document'
 try {
   var Redis = require('node-document-storage-redis');
 } catch (err) {
-  console.error("Install dependeny: $ npm install node-document-storage-redis");
+  console.error("Install dependency: $ npm install node-document-storage-redis");
   process.exit(0);
 }
 try {
   var FileSystem = require('node-document-storage-fs');
 } catch (err) {
-  console.error("Install dependeny: $ npm install node-document-storage-fs");
+  console.error("Install dependency: $ npm install node-document-storage-fs");
   process.exit(0);
 }
 
