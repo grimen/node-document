@@ -1,25 +1,9 @@
 
 ::::: CURRENT/NEXT ::
 
-- [FEATURE]: API for registering meta fields to be persisted when saved:
-
-        Examples:
-
-            // Will be saved as `_created_at` (on first write) - if meta prefix is '_'.
-            Post.meta('created_at', false, function() {
-              // Access to instance (doc) and klass (doc.klass) if needed.
-              return new Date();
-            });
-
-            // Will be saved as `_fingerprint` (on every write) - if meta prefix is '_'.
-            Post.meta('fingerprint', true, function() {
-              return [this.klass.type, encodeURIComponent(this.url)].join('-');
-            });
-
 - [FEATURE]: Connection pool for storage connections - not only per instance, per storage adapter
       - https://github.com/coopernurse/node-pool
-
-      Example:
+      - Example:
 
         SomeStorage.pool = poolModule.Pool({...});
         SomeStorage.prototype.__defineGetter__('pool', function() { return this.klass.pool; });
@@ -102,6 +86,19 @@
 
           [Post, Article].use(TimestampsMiddleware);
           [post, article].use(TimestampsMiddleware);
+
+      - Original deprecated idea - middleware could do this without bloading the API:
+
+        // Will be saved as `_created_at` (on first write) - if meta prefix is '_'.
+        Post.meta('created_at', false, function() {
+          // Access to instance (doc) and klass (doc.klass) if needed.
+          return new Date();
+        });
+
+        // Will be saved as `_fingerprint` (on every write) - if meta prefix is '_'.
+        Post.meta('fingerprint', true, function() {
+          return [this.klass.type, encodeURIComponent(this.url)].join('-');
+        });
 
 - [FEATURE]: `Storage#keys` - export all document keys.
 

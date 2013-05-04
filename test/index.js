@@ -251,7 +251,37 @@ module.exports = {
           }
         }
       }
-    }
+    },
+
+    // MAYBE - sktching
+    // 'Meta': {
+    //   '.meta': {
+    //     '': function() {
+    //       assert.property ( Document, 'meta' );
+    //       assert.typeOf ( Document.meta, 'function' );
+    //     },
+    //
+    //     '()': function() {
+    //       // return meta fields
+    //     },
+    //
+    //     '(field_name)': function() {
+    //       // return meta field generator
+    //     },
+    //
+    //     '(field_name, generator)': function() {
+    //       // set meta fields generator
+    //     },
+    //
+    //     '(field_name, generator, false)': function() {
+    //       // set meta fields generator - first write
+    //     },
+    //
+    //     '(field_name, generator, true)': function() {
+    //       // set meta fields generator - all writes
+    //     }
+    //   }
+    // }
   }, // Document
 
 
@@ -1737,6 +1767,35 @@ module.exports = {
     //     }
     //   }
     // },
+
+    'Meta': {
+      '#meta': {
+        beforeEach: function() {
+          post = new Post({title: "A title", description: "Lorem ipsum..."});
+          article = new Article({title: "A title", description: "Lorem ipsum..."});
+        },
+
+        '': function() {
+          assert.property ( post, 'meta' );
+
+          assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
+          assert.deepEqual ( post.meta, {} );
+
+          post.attributes._id = 1;
+          post.attributes._foo = 'bar';
+          assert.deepEqual ( post.attributes, {_id: 1, _foo: 'bar', title: "A title", description: "Lorem ipsum..."} );
+          assert.deepEqual ( post.meta, {id: 1, foo: 'bar'} );
+
+          post.attributes._foo = null;
+          assert.deepEqual ( post.attributes, {_id: 1, _foo: null, title: "A title", description: "Lorem ipsum..."} );
+          assert.deepEqual ( post.meta, {id: 1, foo: null} );
+
+          delete post.attributes._foo;
+          assert.deepEqual ( post.attributes, {_id: 1, title: "A title", description: "Lorem ipsum..."} );
+          assert.deepEqual ( post.meta, {id: 1} );
+        }
+      }
+    },
 
     'Attributes': {
       beforeEach: function() {
