@@ -2,7 +2,7 @@
   "name": "node-document",
   "description": "Many document stores, Y U NO interface?",
   "keywords": ["document", "odm", "object document mapper", "generic", "unified", "storage", "storages", "validator", "validators", "differ", "differs", "schema"],
-  "version": "0.1.0-pre7",
+  "version": "0.1.0-pre8",
   "homepage": "https://github.com/grimen/node-document",
   "repository": {
     "type": "git",
@@ -47,7 +47,7 @@
     "node-document-validator": "latest",
     "node-document-differ": "latest",
     "node-document-storage-global": "latest",
-    "node-document-validator-amanda": "latest",
+    "node-document-validator-schema": "latest",
     "node-document-differ-jsondiff": "latest"
   },
   "devDependencies": {

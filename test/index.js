@@ -3,7 +3,10 @@ var helper = require('./helper'),
     debug = helper.debug;
 
 var Document = require('../');
+
 var Storage = Document.DefaultStorage;
+var Validator = Document.DefaultValidator;
+var Differ = Document.DefaultDiffer;
 
 var Post;
 var Article;
@@ -33,7 +36,7 @@ module.exports = {
         Post = Document('Post');
       },
 
-      'should successfully create a model': function() {
+      '': function() {
         assert.typeOf ( Post, 'function' );
       },
 
@@ -49,20 +52,12 @@ module.exports = {
         assert.instanceOf ( Post.storage, Document.DefaultStorage );
       },
 
-      '.set': function() {
-        assert.typeOf ( Post.set, 'function' );
+      '.validator': function() {
+        assert.instanceOf ( Post.validator, Document.DefaultValidator );
       },
 
-      '.get': function() {
-        assert.typeOf ( Post.get, 'function' );
-      },
-
-      '.del': function() {
-        assert.typeOf ( Post.del, 'function' );
-      },
-
-      '.end': function() {
-        assert.typeOf ( Post.end, 'function' );
+      '.differ': function() {
+        assert.instanceOf ( Post.differ, Document.DefaultDiffer );
       }
     },
 
@@ -71,7 +66,7 @@ module.exports = {
         Post = Document('Post', new Storage());
       },
 
-      'should successfully create a model': function() {
+      '': function() {
         assert.typeOf ( Post, 'function' );
       },
 
@@ -85,6 +80,14 @@ module.exports = {
 
       '.storage': function() {
         assert.instanceOf ( Post.storage, Storage );
+      },
+
+      '.validator': function() {
+        assert.instanceOf ( Post.validator, Document.DefaultValidator );
+      },
+
+      '.differ': function() {
+        assert.instanceOf ( Post.differ, Document.DefaultDiffer );
       }
     },
 
@@ -107,6 +110,14 @@ module.exports = {
 
       '.storage': function() {
         assert.instanceOf ( Post.storage, Storage );
+      },
+
+      '.validator': function() {
+        assert.instanceOf ( Post.validator, Document.DefaultValidator );
+      },
+
+      '.differ': function() {
+        assert.instanceOf ( Post.differ, Document.DefaultDiffer );
       }
     },
 
@@ -130,6 +141,14 @@ module.exports = {
       '.storage': function() {
         assert.equal ( Post.storage.klass.id, 'fs' );
         assert.instanceOf ( Post.storage, require('node-document-storage-fs') );
+      },
+
+      '.validator': function() {
+        assert.instanceOf ( Post.validator, Document.DefaultValidator );
+      },
+
+      '.differ': function() {
+        assert.instanceOf ( Post.differ, Document.DefaultDiffer );
       }
     },
 
@@ -159,7 +178,11 @@ module.exports = {
       }
     },
 
-    'require': {
+    '.require': {
+      '': function() {
+        assert.typeOf ( Document.require, 'function' );
+      },
+
       '(valid_adapter_path)': function() {
         assert.equal ( Document.require('class'), Document.Class );
       },
@@ -168,6 +191,65 @@ module.exports = {
         assert.throws (function() {
           Document.require('storage/bogus');
         });
+      }
+    },
+
+    'Adapters': {
+      before: function() {
+        Storage = require('node-document-storage-global');
+        Validator = require('node-document-validator-schema');
+        Differ = require('node-document-differ-jsondiff');
+      },
+
+      after: function() {
+        Document.storage = Document.DefaultStorage;
+        Document.validator = Document.DefaultValidator;
+        Document.differ = Document.DefaultDiffer;
+      },
+
+      // TODO: Subclass `Document.Adapter` to make `use` smarter using `instanceof`.
+
+      '.use': {
+        '': function() {
+          assert.property ( Document, 'use' );
+          assert.typeOf ( Document.use, 'function' );
+        },
+
+        'Storage': {
+          '("storage", Storage)': function() {
+            Document.use('storage', Storage);
+            assert.deepEqual ( Document.storage, Storage );
+          },
+
+          '("storage", storage)': function() {
+            Document.use('storage', new Storage());
+            assert.instanceOf ( Document.storage, Storage );
+          }
+        },
+
+        'Validator': {
+          '("validator", Validator)': function() {
+            Document.use('validator', Validator);
+            assert.deepEqual ( Document.validator, Validator );
+          },
+
+          '("validator", validator)': function() {
+            Document.use('validator', new Validator());
+            assert.instanceOf ( Document.validator, Validator );
+          }
+        },
+
+        'Differ': {
+          '("differ", Differ)': function() {
+            Document.use('differ', Differ);
+            assert.deepEqual ( Document.differ, Differ );
+          },
+
+          '("differ", differ)': function() {
+            Document.use('differ', new Differ());
+            assert.instanceOf ( Document.differ, Differ );
+          }
+        }
       }
     }
   }, // Document
@@ -181,8 +263,12 @@ module.exports = {
 
     'Generators': {
       '.id': {
-        'Default': function() {
+        '': function() {
+          assert.property ( Post, 'id' );
           assert.typeOf ( Post.id, 'function' );
+        },
+
+        'Default': function() {
           assert.typeOf ( Post.id(), 'string' );
           assert.equal ( Post.id().length, 36 );
         },
@@ -203,8 +289,86 @@ module.exports = {
       }
     }, // Generators
 
+    'Adapters': {
+      before: function() {
+        Storage = require('node-document-storage-global');
+        Validator = require('node-document-validator-schema');
+        Differ = require('node-document-differ-jsondiff');
+      },
+
+      after: function() {
+        Post.storage = Post.DefaultStorage;
+        Post.validator = Post.DefaultValidator;
+        Post.differ = Post.DefaultDiffer;
+      },
+
+      // TODO: Subclass `Document.Adapter` to make `use` smarter using `instanceof`.
+
+      '.use': {
+        '': function() {
+          assert.property ( Post, 'use' );
+          assert.typeOf ( Post.use, 'function' );
+        },
+
+        'Storage': {
+          '("storage", Storage)': function() {
+            Post.use('storage', Storage);
+            assert.instanceOf ( Post.storage, Storage );
+          },
+
+          '("storage", storage)': function() {
+            Post.use('storage', new Storage());
+            assert.instanceOf ( Post.storage, Storage );
+          },
+
+          'Collection': {
+            '("storage", Storage)': function() {
+              var res = Document([Post, Article]).use('storage', Storage);
+              assert.instanceOf ( Post.storage, Storage );
+              assert.instanceOf ( Article.storage, Storage );
+            },
+
+            '("storage", storage)': function() {
+              Document([Post, Article]).use('storage', new Storage());
+              assert.instanceOf ( Post.storage, Storage );
+              assert.instanceOf ( Article.storage, Storage );
+            }
+          }
+        },
+
+        'Validator': {
+          '("validator", Validator)': function() {
+            Post.use('validator', Validator);
+            assert.instanceOf ( Post.validator, Validator );
+          },
+
+          '("validator", validator)': function() {
+            Post.use('validator', new Validator());
+            assert.instanceOf ( Post.validator, Validator );
+          }
+        },
+
+        'Differ': {
+          '("differ", Differ)': function() {
+            Post.use('differ', Differ);
+            assert.instanceOf ( Post.differ, Differ );
+          },
+
+          '("differ", differ)': function() {
+            Post.use('differ', new Differ());
+            assert.instanceOf ( Post.differ, Differ );
+          }
+        }
+      }
+    },
+
     'Creation': {
       '.new': {
+        '': function() {
+          assert.property ( Post, 'new' );
+          assert.typeOf ( Post.new, 'function' );
+        },
+
         '()': function() {
           post = Post.new();
 
@@ -230,6 +394,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([Post, Article]), 'new' );
+            assert.typeOf ( Document([Post, Article]).new, 'function' );
+          },
+
           '()': function() {
             posts = Document([Post, Article]).new();
 
@@ -274,6 +443,11 @@ module.exports = {
 
     'Persistance': {
       '.create': {
+        '': function() {
+          assert.property ( Post, 'create' );
+          assert.typeOf ( Post.create, 'function' );
+        },
+
         'this': function(done) {
           Post.create(0, {}, function(err) {
             assert.typeOf ( err, 'null' );
@@ -309,6 +483,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([Post, Article]), 'create' );
+            assert.typeOf ( Document([Post, Article]).create, 'function' );
+          },
+
           'this': function(done) {
             Document([Post, Article]).create(0, {}, function(err) {
               assert.typeOf ( err, 'array' );
@@ -367,6 +546,11 @@ module.exports = {
       },
 
       '.set': {
+        '': function() {
+          assert.property ( Post, 'set' );
+          assert.typeOf ( Post.set, 'function' );
+        },
+
         'this': function(done) {
           Post.set(0, {}, function(err) {
             assert.typeOf ( err, 'array' );
@@ -458,6 +642,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([Post, Article]), 'set' );
+            assert.typeOf ( Document([Post, Article]).set, 'function' );
+          },
+
           'this': function(done) {
             Document([Post, Article]).set(0, {}, function(err) {
               assert.typeOf ( err, 'array' );
@@ -559,6 +748,11 @@ module.exports = {
 
 
       '.get': {
+        '': function() {
+          assert.property ( Post, 'get' );
+          assert.typeOf ( Post.get, 'function' );
+        },
+
         'this': function(done) {
           Post.get(0, function(err) {
             assert.typeOf ( err, 'array' );
@@ -620,6 +814,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([Post, Article]), 'get' );
+            assert.typeOf ( Document([Post, Article]).get, 'function' );
+          },
+
           'this': function(done) {
             Document([Post, Article]).get(0, function(err) {
               assert.typeOf ( err, 'array' );
@@ -689,6 +888,11 @@ module.exports = {
       }, // .get
 
       '.del': {
+        '': function() {
+          assert.property ( Post, 'del' );
+          assert.typeOf ( Post.del, 'function' );
+        },
+
         'this': function(done) {
           Post.del(0, function(err) {
             assert.typeOf ( err, 'array' );
@@ -750,6 +954,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([Post, Article]), 'del' );
+            assert.typeOf ( Document([Post, Article]).del, 'function' );
+          },
+
           'this': function(done) {
             Document([Post, Article]).del(0, function(err) {
               assert.typeOf ( err, 'array' );
@@ -819,6 +1028,11 @@ module.exports = {
       }, // .del
 
       '.exists': {
+        '': function() {
+          assert.property ( Post, 'exists' );
+          assert.typeOf ( Post.exists, 'function' );
+        },
+
         'this': function(done) {
           Post.exists(0, function(err) {
             assert.typeOf ( err, 'array' );
@@ -914,6 +1128,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([Post, Article]), 'exists' );
+            assert.typeOf ( Document([Post, Article]).exists, 'function' );
+          },
+
           'this': function(done) {
             Document([Post, Article]).exists(0, function(err) {
               assert.typeOf ( err, 'array' );
@@ -1013,6 +1232,11 @@ module.exports = {
       }, // .exists
 
       '.end': {
+        '': function() {
+          assert.property ( Post, 'end' );
+          assert.typeOf ( Post.end, 'function' );
+        },
+
         'this': function(done) {
           Post.end(function(err) {
             assert.equal ( this, Post );
@@ -1025,6 +1249,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([Post, Article]), 'end' );
+            assert.typeOf ( Document([Post, Article]).end, 'function' );
+          },
+
           'this': function(done) {
             Document([Post, Article]).end(function() {
               assert.typeOf ( this, 'array' );
@@ -1048,16 +1277,21 @@ module.exports = {
             title: {
               required: true,
               type: 'string',
-              length: 7
+              minLength: 7
             }
           });
           Article = Document('Article', {
             title: {
               required: true,
               type: 'string',
-              length: 7
+              minLength: 7
             }
           });
+        },
+
+        '': function() {
+          assert.property ( Post, 'validate' );
+          assert.typeOf ( Post.validate, 'function' );
         },
 
         'this': function(done) {
@@ -1084,7 +1318,7 @@ module.exports = {
 
           Post.validate(data, function(err, errors, valid) {
             assert.typeOf ( err, 'null' );
-            assert.typeOf ( errors, 'object' );
+            assert.ok ( errors, 'object' );
             assert.equal ( errors.length, 1 );
             assert.equal ( valid, false );
             done();
@@ -1107,7 +1341,7 @@ module.exports = {
 
           Post.validate(data, {}, function(err, errors, valid) {
             assert.typeOf ( err, 'null' );
-            assert.typeOf ( errors, 'object' );
+            assert.ok ( errors );
             assert.equal ( errors.length, 1 );
             assert.equal ( valid, false );
             done();
@@ -1115,6 +1349,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([Post, Article]), 'validate' );
+            assert.typeOf ( Document([Post, Article]).validate, 'function' );
+          },
+
           'this': function(done) {
             Document([Post, Article]).validate({}, function(err) {
               assert.typeOf ( err, 'array' );
@@ -1151,9 +1390,9 @@ module.exports = {
               assert.deepEqual ( err, [null, null] );
 
               assert.typeOf ( errors, 'array' );
-              assert.typeOf ( errors[0], 'object' );
+              assert.ok ( errors[0] );
               assert.equal ( errors[0].length, 1 );
-              assert.typeOf ( errors[1], 'object' );
+              assert.ok ( errors[1] );
               assert.equal ( errors[1].length, 1 );
 
               assert.typeOf ( valid, 'array' );
@@ -1186,9 +1425,9 @@ module.exports = {
               assert.deepEqual ( err, [null, null] );
 
               assert.typeOf ( errors, 'array' );
-              assert.typeOf ( errors[0], 'object' );
+              assert.ok ( errors[0] );
               assert.equal ( errors[0].length, 1 );
-              assert.typeOf ( errors[1], 'object' );
+              assert.ok ( errors[1] );
               assert.equal ( errors[1].length, 1 );
 
               assert.typeOf ( valid, 'array' );
@@ -1201,6 +1440,11 @@ module.exports = {
     }, // Validation
 
     'Diffing': {
+      '': function() {
+        assert.property ( Post, 'diff' );
+        assert.typeOf ( Post.diff, 'function' );
+      },
+
       '.diff': {
         'this': function(done) {
           Post.diff({}, {}, function(err) {
@@ -1259,6 +1503,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([Post, Article]), 'diff' );
+            assert.typeOf ( Document([Post, Article]).diff, 'function' );
+          },
+
           '(attributes) - when identical data': function(done) {
             var data_a = {title: "A title"},
                 data_b = {title: "A title"};
@@ -1430,6 +1679,65 @@ module.exports = {
       }
     },
 
+    // REVISIT: Allow change storage adapter for "an instance"? Would be neat, but more complex.
+    // 'Adapters': {
+    //   before: function() {
+    //     Storage = require('node-document-storage-global');
+    //     Validator = require('node-document-validator-schema');
+    //     Differ = require('node-document-differ-jsondiff');
+    //   },
+    //
+    //   after: function() {
+    //     post.storage = post.DefaultStorage;
+    //     post.validator = post.DefaultValidator;
+    //     post.differ = post.DefaultDiffer;
+    //   },
+    //
+    //   // TODO: Subclass `Document.Adapter` to make `use` smarter using `instanceof`.
+    //
+    //   'Storage': {
+    //     '.use': {
+    //       '("storage", Storage)': function() {
+    //         post.use('storage', Storage);
+    //         assert.instanceOf ( post.storage, Storage );
+    //       },
+    //
+    //       '("storage", storage)': function() {
+    //         post.use('storage', new Storage());
+    //         assert.instanceOf ( post.storage, Storage );
+    //       }
+    //     }
+    //   },
+    //
+    //   'Validator': {
+    //     '.use': {
+    //       '("validator", Validator)': function() {
+    //         post.use('validator', Validator);
+    //         assert.instanceOf ( post.validator, Validator );
+    //       },
+    //
+    //       '("validator", validator)': function() {
+    //         post.use('validator', new Validator());
+    //         assert.instanceOf ( post.validator, Validator );
+    //       }
+    //     }
+    //   },
+    //
+    //   'Differ': {
+    //     '.use': {
+    //       '("differ", Differ)': function() {
+    //         post.use('differ', Differ);
+    //         assert.instanceOf ( post.differ, Differ );
+    //       },
+    //
+    //       '("differ", differ)': function() {
+    //         post.use('differ', new Differ());
+    //         assert.instanceOf ( post.differ, Differ );
+    //       }
+    //     }
+    //   }
+    // },
+
     'Attributes': {
       beforeEach: function() {
         post = new Post({title: "A title", description: "Lorem ipsum..."});
@@ -1438,11 +1746,13 @@ module.exports = {
 
       '#attributes': {
         '': function() {
+          assert.property ( post, 'attributes');
           assert.typeOf ( post.attributes, 'object');
         },
 
         'Collection': {
           '': function() {
+            assert.property ( Document([post, article]), 'attributes' );
             assert.typeOf ( Document([post, article]).attributes, 'array' );
             assert.deepEqual ( Document([post, article]).attributes, [post.attributes, article.attributes] );
           }
@@ -1451,11 +1761,13 @@ module.exports = {
 
       '#type': {
         '': function() {
+          assert.property ( post, 'type' );
           assert.equal ( post.type, 'Post' );
         },
 
         'Collection': {
           '': function() {
+            assert.property ( Document([post, article]), 'type' );
             assert.typeOf ( Document([post, article]).type, 'array' );
             assert.deepEqual ( Document([post, article]).type, [post.type, article.type] );
           }
@@ -1487,6 +1799,7 @@ module.exports = {
 
         'Collection': {
           '': function() {
+            assert.property ( Document([post, article]), 'id' );
             assert.typeOf ( Document([post, article]).id, 'array' );
             assert.deepEqual ( Document([post, article]).id, [post.id, article.id] );
           }
@@ -1495,6 +1808,7 @@ module.exports = {
 
       '#get': {
         '': function() {
+          assert.property ( post, 'get' );
           assert.typeOf ( post.get, 'function' );
         },
 
@@ -1506,6 +1820,7 @@ module.exports = {
 
         'Collection': {
           '': function() {
+            assert.property ( Document([post, article]), 'get' );
             assert.typeOf ( Document([post, article]).get, 'function' );
           },
 
@@ -1519,6 +1834,7 @@ module.exports = {
 
       '#set': {
         '': function() {
+          assert.property ( post, 'set' );
           assert.typeOf ( post.set, 'function' );
         },
 
@@ -1542,6 +1858,7 @@ module.exports = {
 
         'Collection': {
           '': function() {
+            assert.property ( Document([post, article]), 'set' );
             assert.typeOf ( Document([post, article]).set, 'function' );
           },
 
@@ -1564,6 +1881,7 @@ module.exports = {
 
       '#attr': {
         '': function() {
+          assert.property ( post, 'attr' );
           assert.typeOf ( post.attr, 'function' );
         },
 
@@ -1593,6 +1911,7 @@ module.exports = {
 
         'Collection': {
           '': function() {
+            assert.property ( Document([post, article]), 'attr' );
             assert.typeOf ( Document([post, article]).attr, 'function' );
           },
 
@@ -1623,6 +1942,11 @@ module.exports = {
       },
 
       '#reset': {
+        '': function() {
+          assert.property ( post, 'attr' );
+          assert.typeOf ( post.attr, 'function' );
+        },
+
         '()': function() {
           post = new Post();
 
@@ -1642,6 +1966,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([post, article]), 'attr' );
+            assert.typeOf ( Document([post, article]).attr, 'function' );
+          },
+
           '()': function() {
             post = new Post();
             article = new Article();
@@ -1664,6 +1993,11 @@ module.exports = {
       },
 
       '#clear': {
+        '': function() {
+          assert.property ( post, 'clear' );
+          assert.typeOf ( post.clear, 'function' );
+        },
+
         '()': function() {
           assert.deepEqual ( post.attributes, {title: "A title", description: "Lorem ipsum..."} );
 
@@ -1705,6 +2039,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([post, article]), 'clear' );
+            assert.typeOf ( Document([post, article]).clear, 'function' );
+          },
+
           '()': function() {
             assert.deepEqual ( Document([post, article]).attributes, [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}] );
 
@@ -1750,26 +2089,44 @@ module.exports = {
 
     'Serialization': {
       '#toJSON': {
-        '=> JSON object (#attributes)': function() {
+        '': function() {
+          assert.property ( post, 'toJSON' );
           assert.typeOf ( post.toJSON, 'function' );
+        },
+
+        '=> JSON object (#attributes)': function() {
           assert.deepEqual ( post.toJSON(), {title: "A title", description: "Lorem ipsum..."});
         },
 
         'Collection': {
-          '=> JSON object (#attributes)': function() {
+          '': function() {
+            assert.property ( Document([post, article]), 'toJSON' );
             assert.typeOf ( Document([post, article]).toJSON, 'function' );
+          },
+
+          '=> JSON object (#attributes)': function() {
             assert.deepEqual (  Document([post, article]).toJSON(), [{title: "A title", description: "Lorem ipsum..."}, {title: "A title", description: "Lorem ipsum..."}]);
           }
         }
       },
 
       '#toString': {
+        '': function() {
+          assert.property ( post, 'toString' );
+          assert.typeOf ( post.toString, 'function' );
+        },
+
         '=> JSON string (#attributes)': function() {
           assert.typeOf ( post.toString, 'function' );
           assert.deepEqual ( post.toString(), JSON.stringify({title: "A title", description: "Lorem ipsum..."}) );
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([post, article]), 'toString' );
+            assert.typeOf ( Document([post, article]).toString, 'function' );
+          },
+
           '=> JSON string (#attributes)': function() {
             assert.typeOf ( Document([post, article]).toString, 'function' );
             assert.deepEqual ( Document([post, article]).toString(), [JSON.stringify({title: "A title", description: "Lorem ipsum..."}), JSON.stringify({title: "A title", description: "Lorem ipsum..."})] );
@@ -1778,12 +2135,22 @@ module.exports = {
       },
 
       '#valueOf': {
+        '': function() {
+          assert.property ( post, 'valueOf' );
+          assert.typeOf ( post.valueOf, 'function' );
+        },
+
         '=> JSON string (#attributes)': function() {
           assert.typeOf ( post.valueOf, 'function' );
           assert.deepEqual ( post.valueOf(), post );
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([post, article]), 'valueOf' );
+            assert.typeOf ( Document([post, article]).valueOf, 'function' );
+          },
+
           '=> JSON string (#attributes)': function() {
             assert.typeOf ( Document([post, article]).valueOf, 'function' );
             assert.deepEqual ( Document([post, article]).valueOf(), [post, article] );
@@ -1792,12 +2159,22 @@ module.exports = {
       },
 
       '#inspect': {
+        '': function() {
+          assert.property ( post, 'inspect' );
+          assert.typeOf ( post.inspect, 'function' );
+        },
+
         '=> JSON object (#)': function() {
           assert.typeOf ( post.inspect, 'function' );
           assert.deepEqual ( post.inspect(), require('util').inspect({title: "A title", description: "Lorem ipsum..."}) );
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([post, article]), 'inspect' );
+            assert.typeOf ( Document([post, article]).inspect, 'function' );
+          },
+
           '=> JSON object (#)': function() {
             assert.typeOf ( Document([post, article]).inspect, 'function' );
             assert.deepEqual ( Document([post, article]).inspect(), require('util').inspect([post, article]) );
@@ -1812,24 +2189,17 @@ module.exports = {
         article = new Article({title: "A title", description: "Lorem ipsum..."});
       },
 
-      '.Differ': {
-        '': function() {
-          assert.property ( Document, 'Differ' );
-          assert.equal ( Document.Differ, Document.DefaultDiffer );
-        }
-      },
-
       '.differ': {
         '': function() {
           assert.property ( Post, 'differ' );
-          assert.instanceOf ( Post.differ, Document.Differ );
+          assert.instanceOf ( Post.differ, Document.differ );
         },
 
         'Collection': {
           '': function() {
             assert.property ( Document([Post, Article]), 'differ' );
-            assert.instanceOf ( Document([Post, Article]).differ[0], Document.Differ );
-            assert.instanceOf ( Document([Post, Article]).differ[1], Document.Differ );
+            assert.instanceOf ( Document([Post, Article]).differ[0], Document.differ );
+            assert.instanceOf ( Document([Post, Article]).differ[1], Document.differ );
           }
         }
       },
@@ -1928,14 +2298,14 @@ module.exports = {
           title: {
             required: true,
             type: 'string',
-            length: 7
+            minLength: 7
           }
         });
         Article = Document('Article', {
           title: {
             required: true,
             type: 'string',
-            length: 7
+            minLength: 7
           }
         });
       },
@@ -1945,24 +2315,87 @@ module.exports = {
         article = new Article({title: "A title", description: "Lorem ipsum..."});
       },
 
-      '.Validator': {
+      '.schema': {
         '': function() {
-          assert.property ( Document, 'Validator' );
-          assert.equal ( Document.Validator, Document.DefaultValidator );
+          assert.property ( Post, 'schema' );
+          assert.deepEqual ( Post.schema, {
+            title: {
+              required: true,
+              type: 'string',
+              minLength: 7
+            }
+          } );
+        },
+
+        'Collection': {
+          '': function() {
+            assert.property ( Document([Post, Article]), 'schema' );
+            assert.deepEqual ( Document([Post, Article]).schema, [
+              {
+                title: {
+                  required: true,
+                  type: 'string',
+                  minLength: 7
+                }
+              },
+              {
+                title: {
+                  required: true,
+                  type: 'string',
+                  minLength: 7
+                }
+              }
+            ] );
+          }
+        }
+      },
+
+      '#schema': {
+        '': function() {
+          assert.property ( post, 'schema' );
+          assert.deepEqual ( post.schema, {
+            title: {
+              required: true,
+              type: 'string',
+              minLength: 7
+            }
+          } );
+        },
+
+        'Collection': {
+          '': function() {
+            assert.property ( Document([post, article]), 'schema' );
+            assert.deepEqual ( Document([post, article]).schema, [
+              {
+                title: {
+                  required: true,
+                  type: 'string',
+                  minLength: 7
+                }
+              },
+              {
+                title: {
+                  required: true,
+                  type: 'string',
+                  minLength: 7
+                }
+              }
+            ] );
+          }
         }
       },
 
       '.validator': {
         '': function() {
           assert.property ( Post, 'validator' );
-          assert.instanceOf ( Post.validator, Document.Validator );
+          assert.instanceOf ( Post.validator, Document.validator );
         },
 
         'Collection': {
           '': function() {
             assert.property ( Document([Post, Article]), 'validator' );
-            assert.instanceOf ( Document([Post, Article]).validator[0], Document.Validator );
-            assert.instanceOf ( Document([Post, Article]).validator[1], Document.Validator );
+            assert.instanceOf ( Document([Post, Article]).validator[0], Document.validator );
+            assert.instanceOf ( Document([Post, Article]).validator[1], Document.validator );
           }
         }
       },
@@ -1997,7 +2430,7 @@ module.exports = {
 
           post.validate(function(err, errors, valid) {
             assert.typeOf ( err, 'null' );
-            assert.typeOf ( errors, 'object' );
+            assert.ok ( errors );
             assert.equal ( valid, false );
             done();
           });
@@ -2049,8 +2482,8 @@ module.exports = {
               assert.deepEqual ( err, [null, null] );
 
               assert.typeOf ( errors, 'array' );
-              assert.typeOf ( errors[0], 'object' );
-              assert.typeOf ( errors[1], 'object' );
+              assert.ok ( errors[0] );
+              assert.ok ( errors[1] );
 
               assert.typeOf ( valid, 'array' );
               assert.equal ( valid[0], false );
@@ -2085,7 +2518,7 @@ module.exports = {
           post.validate(function(err, errors) {
             assert.typeOf ( err, 'null' );
 
-            assert.typeOf ( errors, 'object' );
+            assert.ok ( errors );
             assert.equal ( errors.length, 1 );
             done();
           });
@@ -2122,8 +2555,8 @@ module.exports = {
               assert.deepEqual ( err, [null, null] );
 
               assert.typeOf ( errors, 'array' );
-              assert.typeOf ( errors[0], 'object' );
-              assert.typeOf ( errors[1], 'object' );
+              assert.ok ( errors[0] );
+              assert.ok ( errors[1] );
               done();
             });
           }
@@ -2332,6 +2765,11 @@ module.exports = {
       },
 
       '#destroy': {
+        '': function() {
+          assert.property ( post, 'destroy' );
+          assert.typeOf ( post.destroy, 'function' );
+        },
+
         'this': function(done) {
           post.destroy(function(err) {
             assert.typeOf ( err, 'null' );
@@ -2400,6 +2838,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([post, article]), 'destroy' );
+            assert.typeOf ( Document([post, article]).destroy, 'function' );
+          },
+
           'this': function(done) {
             Document([post, article]).destroy(function(err) {
               assert.typeOf ( err, 'array' );
@@ -2507,6 +2950,11 @@ module.exports = {
       }, // #destroy
 
       '#save': {
+        '': function() {
+          assert.property ( post, 'save' );
+          assert.typeOf ( post.save, 'function' );
+        },
+
         'this': function(done) {
           post.save(function(err) {
             assert.typeOf ( err, 'null' );
@@ -2570,6 +3018,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([post, article]), 'save' );
+            assert.typeOf ( Document([post, article]).save, 'function' );
+          },
+
           'this': function(done) {
             Document([post, article]).save(function(err) {
               assert.typeOf ( err, 'array' );
@@ -2670,6 +3123,11 @@ module.exports = {
       }, // #save
 
       '#fetch': {
+        '': function() {
+          assert.property ( post, 'fetch' );
+          assert.typeOf ( post.fetch, 'function' );
+        },
+
         'this': function(done) {
           post.fetch(function(err) {
             assert.typeOf ( err, 'null' );
@@ -2761,6 +3219,11 @@ module.exports = {
         },
 
         'Collection': {
+          '': function() {
+            assert.property ( Document([post, article]), 'fetch' );
+            assert.typeOf ( Document([post, article]).fetch, 'function' );
+          },
+
           'this': function(done) {
             Document([post, article]).fetch(function(err) {
               assert.typeOf ( err, 'array' );
@@ -2916,11 +3379,6 @@ module.exports = {
     }, // Persistance
 
     'Events': {
-      before: function() {
-        Post = Document('Post');
-        post = new Post();
-      },
-
       'emit': function() {
         assert.property ( Post, 'emit');
         assert.typeOf ( Post.emit, 'function');
