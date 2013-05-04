@@ -43,7 +43,7 @@
             }
           ]
 
-- [ADAPTER/FEATURE]: Generic client-side HTTP GUI: `node-document-admin`
+- [ADAPTER/FEATURE]: Generic client-side HTTP GUI: `node-document-gui`
       - Example: https://github.com/tldrio/mongo-edit
 
 
@@ -87,7 +87,7 @@
           [Post, Article].use(TimestampsMiddleware);
           [post, article].use(TimestampsMiddleware);
 
-      - Original deprecated idea - middleware could do this without bloading the API:
+      - Original deprecated idea - middleware could do this without bloating the API:
 
         // Will be saved as `_created_at` (on first write) - if meta prefix is '_'.
         Post.meta('created_at', false, function() {
