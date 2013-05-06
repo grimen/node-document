@@ -1,16 +1,6 @@
 
 ::::: CURRENT/NEXT ::
 
-- [FEATURE]: Connection pool for storage connections - not only per instance, per storage adapter
-      - https://github.com/coopernurse/node-pool
-      - Example:
-
-        SomeStorage.pool = poolModule.Pool({...});
-        SomeStorage.prototype.__defineGetter__('pool', function() { return this.klass.pool; });
-
-        SomeStorage.aquire(callback);
-        (new SomeStorage).aquire(callback);
-
 - [ADAPTER/FEATURE]: Generic HTTP REST API: `node-document-api`
       - Example:
 
@@ -22,9 +12,6 @@
 
           PUT /post/1
           PUT /post/1,2,3
-
-          PATCH /post/1
-          PATCH /post/1,2,3
 
           DELETE /post/1
           DELETE /post/1,2,3
@@ -43,11 +30,42 @@
             }
           ]
 
+
+          // Any model/types
+          connect_app.use ( document )
+          connect_app.use ( document({methods: ['get', 'set']}) )
+
+          // "Post" model/type only
+          connect_app.use ( document(Post) )
+          connect_app.use ( document(Post, {methods: ['get', 'set']}) )
+
+          // Explicit routes - any model/type
+          express_app.get ( document.get )
+          express_app.post ( document.set )
+          express_app.put ( document.set )
+          express_app.delete ( document.del )
+
+          // Explicit routes - only "Post" model/type
+          express_app.get ( document.get(Post) )
+          express_app.post ( document.set(Post) )
+          express_app.put ( document.set(Post) )
+          express_app.delete ( document.del(Post) )
+
 - [ADAPTER/FEATURE]: Generic client-side HTTP GUI: `node-document-gui`
       - Example: https://github.com/tldrio/mongo-edit
 
 
 ::::: HIGH ::
+
+- [FEATURE]: Connection pool for storage connections - not only per instance, per storage adapter
+      - https://github.com/coopernurse/node-pool
+      - Example:
+
+        SomeStorage.pool = poolModule.Pool({...});
+        SomeStorage.prototype.__defineGetter__('pool', function() { return this.klass.pool; });
+
+        SomeStorage.aquire(callback);
+        (new SomeStorage).aquire(callback);
 
 - [BUG]: See `test/index.js` comment. Probably related to the swallowed errors issue.
 
