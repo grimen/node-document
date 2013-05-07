@@ -71,8 +71,9 @@ Unified interface for validating data based on a custom [JSON Schema](http://jso
 * Adapters
 	* [Amanda](https://github.com/grimen/node-document-validator-amanda)
 	* [Schema.js](https://github.com/grimen/node-document-validator-schema)
-	* [JSONSchema](https://github.com/grimen/node-document-validator-jsonschema)
-	* [JSV](https://github.com/grimen/node-document-validator-jsv)
+	* [JSONGate](https://github.com/grimen/node-document-validator-jsongate)
+  * [JSONSchema](https://github.com/grimen/node-document-validator-jsonschema)
+  * [JSV](https://github.com/grimen/node-document-validator-jsv)
 
 
 ### [**Differ**](https://github.com/grimen/node-document-differ)
@@ -80,10 +81,10 @@ Unified interface for validating data based on a custom [JSON Schema](http://jso
 Unified interface for diffing objects to see changes between the two (additions/removals/edits).
 
 * Operations:
-	* `diff`
+  * `diff`
 * Adapters
-	* [JSONDiff](https://github.com/grimen/node-document-differ-jsondiff)
-	* [DeepDiff](https://github.com/grimen/node-document-differ-deepdiff)
+  * [JSONDiff](https://github.com/grimen/node-document-differ-jsondiff)
+  * [DeepDiff](https://github.com/grimen/node-document-differ-deepdiff)
 	* [ObjectDiff](https://github.com/grimen/node-document-differ-objectdiff)
 	* [Patcher.js](https://github.com/grimen/node-document-differ-patcher)
 
