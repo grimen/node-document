@@ -1,73 +1,16 @@
 
 ::::: CURRENT/NEXT ::
 
-- [ADAPTER/FEATURE]: Generic HTTP REST API: `node-document-api`
-      - Example:
-
-          GET /post/1
-          GET /post/1,2,3
-
-          POST /post/1
-          POST /post/1,2,3
-
-          PUT /post/1
-          PUT /post/1,2,3
-
-          DELETE /post/1
-          DELETE /post/1,2,3
-
-
-          [
-            {
-              _type: 'Post',
-              _id: 1,
-              _version: 1,
-              _expires: '2013-02-01T00:00:00Z',
-              _created_at: '2013-01-01T00:00:00Z',
-              _updated_at: '2013-01-12T00:00:00Z',
-              title: "A title",
-              description: "Lorem ipsum."
-            }
-          ]
-
-
-          // Any model/types
-          connect_app.use ( document )
-          connect_app.use ( document({methods: ['get', 'set']}) )
-
-          // "Post" model/type only
-          connect_app.use ( document(Post) )
-          connect_app.use ( document(Post, {methods: ['get', 'set']}) )
-
-          // Explicit routes - any model/type
-          express_app.get ( document.get )
-          express_app.post ( document.set )
-          express_app.put ( document.set )
-          express_app.delete ( document.del )
-
-          // Explicit routes - only "Post" model/type
-          express_app.get ( document.get(Post) )
-          express_app.post ( document.set(Post) )
-          express_app.put ( document.set(Post) )
-          express_app.delete ( document.del(Post) )
-
-- [ADAPTER/FEATURE]: Generic client-side HTTP GUI: `node-document-gui`
+* [ADAPTER/FEATURE]: Generic client-side HTTP GUI: `node-document-gui`
       - Example: https://github.com/tldrio/mongo-edit
+      - Example: https://github.com/hij1nx/levelweb
+
+- [FEATURE]: `Storage#keys` - export all document keys.
+
+- [FEATURE]: `Storage#types` - export all document types.
 
 
 ::::: HIGH ::
-
-- [FEATURE]: Connection pool for storage connections - not only per instance, per storage adapter
-      - https://github.com/coopernurse/node-pool
-      - Example:
-
-        SomeStorage.pool = poolModule.Pool({...});
-        SomeStorage.prototype.__defineGetter__('pool', function() { return this.klass.pool; });
-
-        SomeStorage.aquire(callback);
-        (new SomeStorage).aquire(callback);
-
-- [BUG]: See `test/index.js` comment. Probably related to the swallowed errors issue.
 
 - [FEATURE/API/PERFORMANCE]: Enhance `Collection` DB operations to not run as single operations, rather merge them and use bulk DB operation.
       1. Operations
@@ -80,6 +23,43 @@
       - Document.Model.prototype.emit('save:before') - before (first)
       - Document.Model.prototype.emit('save:each') - for each item (if many)
       - Document.Model.prototype.emit('save:after') - after (last)
+
+- [FEATURE]: Review meta fields: `_updated_at`, `_created_at`. Adapter and hook into events, e.g. "before save", etc.? Middleware API?
+      - Example:
+          var TimestampsMiddleware = require('node-document-middleware-timestamps');
+
+          Post.use(TimestampsMiddleware);
+          post.use(TimestampsMiddleware);
+
+          [Post, Article].use(TimestampsMiddleware);
+          [post, article].use(TimestampsMiddleware);
+
+      - Original *deprecated* idea - middleware could do this without bloating the API:
+
+          // Will be saved as `_created_at` (on first write) - if meta prefix is '_'.
+          Post.meta('created_at', false, function() {
+            // Access to instance (doc) and klass (doc.klass) if needed.
+            return new Date();
+          });
+
+          // Will be saved as `_fingerprint` (on every write) - if meta prefix is '_'.
+          Post.meta('fingerprint', true, function() {
+            return [this.klass.type, encodeURIComponent(this.url)].join('-');
+          });
+
+- [FEATURE]: Connection pool for storage connections - not only per instance, per storage adapter
+      - https://github.com/coopernurse/node-pool
+      - Example:
+
+        SomeStorage.pool = poolModule.Pool({...});
+        SomeStorage.prototype.__defineGetter__('pool', function() { return this.klass.pool; });
+
+        SomeStorage.aquire(callback);
+        (new SomeStorage).aquire(callback);
+
+      - Issue/Review: Needs to close connections manually to make this behave as intended. Make connection pools optional?
+
+- [BUG]: See `test/index.js` comment. Probably related to the swallowed errors issue.
 
 - [FEATURE/API]: Extend the Collection API with "Perform collection of operations". Possible enhancement: Merge it into bulk-request under the hood.
     - Example: Merge different operations on different document types into single bulk operation.
@@ -95,32 +75,7 @@
 
 - [REFACTOR]: Make `Differ#diff` and `Validator#validate` synchronous? - worst case drop support for `Amanda` or "fake it".
 
-- [FEATURE]: Review meta fields: `_updated_at`, `_created_at`. Adapter and hook into events, e.g. "before save", etc.? Middleware API?
-      - Example:
-          var TimestampsMiddleware = require('node-document-middleware-timestamps');
-
-          Post.use(TimestampsMiddleware);
-          post.use(TimestampsMiddleware);
-
-          [Post, Article].use(TimestampsMiddleware);
-          [post, article].use(TimestampsMiddleware);
-
-      - Original deprecated idea - middleware could do this without bloating the API:
-
-        // Will be saved as `_created_at` (on first write) - if meta prefix is '_'.
-        Post.meta('created_at', false, function() {
-          // Access to instance (doc) and klass (doc.klass) if needed.
-          return new Date();
-        });
-
-        // Will be saved as `_fingerprint` (on every write) - if meta prefix is '_'.
-        Post.meta('fingerprint', true, function() {
-          return [this.klass.type, encodeURIComponent(this.url)].join('-');
-        });
-
-- [FEATURE]: `Storage#keys` - export all document keys.
-
-- [FEATURE]: Support "expires" for documents (Storage).
+- [FEATURE]: Support "expires" for documents (Storage)
       - Memory: Invalidate on fetch
       - FileSystem: Invalidate on fetch
       - Redis: http://redis.io/commands/expire
@@ -184,6 +139,9 @@
 - [ENHANCEMENT]: Make `Document.storage` a property, to later support more advanced shortcuts like in the constructor:
 
       Post.storage = 'file:///app'
+
+- [ADAPTER]: Google Spreadsheet
+      - https://github.com/samcday/node-google-spreadsheets
 
 - [ADAPTER]: OrientDB
       - https://github.com/gabipetrovay/node-orientdb
