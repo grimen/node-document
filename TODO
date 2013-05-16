@@ -1,16 +1,39 @@
 
 ::::: CURRENT/NEXT ::
 
+* [FEATURE]: `Storage#keys` - export all document keys.
+
+- [FEATURE]: `Storage#types` - export all document types.
+
+- [FEATURE]: Count records by type: `Storage#count(<TYPE>)`
+      - Memory: `Object.keys`
+      - FileSystem: http://nodejs.org/docs/v0.3.1/api/fs.html#fs.readdir
+      - Memcache: https://gist.github.com/1365005 (HACK)
+      - Redis: http://redis.io/commands/keys
+      - MongoDB: http://docs.mongodb.org/manual/reference/method/db.collection.count
+      - ElasticSearch: http://www.elasticsearch.org/guide/reference/api/count.html
+      - AmazonS3: http://docs.amazonwebservices.com/AmazonS3/2006-03-01/API/RESTBucketGET.html (HACK - bad one)
+
+- [FEATURE]: Clear records by type: `Storage#clear(<TYPE>)`
+      - Memory: `Object.keys`
+      - FileSystem: http://nodejs.org/docs/v0.3.1/api/fs.html#fs.readdir
+      - Memcache: https://gist.github.com/1365005 (HACK)
+      - Redis: http://redis.io/commands/keys
+      - MongoDB: http://docs.mongodb.org/manual/reference/method/db.collection.remove
+      - ElasticSearch: http://www.elasticsearch.org/guide/reference/api/delete-by-query.html
+      - AmazonS3:
+            http://docs.aws.amazon.com/AmazonS3/latest/API/multiobjectdeleteapi.html
+            http://docs.amazonwebservices.com/AmazonS3/2006-03-01/API/RESTBucketGET.html (HACK - bad one)
+
 * [ADAPTER/FEATURE]: Generic client-side HTTP GUI: `node-document-gui`
       - Example: https://github.com/tldrio/mongo-edit
       - Example: https://github.com/hij1nx/levelweb
 
-- [FEATURE]: `Storage#keys` - export all document keys.
-
-- [FEATURE]: `Storage#types` - export all document types.
-
 
 ::::: HIGH ::
+
+- [ISSUE]: Fix `funargs` library to not extend `Array.prototype`, which it currently do - getting annoying.
+      - https://github.com/grimen/node-funargs/issues/1
 
 - [FEATURE/API/PERFORMANCE]: Enhance `Collection` DB operations to not run as single operations, rather merge them and use bulk DB operation.
       1. Operations
@@ -85,26 +108,6 @@
       - AmazonS3: http://aws.typepad.com/aws/2011/12/amazon-s3-object-expiration.html (i.e. note really => invalidate on fetch)
 
       * Always set `_expires` property.
-
-- [FEATURE]: Count records by type: `Storage#count(<TYPE>)`
-      - Memory: `Object.keys`
-      - FileSystem: http://nodejs.org/docs/v0.3.1/api/fs.html#fs.readdir
-      - Memcache: https://gist.github.com/1365005 (HACK)
-      - Redis: http://redis.io/commands/keys
-      - MongoDB: http://docs.mongodb.org/manual/reference/method/db.collection.count
-      - ElasticSearch: http://www.elasticsearch.org/guide/reference/api/count.html
-      - AmazonS3: http://docs.amazonwebservices.com/AmazonS3/2006-03-01/API/RESTBucketGET.html (HACK - bad one)
-
-- [FEATURE]: Clear records by type: `Storage#clear(<TYPE>)`
-      - Memory: `Object.keys`
-      - FileSystem: http://nodejs.org/docs/v0.3.1/api/fs.html#fs.readdir
-      - Memcache: https://gist.github.com/1365005 (HACK)
-      - Redis: http://redis.io/commands/keys
-      - MongoDB: http://docs.mongodb.org/manual/reference/method/db.collection.remove
-      - ElasticSearch: http://www.elasticsearch.org/guide/reference/api/delete-by-query.html
-      - AmazonS3:
-            http://docs.aws.amazon.com/AmazonS3/latest/API/multiobjectdeleteapi.html
-            http://docs.amazonwebservices.com/AmazonS3/2006-03-01/API/RESTBucketGET.html (HACK - bad one)
 
 - [FEATURE]: Migrate from one DB to another via storage instances: `Storage#export(storage || Stream, ...)` + `Storage#import(storage || Stream, ...)`, and maybe Storage#sync(storage, ...
       - Inherit Stream?
