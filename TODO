@@ -1,7 +1,9 @@
 
 ::::: CURRENT/NEXT ::
 
-* [FEATURE]: `Storage#keys` - export all document keys.
+- [FEATURE]: `Storage#get('post/*')` - get all documents of type 'post' (...using some kind of pagination if possible?)
+
+- [FEATURE]: `Storage#keys` - export all document keys.
 
 - [FEATURE]: `Storage#types` - export all document types.
 
