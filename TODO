@@ -34,9 +34,6 @@
 
 ::::: HIGH ::
 
-- [ISSUE]: Fix `funargs` library to not extend `Array.prototype`, which it currently do - getting annoying.
-      - https://github.com/grimen/node-funargs/issues/1
-
 - [FEATURE/API/PERFORMANCE]: Enhance `Collection` DB operations to not run as single operations, rather merge them and use bulk DB operation.
       1. Operations
            Post.set(1, data, callback) // Post.storage.set('Post', 1, data, callback)
@@ -183,6 +180,17 @@
       - https://github.com/racker/node-cassandra-client
       - https://github.com/simplereach/helenus
 
+- [ADAPTER]: Google Cloud Datastore
+      - https://github.com/GoogleCloudPlatform/google-cloud-datastore
+
+- [ADAPTER]: Google Storage
+      - https://github.com/nodejitsu/pkgcloud#storage
+
+- [ADAPTER]: Rackspace Storage
+      - https://github.com/nodejitsu/pkgcloud#storage
+
+- [ADAPTER]: Azure Storage
+      - https://github.com/nodejitsu/pkgcloud#storage
 
 - [REFACTOR]: Switch to lower-lever driver for `AmazonS3` storage adapter
       - https://github.com/SaltwaterC/aws2js/wiki/S3-Client
