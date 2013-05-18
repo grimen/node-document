@@ -1,24 +1,18 @@
 process.env.NODE_ENV = 'test';
 
+process.setMaxListeners(0);
+
 require('sugar');
 require('colors');
 
-var chai = require('chai');
-// var longjohn = require('longjohn');
+module.exports.longjohn = require('longjohn');
+module.exports.longjohn.async_trace_limit = 3;
 
-// longjohn.async_trace_limit = 3;
+module.exports.chai = require('chai');
+module.exports.chai.Assertion.includeStack = true;
 
-// REVIEW: http://chaijs.com/plugins
-chai.Assertion.includeStack = true;
+module.exports.flag = require('node-env-flag');
 
-module.exports.flag = function(value, default_value) {
-  if (typeof value === 'undefined') {
-    return (default_value === undefined) ? false : default_value;
-  } else {
-    return (/^1|true$/i).test('' + value); // ...to avoid the boolean/truthy ghetto.
-  }
-};
-
-module.exports.assert = chai.assert;
+module.exports.assert = module.exports.chai.assert;
 
 module.exports.debug = console.log;
