@@ -146,7 +146,7 @@ Unified interface for diffing objects to see changes between the two (additions/
 })
 ```
 
-More usage examples coming soon, unil then checkout the [tests](https://github.com/grimen/node-document/blob/master/test/document_spec.js).
+More usage examples coming soon, unil then checkout the [tests](https://github.com/grimen/node-document/tree/master/test/document).
 
 
 ## Test
