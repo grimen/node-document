@@ -46,6 +46,8 @@
       - Document.Model.prototype.emit('save:each') - for each item (if many)
       - Document.Model.prototype.emit('save:after') - after (last)
 
+- [FEATURE]: `#monitor` - shortcut for listening on DB operations (like Redis MONITOR).
+
 - [FEATURE]: Review meta fields: `_updated_at`, `_created_at`. Adapter and hook into events, e.g. "before save", etc.? Middleware API?
       - Example:
           var TimestampsMiddleware = require('node-document-middleware-timestamps');
