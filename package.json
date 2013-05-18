@@ -57,6 +57,7 @@
     "node-inspector": "latest",
     "longjohn": "latest",
     "colors": "latest",
-    "node-document-storage-fs": "latest"
+    "node-document-storage-fs": "latest",
+    "node-env-flag": "latest"
   }
 }

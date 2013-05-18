@@ -568,17 +568,18 @@ module.exports = {
           assert.deepEqual ( post.inspect(), require('util').inspect({title: "A title", description: "Lorem ipsum..."}) );
         },
 
-        'Collection': {
-          '': function() {
-            assert.property ( Document([post, article]), 'inspect' );
-            assert.typeOf ( Document([post, article]).inspect, 'function' );
-          },
+        // Don't play well with Node.js REPL.
+        // 'Collection': {
+        //   '': function() {
+        //     assert.property ( Document([post, article]), 'inspect' );
+        //     assert.typeOf ( Document([post, article]).inspect, 'function' );
+        //   },
 
-          '=> JSON object (#)': function() {
-            assert.typeOf ( Document([post, article]).inspect, 'function' );
-            assert.deepEqual ( Document([post, article]).inspect(), require('util').inspect([post, article]) );
-          }
-        }
+        //   '=> JSON object (#)': function() {
+        //     assert.typeOf ( Document([post, article]).inspect, 'function' );
+        //     assert.deepEqual ( Document([post, article]).inspect(), require('util').inspect([post, article]) );
+        //   }
+        // }
       }
     }, // Serialization
 
